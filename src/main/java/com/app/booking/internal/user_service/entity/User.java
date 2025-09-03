@@ -1,0 +1,30 @@
+package com.app.booking.internal.user_service.entity;
+
+import com.app.booking.common.enums.UserRole;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+
+@Entity
+@Table(name = "users")
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+
+    @Email
+    @Column(unique = true, nullable = false)
+    String email;
+    String password;
+
+    @Enumerated(EnumType.STRING)
+    UserRole role;
+}
