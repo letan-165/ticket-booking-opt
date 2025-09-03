@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ticker-booking
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+app:
+  time:
+    expiryTime: 3600
+
+key:
+  jwt:
+    value: ${KEY_JWT:12345678901234567890123456789012}
+
