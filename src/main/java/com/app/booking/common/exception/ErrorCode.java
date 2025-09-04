@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    PAYMENT_STATUS_INVALID(1011, "Payment status invalid (PENDING, SUCCESS, FAILED)", HttpStatus.BAD_REQUEST),
+    SEAT_STATUS_INVALID(1010, "Seat status invalid (AVAILABLE, BOOKED, LOCKED)", HttpStatus.BAD_REQUEST),
+    TICKER_STATUS_INVALID(1009, "Ticket status invalid (BOOKED, CANCELLED, CONFIRMED)", HttpStatus.BAD_REQUEST),
+    ROLE_INVALID(1008, "User role invalid (USER, ORGANIZER, ADMIN)", HttpStatus.BAD_REQUEST),
+    ENUM_INVALID(1007,"Enum invalid", HttpStatus.BAD_REQUEST),
     TOKEN_LOGOUT(1006,"Token had logout", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1005,"Password don't valid", HttpStatus.BAD_REQUEST),
     AUTHENTICATION(1004,"Token not authentication ", HttpStatus.UNAUTHORIZED),

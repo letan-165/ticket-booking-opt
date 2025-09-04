@@ -6,13 +6,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticker-booking
+    url: jdbc:postgresql://localhost:5432/ticker_booking
     username: root
     password: root
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
 
 

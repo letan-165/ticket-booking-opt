@@ -19,7 +19,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(name = "user_id", nullable = false)
-    Long userId;
+    String userId;
     @Column(name = "seat_id", nullable = false)
     Long seatId;
     @Column(name = "booking_time")

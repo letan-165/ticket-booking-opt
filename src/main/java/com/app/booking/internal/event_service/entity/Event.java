@@ -19,7 +19,7 @@ public class Event {
     Long id;
 
     @Column(name = "organizer_id", nullable = false)
-    Long organizerId;
+    String organizerId;
     String name;
     String location;
     @Column(name = "time")
