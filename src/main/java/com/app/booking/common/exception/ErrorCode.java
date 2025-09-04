@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatusCode;
 public enum ErrorCode {
     // ===== SERVICE (1001 – 1999) =====
     // === USER ===
-    USER_NO_EXISTS(1001, "User not exists", HttpStatus.BAD_REQUEST),
+    USER_NO_EXISTS(1001, "User not found", HttpStatus.BAD_REQUEST),
     USER_EXISTS(1002, "User existed", HttpStatus.BAD_REQUEST),
+    EVENT_NO_EXISTS(1003, "Event not found", HttpStatus.BAD_REQUEST),
+    SEAT_NO_EXISTS(1004, "Seat not found", HttpStatus.BAD_REQUEST),
 
     // ===== AUTH (2001 – 2999) =====
     UNAUTHORIZED(2001, "You don't have permission", HttpStatus.FORBIDDEN),
@@ -32,7 +34,8 @@ public enum ErrorCode {
     NOT_NULL(3103, "Value request.{field} is null", HttpStatus.BAD_REQUEST),
 
     // ===== COMMON (9000 – 9999) =====
-    INTERNAL_ERROR(9000,"Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    INTERNAL_ERROR(9001,"Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    NOT_FOUND(9002,"Not Found", HttpStatus.INTERNAL_SERVER_ERROR),
     OTHER_ERROR(9999,"Other error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     int code;

@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Objects;
 
@@ -21,9 +22,15 @@ public class GlobalExceptionHandling {
                         .message(errorCode.message)
                         .build());
     }
+
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingException(){
         return toResponseEntity(ErrorCode.OTHER_ERROR);
+    }
+
+    @ExceptionHandler(value = NoResourceFoundException.class)
+    ResponseEntity<ApiResponse> handlingNoResourceFoundException(){
+        return toResponseEntity(ErrorCode.NOT_FOUND);
     }
 
     @ExceptionHandler(value = AppException.class)

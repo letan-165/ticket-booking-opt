@@ -22,8 +22,10 @@ public class Event {
     String organizerId;
     String name;
     String location;
+
     @Column(name = "time")
     LocalDateTime time;
+
     @Column(name = "total_seats")
     Long totalSeats;
 }

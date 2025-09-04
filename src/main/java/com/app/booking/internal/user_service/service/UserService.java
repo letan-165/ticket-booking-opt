@@ -26,21 +26,29 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
+    public User findUser(String userID){
+        return userRepository.findById(userID)
+                .orElseThrow(()->new AppException(ErrorCode.USER_NO_EXISTS));
+    }
+    public void userIsExist(String userID){
+        if(!userRepository.existsById(userID))
+            throw new AppException(ErrorCode.USER_NO_EXISTS);
+    }
+
+
     public List<UserResponse> findAll(){
         return userRepository.findAll().stream()
                 .map(userMapper::toUserResponse)
                 .toList();
     }
 
-    public UserResponse findById(String userID) {
-        User user = userRepository.findById(userID)
-                .orElseThrow(()->new AppException(ErrorCode.USER_NO_EXISTS));
+    public UserResponse findById(String id) {
+        User user = findUser(id);
         return userMapper.toUserResponse(user);
     }
 
     public UserResponse update(String id,@Valid UserRequest request) {
-        User user = userRepository.findById(id)
-                .orElseThrow(()->new AppException(ErrorCode.USER_NO_EXISTS));
+        User user = findUser(id);
         userMapper.updateUserFromRequest(request, user);
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
