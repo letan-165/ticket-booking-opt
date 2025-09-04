@@ -51,7 +51,7 @@ public class GlobalExceptionHandling {
                 return switch (enumName) {
                     case "PaymentStatus" -> toResponseEntity(ErrorCode.PAYMENT_STATUS_INVALID);
                     case "SeatStatus" -> toResponseEntity(ErrorCode.SEAT_STATUS_INVALID);
-                    case "TickerStatus" -> toResponseEntity(ErrorCode.TICKET_STATUS_INVALID);
+                    case "TicketStatus" -> toResponseEntity(ErrorCode.TICKET_STATUS_INVALID);
                     case "UserRole" -> toResponseEntity(ErrorCode.ROLE_INVALID);
                     default -> toResponseEntity(ErrorCode.ENUM_INVALID);
                 };

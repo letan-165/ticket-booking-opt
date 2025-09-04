@@ -1,6 +1,6 @@
 package com.app.booking.internal.ticket_service.entity;
 
-import com.app.booking.common.enums.SeatStatus;
+import com.app.booking.common.enums.TicketStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,13 +18,16 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @Column(name = "user_id", nullable = false)
     String userId;
+
     @Column(name = "seat_id", nullable = false)
     Long seatId;
+
     @Column(name = "booking_time")
     LocalDateTime bookingTime;
 
     @Enumerated(EnumType.STRING)
-    SeatStatus status;
+    TicketStatus status;
 }

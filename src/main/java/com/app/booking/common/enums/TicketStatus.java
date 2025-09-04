@@ -1,5 +1,5 @@
 package com.app.booking.common.enums;
 
-public enum TickerStatus {
+public enum TicketStatus {
     BOOKED, CANCELLED, CONFIRMED
 }

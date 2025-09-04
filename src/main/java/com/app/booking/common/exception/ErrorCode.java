@@ -14,6 +14,8 @@ public enum ErrorCode {
     USER_EXISTS(1002, "User existed", HttpStatus.BAD_REQUEST),
     EVENT_NO_EXISTS(1003, "Event not found", HttpStatus.BAD_REQUEST),
     SEAT_NO_EXISTS(1004, "Seat not found", HttpStatus.BAD_REQUEST),
+    TICKET_NO_EXISTS(1005, "Ticket not found", HttpStatus.BAD_REQUEST),
+    STATUS_UNABLE(1006, "Cannot initiate ticket when seat status is invalid", HttpStatus.BAD_REQUEST),
 
     // ===== AUTH (2001 – 2999) =====
     UNAUTHORIZED(2001, "You don't have permission", HttpStatus.FORBIDDEN),
