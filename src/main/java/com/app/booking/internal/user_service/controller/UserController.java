@@ -4,6 +4,7 @@ import com.app.booking.common.ApiResponse;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PatchMapping("/public/{id}")
-    ApiResponse<UserResponse> update(@PathVariable String id, @RequestBody UserRequest request){
+    ApiResponse<UserResponse> update(@PathVariable String id,@RequestBody UserRequest request){
         return ApiResponse.<UserResponse>builder()
                 .result(userService.update(id,request))
                 .build();

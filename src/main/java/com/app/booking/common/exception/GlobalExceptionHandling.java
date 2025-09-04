@@ -4,8 +4,12 @@ import com.app.booking.common.ApiResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Objects;
 
 @ControllerAdvice
 public class GlobalExceptionHandling {
@@ -47,6 +51,29 @@ public class GlobalExceptionHandling {
             }
         }
         return toResponseEntity(ErrorCode.ENUM_INVALID);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse> handleValidation(MethodArgumentNotValidException ex) {
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String field = Objects.requireNonNull(fieldError).getField();
+        String annotation = fieldError.getCode();
+
+        ErrorCode errorCode;
+        switch (Objects.requireNonNull(annotation)) {
+            case "NotBlank" -> errorCode = ErrorCode.NOT_BLANK;
+            case "NotNull" -> errorCode = ErrorCode.NOT_NULL;
+            case "Email"   -> errorCode = ErrorCode.EMAIL_INVALID;
+            default        -> errorCode = ErrorCode.OTHER_ERROR;
+        }
+
+        String finalMessage = errorCode.getMessage().replace("{field}", field);
+
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(finalMessage)
+                        .build());
     }
 
 }

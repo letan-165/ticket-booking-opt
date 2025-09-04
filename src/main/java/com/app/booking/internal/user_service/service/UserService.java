@@ -7,6 +7,7 @@ import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.entity.User;
 import com.app.booking.internal.user_service.mapper.UserMapper;
 import com.app.booking.internal.user_service.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -37,7 +38,7 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
-    public UserResponse update(String id,UserRequest request) {
+    public UserResponse update(String id,@Valid UserRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.USER_NO_EXISTS));
         userMapper.updateUserFromRequest(request, user);

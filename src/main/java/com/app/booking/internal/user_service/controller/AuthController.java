@@ -8,6 +8,7 @@ import com.app.booking.internal.user_service.dto.response.LoginResponse;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.service.AuthService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,23 +29,23 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping("/public/register")
-    ApiResponse<UserResponse> register(@RequestBody UserRequest request){
+    ApiResponse<UserResponse> register(@Valid @RequestBody UserRequest request){
         return ApiResponse.<UserResponse>builder()
                 .result(authService.register(request))
                 .build();
     }
 
     @PostMapping("/public/login")
-    ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) throws JOSEException {
+    ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequest request) throws JOSEException {
         return ApiResponse.<LoginResponse>builder()
                 .result(authService.login(request))
                 .build();
     }
 
-    @PostMapping("/instropect")
-    public ApiResponse<Boolean> instropect(@RequestBody TokenRequest request) throws ParseException, JOSEException {
+    @PostMapping("/introspect")
+    public ApiResponse<Boolean> introspect(@RequestBody TokenRequest request) throws ParseException, JOSEException {
         return ApiResponse.<Boolean>builder()
-                .result(authService.instropect(request))
+                .result(authService.introspect(request))
                 .build();
     }
 
