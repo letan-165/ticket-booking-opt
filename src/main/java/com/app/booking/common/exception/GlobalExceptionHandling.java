@@ -19,7 +19,7 @@ public class GlobalExceptionHandling {
     }
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingException(){
-        return toResponseEntity(ErrorCode.OTHER_ERROL);
+        return toResponseEntity(ErrorCode.OTHER_ERROR);
     }
 
     @ExceptionHandler(value = AppException.class)
@@ -40,7 +40,7 @@ public class GlobalExceptionHandling {
                 return switch (enumName) {
                     case "PaymentStatus" -> toResponseEntity(ErrorCode.PAYMENT_STATUS_INVALID);
                     case "SeatStatus" -> toResponseEntity(ErrorCode.SEAT_STATUS_INVALID);
-                    case "TickerStatus" -> toResponseEntity(ErrorCode.TICKER_STATUS_INVALID);
+                    case "TickerStatus" -> toResponseEntity(ErrorCode.TICKET_STATUS_INVALID);
                     case "UserRole" -> toResponseEntity(ErrorCode.ROLE_INVALID);
                     default -> toResponseEntity(ErrorCode.ENUM_INVALID);
                 };

@@ -76,7 +76,7 @@ public class AuthService {
                 .build();
     }
 
-    public Boolean instropect(TokenRequest request) throws ParseException, JOSEException {
+    public Boolean introspect(TokenRequest request) throws ParseException, JOSEException {
         SignedJWT jwt = SignedJWT.parse(request.getToken());
         var expiryTime = jwt.getJWTClaimsSet().getExpirationTime();
         JWSVerifier jwsVerifier = new MACVerifier(KEY.getBytes());
@@ -85,7 +85,7 @@ public class AuthService {
         boolean isTime = expiryTime.after(Date.from(Instant.now()));
 
         if(!isVerify || !isTime )
-            throw new AppException(ErrorCode.AUTHENTICATION);
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         return true;
     }

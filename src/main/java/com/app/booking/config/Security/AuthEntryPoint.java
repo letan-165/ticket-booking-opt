@@ -15,7 +15,7 @@ import java.io.IOException;
 public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ErrorCode errorCode = ErrorCode.AUTHENTICATION;
+        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
         response.setStatus(errorCode.getHttpStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 

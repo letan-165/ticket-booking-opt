@@ -3,6 +3,7 @@ package com.app.booking.internal.user_service.entity;
 import com.app.booking.common.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

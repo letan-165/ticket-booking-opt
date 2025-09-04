@@ -1,4 +1,4 @@
-package com.app.booking.internal.ticker_service.entity;
+package com.app.booking.internal.ticket_service.entity;
 
 import com.app.booking.common.enums.SeatStatus;
 import jakarta.persistence.*;
