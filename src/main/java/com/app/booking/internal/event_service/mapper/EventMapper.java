@@ -11,5 +11,5 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface EventMapper {
     Event toEvent(EventRequest request);
     EventResponse toEventResponse(Event event);
-    void updateEventFromRequest(Event event, @MappingTarget EventRequest request);
+    void updateEventFromRequest(@MappingTarget Event event,EventRequest request);
 }

@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
 
     @Column(name = "ticket_id", nullable = false)
-    Long ticketId;
-    Long amount;
+    Integer ticketId;
+    Integer amount;
 
     @Enumerated(EnumType.STRING)
     PaymentStatus status;

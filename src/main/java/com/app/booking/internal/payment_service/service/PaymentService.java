@@ -5,6 +5,7 @@ import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
+import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,14 @@ public class PaymentService {
     }
 
 
-    public Payment create(Long ticketId){
-        if (!ticketRepository.existsById(ticketId))
-            throw new AppException(ErrorCode.TICKET_NO_EXISTS);
+    public Payment create(Integer ticketId){
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(()->new AppException(ErrorCode.TICKET_NO_EXISTS));
 
         Payment payment = Payment.builder()
                 .ticketId(ticketId)
                 .createdAt(LocalDateTime.now())
-                .amount(10000L)
+                .amount(ticket.getPrice())
                 .status(PaymentStatus.PENDING)
                 .build();
 

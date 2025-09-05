@@ -17,13 +17,16 @@ import java.time.LocalDateTime;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
 
     @Column(name = "user_id", nullable = false)
     String userId;
 
     @Column(name = "seat_id", nullable = false)
-    Long seatId;
+    Integer seatId;
+
+    @Column(nullable = false)
+    Integer price;
 
     @Column(name = "booking_time")
     LocalDateTime bookingTime;

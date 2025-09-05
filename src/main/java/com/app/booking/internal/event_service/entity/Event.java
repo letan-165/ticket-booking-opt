@@ -16,16 +16,19 @@ import java.time.LocalDateTime;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
 
     @Column(name = "organizer_id", nullable = false)
     String organizerId;
     String name;
     String location;
 
+    @Column(name = "price_ticket")
+    Integer priceTicket;
+
     @Column(name = "time")
     LocalDateTime time;
 
     @Column(name = "total_seats")
-    Long totalSeats;
+    Integer totalSeats;
 }

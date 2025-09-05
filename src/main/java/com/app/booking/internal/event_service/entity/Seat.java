@@ -15,9 +15,9 @@ import lombok.experimental.FieldDefaults;
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
     @Column(name = "event_id", nullable = false)
-    Long eventId;
+    Integer eventId;
 
     @Column(name = "seat_number", nullable = false)
     String seatNumber;

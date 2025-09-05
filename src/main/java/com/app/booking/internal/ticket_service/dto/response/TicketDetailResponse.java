@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketDetailResponse {
-    Long id;
+    Integer id;
     String userId;
     Seat seat;
+    Integer price;
     LocalDateTime bookingTime;
     TicketStatus status;
 }

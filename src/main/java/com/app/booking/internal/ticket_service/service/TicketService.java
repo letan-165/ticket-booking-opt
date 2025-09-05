@@ -5,6 +5,7 @@ import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.event_service.entity.Seat;
+import com.app.booking.internal.event_service.repository.EventRepository;
 import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.ticket_service.dto.response.TicketDetailResponse;
@@ -33,7 +34,7 @@ public class TicketService {
     TicketMapper ticketMapper;
 
 
-    public Ticket findById(Long ticketId){
+    public Ticket findById(Integer ticketId){
         return ticketRepository.findById(ticketId)
                 .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
     }
@@ -55,10 +56,15 @@ public class TicketService {
         if (!seat.getStatus().equals(SeatStatus.AVAILABLE))
             throw new AppException(ErrorCode.STATUS_UNABLE);
 
+        Integer price = seatRepository.findPriceBySeatId(request.getSeatId());
+        if(price==null)
+            throw new AppException(ErrorCode.PRICE_EVENT_INVALID);
+
         Ticket ticket = Ticket.builder()
                 .userId(request.getUserId())
                 .seatId(request.getSeatId())
                 .bookingTime(LocalDateTime.now())
+                .price(price)
                 .status(TicketStatus.BOOKED)
                 .build();
 
@@ -67,7 +73,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public TicketDetailResponse getDetail(Long ticketId){
+    public TicketDetailResponse getDetail(Integer ticketId){
         Ticket ticket = findById(ticketId);
         Seat seat = seatRepository.findById(ticket.getSeatId())
                 .orElseThrow(()-> new AppException(ErrorCode.SEAT_NO_EXISTS));
@@ -77,7 +83,7 @@ public class TicketService {
         return response;
     }
 
-    public Ticket confirm(Long ticketId){
+    public Ticket confirm(Integer ticketId){
         Ticket ticket = findById(ticketId);
         Seat seat = seatRepository.findById(ticket.getSeatId())
                 .orElseThrow(()-> new AppException(ErrorCode.SEAT_NO_EXISTS));
@@ -87,7 +93,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public Ticket cancel(Long ticketId){
+    public Ticket cancel(Integer ticketId){
         Ticket ticket = findById(ticketId);
         Seat seat = seatRepository.findById(ticket.getSeatId())
                 .orElseThrow(()-> new AppException(ErrorCode.SEAT_NO_EXISTS));

@@ -13,11 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventResponse {
-    Long id;
+    Integer id;
     String organizerId;
     String name;
     String location;
+    Integer priceTicket;
     LocalDateTime time;
-    Long totalSeats;
+    Integer totalSeats;
     List<Seat> seats;
 }

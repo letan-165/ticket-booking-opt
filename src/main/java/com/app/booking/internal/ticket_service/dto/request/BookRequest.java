@@ -14,5 +14,5 @@ public class BookRequest {
     String userId;
 
     @NonNull
-    Long seatId;
+    Integer seatId;
 }

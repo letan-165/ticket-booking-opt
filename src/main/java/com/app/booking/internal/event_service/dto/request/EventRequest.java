@@ -17,8 +17,9 @@ public class EventRequest {
 
     @NotBlank
     String name;
+    Integer priceTicket;
 
     String location;
     LocalDateTime time;
-    long totalSeats;
+    int totalSeats;
 }

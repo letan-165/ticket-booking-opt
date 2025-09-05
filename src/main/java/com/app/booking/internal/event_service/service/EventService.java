@@ -34,7 +34,7 @@ public class EventService {
     EventMapper eventMapper;
     UserService userService;
 
-    public Event findById(Long id) {
+    public Event findById(Integer id) {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.EVENT_NO_EXISTS));
     }
@@ -49,7 +49,7 @@ public class EventService {
     }
 
 
-    public EventResponse getDetail(Long id) {
+    public EventResponse getDetail(Integer id) {
         var event = findById(id);
 
         var seats = seatRepository.findAllByEventId(id);
@@ -77,21 +77,22 @@ public class EventService {
     }
 
     //Update totalSeats
-    public Event update(Long id,EventRequest request) {
+    public Event update(Integer id,EventRequest request) {
         Event event = findById(id);
         userService.userIsExist(request.getOrganizerId());
         eventMapper.updateEventFromRequest(event, request);
+        log.info("tantesst {} | {}",request.getPriceTicket() , event.getPriceTicket() );
         return eventRepository.save(event);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         if (!eventRepository.existsById(id)) {
             throw new AppException(ErrorCode.EVENT_NO_EXISTS);
         }
         eventRepository.deleteById(id);
     }
 
-    public Seat updateStatusSeats(Long seatId, SeatStatusRequest request){
+    public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request){
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(()->new AppException(ErrorCode.SEAT_NO_EXISTS));
 

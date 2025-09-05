@@ -41,7 +41,7 @@ public class EventController {
     }
 
     @GetMapping("/public/{id}")
-    public ApiResponse<EventResponse> getDetail(@PathVariable Long id) {
+    public ApiResponse<EventResponse> getDetail(@PathVariable Integer id) {
         return ApiResponse.<EventResponse>builder()
                 .result(eventService.getDetail(id))
                 .build();
@@ -55,14 +55,14 @@ public class EventController {
     }
 
     @PatchMapping("/public/{id}")
-    public ApiResponse<Event> update(@PathVariable Long id,@Valid @RequestBody EventRequest request) {
+    public ApiResponse<Event> update(@PathVariable Integer id,@Valid @RequestBody EventRequest request) {
         return ApiResponse.<Event>builder()
                 .result(eventService.update(id, request))
                 .build();
     }
 
     @DeleteMapping("/public/{id}")
-    public ApiResponse<Boolean> delete(@PathVariable Long id) {
+    public ApiResponse<Boolean> delete(@PathVariable Integer id) {
         eventService.delete(id);
         return ApiResponse.<Boolean>builder()
                 .result(true)
@@ -70,7 +70,7 @@ public class EventController {
     }
 
     @PatchMapping("/public/seats/{seatId}")
-    public ApiResponse<Seat> updateStatusSeats(@PathVariable Long seatId, @RequestBody SeatStatusRequest request) {
+    public ApiResponse<Seat> updateStatusSeats(@PathVariable Integer seatId, @RequestBody SeatStatusRequest request) {
         return ApiResponse.<Seat>builder()
                 .result(eventService.updateStatusSeats(seatId,request))
                 .build();

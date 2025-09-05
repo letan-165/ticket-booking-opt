@@ -49,7 +49,7 @@ public class UserService {
 
     public UserResponse update(String id,@Valid UserRequest request) {
         User user = findUser(id);
-        userMapper.updateUserFromRequest(request, user);
+        userMapper.updateUserFromRequest(user,request);
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }

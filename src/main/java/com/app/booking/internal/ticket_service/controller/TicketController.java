@@ -37,7 +37,7 @@ public class TicketController {
     }
 
     @GetMapping("/public/{ticketId}")
-    public ApiResponse<TicketDetailResponse> getDetail(@PathVariable Long ticketId) {
+    public ApiResponse<TicketDetailResponse> getDetail(@PathVariable Integer ticketId) {
         return ApiResponse.<TicketDetailResponse>builder()
                 .result(ticketService.getDetail(ticketId))
                 .build();
@@ -51,14 +51,14 @@ public class TicketController {
     }
 
     @PatchMapping("/public/cancel/{ticketId}")
-    public ApiResponse<Ticket> cancel(@PathVariable Long ticketId) {
+    public ApiResponse<Ticket> cancel(@PathVariable Integer ticketId) {
         return ApiResponse.<Ticket>builder()
                 .result(ticketService.cancel(ticketId))
                 .build();
     }
 
     @PatchMapping("/public/confirm/{ticketId}")
-    public ApiResponse<Ticket> confirm(@PathVariable Long ticketId) {
+    public ApiResponse<Ticket> confirm(@PathVariable Integer ticketId) {
         return ApiResponse.<Ticket>builder()
                 .result(ticketService.confirm(ticketId))
                 .build();
