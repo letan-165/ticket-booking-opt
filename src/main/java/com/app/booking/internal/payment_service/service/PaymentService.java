@@ -29,6 +29,9 @@ public class PaymentService {
         return paymentRepository.findAll(pageable);
     }
 
+    public Page<Payment> findAllByOrganizerId(String organizerId,Pageable pageable){
+        return paymentRepository.findAllByOrganizerId(organizerId,pageable);
+    }
 
     public Payment create(Integer ticketId){
         Ticket ticket = ticketRepository.findById(ticketId)
