@@ -60,7 +60,7 @@ public class TicketService {
     @Transactional
     public TicketDetailResponse create(BookRequest request){
         userService.userIsExist(request.getUserId());
-        Seat seat = seatRepository.findById(request.getSeatId())
+        Seat seat = seatRepository.findSeatForUpdate(request.getSeatId())
                 .orElseThrow(()-> new AppException(ErrorCode.SEAT_NO_EXISTS));
 
         if (!seat.getStatus().equals(SeatStatus.AVAILABLE))
