@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tickets")
 @RequiredArgsConstructor
@@ -23,16 +25,16 @@ public class TicketController {
     TicketService ticketService;
 
     @GetMapping("/public")
-    public ApiResponse<Page<Ticket>> getAll(Pageable pageable) {
-        return ApiResponse.<Page<Ticket>>builder()
-                .result(ticketService.findAll(pageable))
+    public ApiResponse<List<Ticket>> getAll(Pageable pageable) {
+        return ApiResponse.<List<Ticket>>builder()
+                .result(ticketService.findAll(pageable).getContent())
                 .build();
     }
 
     @GetMapping("/public/user/{userId}")
-    public ApiResponse<Page<Ticket>> getByUser(@PathVariable String userId, Pageable pageable) {
-        return ApiResponse.<Page<Ticket>>builder()
-                .result(ticketService.findAllByUserId(userId, pageable))
+    public ApiResponse<List<Ticket>> getByUser(@PathVariable String userId, Pageable pageable) {
+        return ApiResponse.<List<Ticket>>builder()
+                .result(ticketService.findAllByUserId(userId, pageable).getContent())
                 .build();
     }
 

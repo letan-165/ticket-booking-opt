@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
@@ -27,16 +29,16 @@ public class EventController {
     EventService eventService;
 
     @GetMapping("/public")
-    public ApiResponse<Page<Event>> getAll(@PageableDefault(size = 10) Pageable pageable) {
-        return ApiResponse.<Page<Event>>builder()
-                .result(eventService.getAll(pageable))
+    public ApiResponse<List<Event>> getAll(@PageableDefault(size = 10) Pageable pageable) {
+        return ApiResponse.<List<Event>>builder()
+                .result(eventService.getAll(pageable).getContent())
                 .build();
     }
 
     @GetMapping("/public/organizers/{id}")
-    public ApiResponse<Page<Event>> findAllByOrganizerId(@PathVariable String id,@PageableDefault(size = 10) Pageable pageable) {
-        return ApiResponse.<Page<Event>>builder()
-                .result(eventService.findAllByOrganizerId(id,pageable))
+    public ApiResponse<List<Event>> findAllByOrganizerId(@PathVariable String id,@PageableDefault(size = 10) Pageable pageable) {
+        return ApiResponse.<List<Event>>builder()
+                .result(eventService.findAllByOrganizerId(id,pageable).getContent())
                 .build();
     }
 

@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/payments")
 @RequiredArgsConstructor
@@ -21,16 +23,16 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
     PaymentService paymentService;
     @GetMapping("/public")
-    public ApiResponse<Page<Payment>> getAll(Pageable pageable) {
-        return ApiResponse.<Page<Payment>>builder()
-                .result(paymentService.findAll(pageable))
+    public ApiResponse<List<Payment>> getAll(Pageable pageable) {
+        return ApiResponse.<List<Payment>>builder()
+                .result(paymentService.findAll(pageable).getContent())
                 .build();
     }
 
     @GetMapping("/public/user/{userId}")
-    public ApiResponse<Page<Payment>> findAllByOrganizerId(@PathVariable String userId, Pageable pageable) {
-        return ApiResponse.<Page<Payment>>builder()
-                .result(paymentService.findAllByOrganizerId(userId, pageable))
+    public ApiResponse<List<Payment>> findAllByOrganizerId(@PathVariable String userId, Pageable pageable) {
+        return ApiResponse.<List<Payment>>builder()
+                .result(paymentService.findAllByOrganizerId(userId, pageable).getContent())
                 .build();
     }
 
