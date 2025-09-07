@@ -15,8 +15,11 @@ public enum ErrorCode {
     EVENT_NO_EXISTS(1003, "Event not found", HttpStatus.BAD_REQUEST),
     SEAT_NO_EXISTS(1004, "Seat not found", HttpStatus.BAD_REQUEST),
     TICKET_NO_EXISTS(1005, "Ticket not found", HttpStatus.BAD_REQUEST),
-    STATUS_UNABLE(1006, "Cannot initiate ticket when seat status is invalid", HttpStatus.BAD_REQUEST),
+    TICKET_NO_AVAILABLE(1006, "Cannot initiate ticket when seat status is invalid", HttpStatus.BAD_REQUEST),
     PRICE_EVENT_INVALID(1007, "Invalid event price", HttpStatus.BAD_REQUEST),
+    PAYMENT_NO_EXISTS(1008, "Payment not found", HttpStatus.BAD_REQUEST),
+    PAYMENT_NO_PENDING(1009, "Cannot payment when status is invalid", HttpStatus.BAD_REQUEST),
+    TICKET_IS_BOOKED(1010, "Ticket status booked", HttpStatus.BAD_REQUEST),
 
     // ===== AUTH (2001 – 2999) =====
     UNAUTHORIZED(2001, "You don't have permission", HttpStatus.FORBIDDEN),

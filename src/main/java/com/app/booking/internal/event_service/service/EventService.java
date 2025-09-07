@@ -12,6 +12,7 @@ import com.app.booking.internal.event_service.mapper.EventMapper;
 import com.app.booking.internal.event_service.repository.EventRepository;
 import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.user_service.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -51,14 +52,13 @@ public class EventService {
 
     public EventResponse getDetail(Integer id) {
         var event = findById(id);
-
         var seats = seatRepository.findAllByEventId(id);
         EventResponse response = eventMapper.toEventResponse(event);
         response.setSeats(seats);
         return response;
     }
 
-    //Transition
+    @Transactional
     public EventResponse create(EventRequest request) {
         userService.userIsExist(request.getOrganizerId());
         List<Seat> seats= new ArrayList<>();
@@ -76,12 +76,11 @@ public class EventService {
         return response;
     }
 
-    //Update totalSeats
     public Event update(Integer id,EventRequest request) {
         Event event = findById(id);
+        request.setTotalSeats(event.getTotalSeats());
         userService.userIsExist(request.getOrganizerId());
         eventMapper.updateEventFromRequest(event, request);
-        log.info("tantesst {} | {}",request.getPriceTicket() , event.getPriceTicket() );
         return eventRepository.save(event);
     }
 

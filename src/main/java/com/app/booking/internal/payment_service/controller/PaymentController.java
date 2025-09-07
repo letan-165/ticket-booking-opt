@@ -1,11 +1,10 @@
 package com.app.booking.internal.payment_service.controller;
 
 import com.app.booking.common.ApiResponse;
+import com.app.booking.common.exception.AppException;
+import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.service.PaymentService;
-import com.app.booking.internal.ticket_service.dto.request.BookRequest;
-import com.app.booking.internal.ticket_service.entity.Ticket;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -42,4 +41,10 @@ public class PaymentController {
                 .build();
     }
 
+    @PatchMapping("/public/pay/{paymentID}/{isSuccess}")
+    public ApiResponse<Payment> pay(@PathVariable Integer paymentID,@PathVariable Boolean isSuccess) {
+        return ApiResponse.<Payment>builder()
+                .result(paymentService.pay(paymentID,isSuccess))
+                .build();
+    }
 }

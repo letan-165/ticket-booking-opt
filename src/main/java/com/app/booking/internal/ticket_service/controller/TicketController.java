@@ -44,23 +44,9 @@ public class TicketController {
     }
 
     @PostMapping("/public/book")
-    public ApiResponse<Ticket> create(@Valid @RequestBody BookRequest request) {
-        return ApiResponse.<Ticket>builder()
+    public ApiResponse<TicketDetailResponse> create(@Valid @RequestBody BookRequest request) {
+        return ApiResponse.<TicketDetailResponse>builder()
                 .result(ticketService.create(request))
-                .build();
-    }
-
-    @PatchMapping("/public/cancel/{ticketId}")
-    public ApiResponse<Ticket> cancel(@PathVariable Integer ticketId) {
-        return ApiResponse.<Ticket>builder()
-                .result(ticketService.cancel(ticketId))
-                .build();
-    }
-
-    @PatchMapping("/public/confirm/{ticketId}")
-    public ApiResponse<Ticket> confirm(@PathVariable Integer ticketId) {
-        return ApiResponse.<Ticket>builder()
-                .result(ticketService.confirm(ticketId))
                 .build();
     }
 }
