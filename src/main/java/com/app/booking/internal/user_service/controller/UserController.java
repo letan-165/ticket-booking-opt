@@ -4,11 +4,12 @@ import com.app.booking.common.ApiResponse;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.service.UserService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/public")
-    ApiResponse<List<UserResponse>> findAll(){
+    ApiResponse<List<UserResponse>> findAll(@PageableDefault(size = 10) Pageable pageable){
         return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.findAll())
+                .result(userService.findAll(pageable))
                 .build();
     }
 

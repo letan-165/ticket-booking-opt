@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,8 @@ public class UserService {
             throw new AppException(ErrorCode.USER_NO_EXISTS);
     }
 
-
-    public List<UserResponse> findAll(){
-        return userRepository.findAll().stream()
+    public List<UserResponse> findAll(Pageable pageable){
+        return userRepository.findAll(pageable).stream()
                 .map(userMapper::toUserResponse)
                 .toList();
     }
