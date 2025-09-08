@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,6 +62,7 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
+    @CachePut(value="user", key="'findById:' + #id")
     @CacheEvict(value = "users", allEntries = true)
     public UserResponse update(String id,@Valid UserRequest request) {
         User user = findUser(id);

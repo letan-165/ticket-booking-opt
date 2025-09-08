@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,7 @@ public class EventService {
         return response;
     }
 
-    @CacheEvict(value = "events", allEntries = true)
+    @CacheEvict(value = {"events", "event"}, allEntries = true)
     public Event update(Integer id,EventRequest request) {
         Event event = findById(id);
         request.setTotalSeats(event.getTotalSeats());
@@ -89,7 +90,7 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    @CacheEvict(value = "events", allEntries = true)
+    @CacheEvict(value = {"events", "event"}, allEntries = true)
     public void delete(Integer id) {
         if (!eventRepository.existsById(id)) {
             throw new AppException(ErrorCode.EVENT_NO_EXISTS);
@@ -97,7 +98,7 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    @CacheEvict(value = "events", allEntries = true)
+    @CacheEvict(value = {"events", "event"}, allEntries = true)
     public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request){
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(()->new AppException(ErrorCode.SEAT_NO_EXISTS));
