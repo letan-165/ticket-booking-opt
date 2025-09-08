@@ -20,11 +20,14 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,16 +51,19 @@ public class TicketService {
                 .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
     }
 
-    public Page<Ticket> findAll(Pageable pageable){
-        return ticketRepository.findAll(pageable);
+    @Cacheable(value = "tickets", keyGenerator = "pageableKeyGenerator")
+    public List<Ticket> findAll(Pageable pageable){
+        return ticketRepository.findAll(pageable).getContent();
     }
 
-    public Page<Ticket> findAllByUserId(String userId,Pageable pageable){
+    @Cacheable(value = "tickets", keyGenerator = "pageableKeyGenerator")
+    public List<Ticket> findAllByUserId(String userId,Pageable pageable){
         userService.userIsExist(userId);
-        return ticketRepository.findAllByUserId(userId, pageable);
+        return ticketRepository.findAllByUserId(userId, pageable).getContent();
     }
 
     @Transactional
+    @CacheEvict(value = "tickets", allEntries = true)
     public TicketDetailResponse create(BookRequest request){
         userService.userIsExist(request.getUserId());
         Seat seat = seatRepository.findSeatForUpdate(request.getSeatId())
@@ -89,6 +95,7 @@ public class TicketService {
         return ticketRes;
     }
 
+    @Cacheable(value = "ticket", keyGenerator = "simpleKeyGenerator")
     public TicketDetailResponse getDetail(Integer ticketId){
         Ticket ticket = findById(ticketId);
         Seat seat = findSeatById(ticket.getSeatId());

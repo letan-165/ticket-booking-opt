@@ -25,14 +25,14 @@ public class PaymentController {
     @GetMapping("/public")
     public ApiResponse<List<Payment>> getAll(Pageable pageable) {
         return ApiResponse.<List<Payment>>builder()
-                .result(paymentService.findAll(pageable).getContent())
+                .result(paymentService.findAll(pageable))
                 .build();
     }
 
     @GetMapping("/public/user/{userId}")
     public ApiResponse<List<Payment>> findAllByOrganizerId(@PathVariable String userId, Pageable pageable) {
         return ApiResponse.<List<Payment>>builder()
-                .result(paymentService.findAllByOrganizerId(userId, pageable).getContent())
+                .result(paymentService.findAllByOrganizerId(userId, pageable))
                 .build();
     }
 

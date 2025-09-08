@@ -1,5 +1,6 @@
 package com.app.booking.internal.user_service.service;
 
+import com.app.booking.common.PageResponse;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
@@ -12,6 +13,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,17 +40,28 @@ public class UserService {
             throw new AppException(ErrorCode.USER_NO_EXISTS);
     }
 
-    public List<UserResponse> findAll(Pageable pageable){
-        return userRepository.findAll(pageable).stream()
-                .map(userMapper::toUserResponse)
-                .toList();
+    @Cacheable(value = "users", keyGenerator = "pageableKeyGenerator")
+    public PageResponse<UserResponse> findAll(Pageable pageable) {
+        Page<UserResponse> page = userRepository.findAll(pageable)
+                .map(userMapper::toUserResponse);
+
+        return new PageResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
+    @Cacheable(value = "user", keyGenerator  = "simpleKeyGenerator")
     public UserResponse findById(String id) {
         User user = findUser(id);
         return userMapper.toUserResponse(user);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public UserResponse update(String id,@Valid UserRequest request) {
         User user = findUser(id);
         userMapper.updateUserFromRequest(user,request);

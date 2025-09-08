@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -21,15 +24,9 @@ import java.util.Map;
 @Configuration
 @EnableCaching
 public class CacheConfig {
-    Map<String, Duration> cacheTtls = Map.of(
-            "eventDetail", Duration.ofMinutes(30),
-            "userProfile", Duration.ofHours(1),
-            "dashboardStats", Duration.ofSeconds(10)
-    );
-
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory,
-                                          ObjectMapper objectMapper,
+                                          @Qualifier("redisObjectMapper") ObjectMapper objectMapper,
                                           CacheTtlProperties cacheTtlProperties) {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
@@ -50,16 +47,23 @@ public class CacheConfig {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
+    @Primary
+    public ObjectMapper apiObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper;
+    }
 
+    @Bean
+    public ObjectMapper redisObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.activateDefaultTyping(
                 LaissezFaireSubTypeValidator.instance,
                 ObjectMapper.DefaultTyping.NON_FINAL
         );
-
         return mapper;
     }
 }

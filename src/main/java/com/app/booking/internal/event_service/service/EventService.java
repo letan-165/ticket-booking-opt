@@ -17,7 +17,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -40,16 +41,18 @@ public class EventService {
                 .orElseThrow(() -> new AppException(ErrorCode.EVENT_NO_EXISTS));
     }
 
-    public Page<Event> getAll(Pageable pageable) {
-        return eventRepository.findAll(pageable);
+    @Cacheable(value = "events", keyGenerator  = "pageableKeyGenerator")
+    public List<Event> getAll(Pageable pageable) {
+        return eventRepository.findAll(pageable).getContent();
     }
-
-    public Page<Event> findAllByOrganizerId(String id,Pageable pageable) {
+    @Cacheable(value = "events", keyGenerator  = "pageableKeyGenerator")
+    public List<Event> findAllByOrganizerId(String id,Pageable pageable) {
         userService.userIsExist(id);
-        return eventRepository.findAllByOrganizerId(id,pageable);
+        return eventRepository.findAllByOrganizerId(id,pageable).getContent();
     }
 
 
+    @Cacheable(value = "event",keyGenerator  = "simpleKeyGenerator")
     public EventResponse getDetail(Integer id) {
         var event = findById(id);
         var seats = seatRepository.findAllByEventId(id);
@@ -59,6 +62,7 @@ public class EventService {
     }
 
     @Transactional
+    @CacheEvict(value = "events", allEntries = true)
     public EventResponse create(EventRequest request) {
         userService.userIsExist(request.getOrganizerId());
         List<Seat> seats= new ArrayList<>();
@@ -76,6 +80,7 @@ public class EventService {
         return response;
     }
 
+    @CacheEvict(value = "events", allEntries = true)
     public Event update(Integer id,EventRequest request) {
         Event event = findById(id);
         request.setTotalSeats(event.getTotalSeats());
@@ -84,6 +89,7 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    @CacheEvict(value = "events", allEntries = true)
     public void delete(Integer id) {
         if (!eventRepository.existsById(id)) {
             throw new AppException(ErrorCode.EVENT_NO_EXISTS);
@@ -91,6 +97,7 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
+    @CacheEvict(value = "events", allEntries = true)
     public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request){
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(()->new AppException(ErrorCode.SEAT_NO_EXISTS));

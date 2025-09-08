@@ -31,14 +31,14 @@ public class EventController {
     @GetMapping("/public")
     public ApiResponse<List<Event>> getAll(@PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
-                .result(eventService.getAll(pageable).getContent())
+                .result(eventService.getAll(pageable))
                 .build();
     }
 
     @GetMapping("/public/organizers/{id}")
     public ApiResponse<List<Event>> findAllByOrganizerId(@PathVariable String id,@PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
-                .result(eventService.findAllByOrganizerId(id,pageable).getContent())
+                .result(eventService.findAllByOrganizerId(id,pageable))
                 .build();
     }
 

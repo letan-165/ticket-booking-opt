@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/public")
     ApiResponse<List<UserResponse>> findAll(@PageableDefault(size = 10) Pageable pageable){
         return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.findAll(pageable))
+                .result(userService.findAll(pageable).getContent())
                 .build();
     }
 

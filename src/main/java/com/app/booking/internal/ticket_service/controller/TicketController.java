@@ -10,7 +10,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,14 +28,14 @@ public class TicketController {
     @GetMapping("/public")
     public ApiResponse<List<Ticket>> getAll(Pageable pageable) {
         return ApiResponse.<List<Ticket>>builder()
-                .result(ticketService.findAll(pageable).getContent())
+                .result(ticketService.findAll(pageable))
                 .build();
     }
 
     @GetMapping("/public/user/{userId}")
     public ApiResponse<List<Ticket>> getByUser(@PathVariable String userId, Pageable pageable) {
         return ApiResponse.<List<Ticket>>builder()
-                .result(ticketService.findAllByUserId(userId, pageable).getContent())
+                .result(ticketService.findAllByUserId(userId, pageable))
                 .build();
     }
 
