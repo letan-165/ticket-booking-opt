@@ -9,6 +9,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/ticker_booking
     username: root
     password: root
+  cache:
+    type: redis
+  redis:
+    url: redis://localhost:6379
 
 management:
   endpoints:
@@ -33,4 +37,11 @@ app:
 key:
   jwt:
     value: ${KEY_JWT:12345678901234567890123456789012}
+
+custom-cache:
+  default-ttl: 300        # 5 phút
+  ttls:
+    eventDetail: 1800     # 30 phút
+    userProfile: 3600     # 1h
+    dashboardStats: 10    # 10s
 
