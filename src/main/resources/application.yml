@@ -3,16 +3,22 @@ server:
   servlet:
     context-path: /api
 
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ticker_booking
     username: root
     password: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
   cache:
     type: redis
   redis:
     url: redis://localhost:6379
+
+  rabbitmq:
+    addresses: amqp://guest:guest@localhost:5672
 
 management:
   endpoints:
@@ -23,13 +29,6 @@ management:
     prometheus:
       enabled: true
 
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-
-
 app:
   time:
     expiryTime: 3600
@@ -39,9 +38,10 @@ key:
     value: ${KEY_JWT:12345678901234567890123456789012}
 
 custom-cache:
-  default-ttl: 300        # 5 phút
+  default-ttl: 300
   ttls:
-    eventDetail: 1800     # 30 phút
-    userProfile: 3600     # 1h
-    dashboardStats: 10    # 10s
+    eventDetail: 1800
+    userProfile: 3600
+    dashboardStats: 10
+
 
