@@ -47,9 +47,9 @@ public class TicketController {
     }
 
     @PostMapping("/public/book")
-    public ApiResponse<TicketDetailResponse> create(@Valid @RequestBody BookRequest request) {
-        return ApiResponse.<TicketDetailResponse>builder()
-                .result(ticketService.create(request))
+    public ApiResponse<String> booking(@Valid @RequestBody BookRequest request) {
+        return ApiResponse.<String>builder()
+                .result(ticketService.booking(request))
                 .build();
     }
 }

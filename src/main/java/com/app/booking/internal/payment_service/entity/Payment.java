@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payments")
-@Builder
+@Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,4 +28,16 @@ public class Payment {
 
     @Column(name = "created_at")
     LocalDateTime createdAt;
+
+    @Column(name = "transaction_id")
+    String transactionId;
+
+    @Column(name = "response_code")
+    String responseCode;
+
+    @Column(name = "bank_code")
+    String bankCode;
+
+    @Column(name = "pay_date")
+    LocalDateTime payDate;
 }

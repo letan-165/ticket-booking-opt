@@ -27,6 +27,8 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class PaymentController {
     PaymentService paymentService;
+    VNPayService vnPayService;
+
     @GetMapping("/public")
     public ApiResponse<List<Payment>> getAll(Pageable pageable) {
         return ApiResponse.<List<Payment>>builder()
@@ -41,44 +43,10 @@ public class PaymentController {
                 .build();
     }
 
-    @PostMapping("/public/{ticketId}")
-    public ApiResponse<Payment> create(@PathVariable Integer ticketId) {
+    @GetMapping("/vnpay/return")
+    public ApiResponse<Payment> paymentReturn(HttpServletRequest request) {
         return ApiResponse.<Payment>builder()
-                .result(paymentService.create(ticketId))
+                .result(paymentService.paid(request))
                 .build();
-    }
-
-    VNPayService vnPayService;
-
-    @PostMapping("/create")
-    public Map<String, Object> createPayment(
-            @RequestParam("amount") int orderTotal,
-            @RequestParam("orderInfo") String orderInfo,
-            HttpServletRequest request) {
-        String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "OK");
-        response.put("paymentUrl", vnpayUrl);
-        return response;
-    }
-
-    @GetMapping("/vnpay-return")
-    public Map<String, Object> paymentReturn(HttpServletRequest request) {
-        int paymentStatus = vnPayService.orderReturn(request);
-
-        String orderInfo = request.getParameter("vnp_OrderInfo");
-        String paymentTime = request.getParameter("vnp_PayDate");
-        String transactionId = request.getParameter("vnp_TransactionNo");
-        String totalPrice = request.getParameter("vnp_Amount");
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("orderId", orderInfo);
-        response.put("totalPrice", totalPrice);
-        response.put("paymentTime", paymentTime);
-        response.put("transactionId", transactionId);
-        response.put("status", paymentStatus == 1 ? "SUCCESS" : "FAILED");
-
-        return response;
     }
 }

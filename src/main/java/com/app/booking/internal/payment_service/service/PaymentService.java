@@ -11,6 +11,7 @@ import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +23,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -44,11 +48,12 @@ public class PaymentService {
     }
 
     @CacheEvict(value = "payments", allEntries = true)
-    public Payment create(Integer ticketId){
+    public Payment update(Integer paymentId,Integer ticketId){
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
 
         Payment payment = Payment.builder()
+                .id(paymentId)
                 .ticketId(ticketId)
                 .createdAt(LocalDateTime.now())
                 .amount(ticket.getPrice())
@@ -58,8 +63,32 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    @CacheEvict(value = {"payments", "tickets", "events"}, allEntries = true)
-    public Payment pay(Integer paymentID,boolean isSuccess){
+    public Payment paid(HttpServletRequest request){
+        //TODO:  message ack TTL
+        Integer paymentId = Integer.valueOf(request.getParameter("vnp_TxnRef"));
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(()->new AppException(ErrorCode.PAYMENT_NO_EXISTS));
+        if(!payment.getStatus().equals(PaymentStatus.PENDING))
+            throw new AppException(ErrorCode.PAYMENT_NO_PENDING);
+
+        boolean isPaid = "00".equals(request.getParameter("vnp_TransactionStatus"));
+
+        if (isPaid){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            payment = payment.toBuilder()
+                    .transactionId(request.getParameter("vnp_TransactionNo"))
+                    .responseCode(request.getParameter("vnp_ResponseCode"))
+                    .bankCode(request.getParameter("vnp_BankCode"))
+                    .payDate(LocalDateTime.parse(request.getParameter("vnp_PayDate"),formatter))
+                    .build();
+        }
+        //TODO: message update ticket
+        payment.setStatus(isPaid ? PaymentStatus.SUCCESS : PaymentStatus.FAILED);
+        return paymentRepository.save(payment);
+    }
+
+    @CacheEvict(value = {"payments", "tickets", "events", "seat"}, allEntries = true)
+    public void updateStatus(Integer paymentID,boolean isSuccess){
         Payment payment = paymentRepository.findById(paymentID)
                 .orElseThrow(()->new AppException(ErrorCode.PAYMENT_NO_EXISTS));
 
@@ -67,25 +96,9 @@ public class PaymentService {
             throw new AppException(ErrorCode.PAYMENT_NO_PENDING);
 
         PaymentStatus paymentStatus = isSuccess ? PaymentStatus.SUCCESS : PaymentStatus.FAILED;
-        paymentStatus(payment.getTicketId(),isSuccess);
         payment.setStatus(paymentStatus);
-        return paymentRepository.save(payment);
+        paymentRepository.save(payment);
     }
 
-    void paymentStatus(Integer ticketId, boolean isSuccess){
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
-
-        SeatStatus seatStatus = isSuccess ? SeatStatus.BOOKED : SeatStatus.AVAILABLE;
-        TicketStatus ticketStatus = isSuccess ? TicketStatus.CONFIRMED : TicketStatus.CANCELLED;
-
-        Seat seat = seatRepository.findById(ticket.getSeatId())
-                .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
-
-        seat.setStatus(seatStatus);
-        seatRepository.save(seat);
-        ticket.setStatus(ticketStatus);
-        ticketRepository.save(ticket);
-    }
 
 }
