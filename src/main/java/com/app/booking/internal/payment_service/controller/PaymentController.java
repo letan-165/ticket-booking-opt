@@ -11,11 +11,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +32,10 @@ import java.util.Map;
 public class PaymentController {
     PaymentService paymentService;
     VNPayService vnPayService;
+
+    @NonFinal
+    @Value("${vnp.feBackUrl}")
+    String feBackUrl;
 
     @GetMapping("/public")
     public ApiResponse<List<Payment>> getAll(Pageable pageable) {
@@ -45,9 +52,10 @@ public class PaymentController {
     }
 
     @GetMapping("/vnpay/return")
-    public ApiResponse<TransactionPay> paymentReturn(HttpServletRequest request) {
-        return ApiResponse.<TransactionPay>builder()
-                .result(paymentService.paid(request))
-                .build();
+    public void  paymentReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        TransactionPay result = paymentService.paid(request);
+        boolean status = result.getResponseCode().equals("00");
+        String redirectUrl = feBackUrl + "?paymentId=" + result.getTxnRef() + "&status=" + status;
+        response.sendRedirect(redirectUrl);
     }
 }

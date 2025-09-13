@@ -50,5 +50,6 @@ vnp:
   returnUrl: http://localhost:8080/api/payments/vnpay/return
   tmnCode: 3L9OJNZI
   secretKey: GLAKJH2RLKY3U04LY119H0NTNQ33M4CO
+  feBackUrl: http://localhost:8888/home
 
 
