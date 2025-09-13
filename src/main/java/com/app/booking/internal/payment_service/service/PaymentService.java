@@ -35,6 +35,7 @@ public class PaymentService {
     TransactionPayRepository transactionPayRepository;
     TicketRepository ticketRepository;
     RabbitTemplate rabbitTemplate;
+    VNPayService vnPayService;
 
     @Cacheable(value = "payments", keyGenerator  = "pageableKeyGenerator")
     public List<Payment> findAll(Pageable pageable){
@@ -70,10 +71,6 @@ public class PaymentService {
                         .paid(isPaid)
                 .build());
 
-        if (!isPaid){
-            throw new AppException(ErrorCode.PAYMENT_FAIL);
-        }
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         TransactionPay transactionPay = TransactionPay.builder()
                 .id(request.getParameter("vnp_TransactionNo"))
@@ -87,6 +84,20 @@ public class PaymentService {
                 .build();
 
         return transactionPayRepository.save(transactionPay);
+    }
+
+    public String retryPay(Integer ticketId){
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(()->new AppException(ErrorCode.TICKET_NO_EXISTS));
+        Payment payment = Payment.builder()
+                .ticketId(ticketId)
+                .createdAt(LocalDateTime.now())
+                .amount(ticket.getPrice())
+                .status(PaymentStatus.PENDING)
+                .build();
+
+        Payment paymentRes = paymentRepository.save(payment);
+        return vnPayService.create(paymentRes.getId(),paymentRes.getAmount(),"Thanh toán lại vé: " + ticket.getId());
     }
 
     @CacheEvict(value = {"payments", "tickets", "events", "seat"}, allEntries = true)

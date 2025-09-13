@@ -24,8 +24,8 @@ public class LockSeatConsumer {
     @RabbitListener(queues = LockSeatMQ.LOCK_SEAT_QUEUE_DQL)
     public void paymentFail(LockSeatDQLMessaging lockSeatDQLMessaging){
         try{
-            ticketService.updateStatus(lockSeatDQLMessaging.getTicketID(), false);
             paymentService.updateStatus(lockSeatDQLMessaging.getPaymentID(), false);
+            ticketService.updateStatus(lockSeatDQLMessaging.getTicketID(), false);
         } catch (AppException e) {
             log.info("LockSeatConsumer.paymentFail{}",e.getMessage());
         }

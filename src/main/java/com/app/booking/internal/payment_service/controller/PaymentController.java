@@ -6,8 +6,10 @@ import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
+import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -58,4 +60,12 @@ public class PaymentController {
         String redirectUrl = feBackUrl + "?paymentId=" + result.getTxnRef() + "&status=" + status;
         response.sendRedirect(redirectUrl);
     }
+
+    @PostMapping("/public/retry/{ticketId}")
+    public ApiResponse<String> retryPay(@PathVariable Integer ticketId) {
+        return ApiResponse.<String>builder()
+                .result(paymentService.retryPay(ticketId))
+                .build();
+    }
+
 }
