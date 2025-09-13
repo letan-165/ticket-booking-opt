@@ -1,24 +1,21 @@
 package com.app.booking.messaging.consumer;
 
 import com.app.booking.common.enums.TicketStatus;
-import com.app.booking.config.RabbitMQ.BookingConfig;
-import com.app.booking.config.RabbitMQ.LockSeatConfig;
+import com.app.booking.messaging.mq.BookingMQ;
+import com.app.booking.messaging.mq.LockSeatMQ;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.service.TicketService;
-import com.app.booking.messaging.dto.CreateBookingConsumer;
-import com.app.booking.messaging.dto.LockSeatDQL;
-import com.rabbitmq.client.Channel;
+import com.app.booking.messaging.dto.CreateBookingMessaging;
+import com.app.booking.messaging.dto.LockSeatDQLMessaging;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Component
@@ -30,8 +27,8 @@ public class BookingConsumer {
     TicketService ticketService;
     RabbitTemplate rabbitTemplate;
 
-    @RabbitListener(queues = BookingConfig.CREATE_BOOKING_QUEUE)
-    public void create(CreateBookingConsumer consumer) throws InterruptedException {
+    @RabbitListener(queues = BookingMQ.CREATE_BOOKING_QUEUE)
+    public void create(CreateBookingMessaging consumer) throws InterruptedException {
         Ticket ticket = ticketService.save(Ticket.builder()
                 .userId(consumer.getUserId())
                 .seatId(consumer.getSeatId())
@@ -40,21 +37,11 @@ public class BookingConsumer {
                 .status(TicketStatus.BOOKED)
                 .build());
 
-        rabbitTemplate.convertAndSend(LockSeatConfig.LOCK_SEAT_QUEUE, LockSeatDQL.builder()
+        rabbitTemplate.convertAndSend(LockSeatMQ.LOCK_SEAT_QUEUE, LockSeatDQLMessaging.builder()
                 .ticketID(ticket.getId())
-                        .paymentID(consumer.getPaymentId())
+                .paymentID(consumer.getPaymentId())
                 .build());
 
         paymentService.update(consumer.getPaymentId(),ticket.getId());
     }
-
-    @RabbitListener(queues = LockSeatConfig.LOCK_SEAT_QUEUE_DQL)
-    public void paymentFail(LockSeatDQL lockSeatDQL){
-        log.info("paymentFail");
-        ticketService.updateStatus(lockSeatDQL.getTicketID(), false);
-        paymentService.updateStatus(lockSeatDQL.getPaymentID(), false);
-    }
-
-
-
 }

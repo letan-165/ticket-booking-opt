@@ -1,4 +1,4 @@
-package com.app.booking.config.RabbitMQ;
+package com.app.booking.messaging.mq;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LockSeatConfig {
+public class LockSeatMQ {
     public static final String LOCK_SEAT_EXCHANGE = "LockSeat";
     public static final String LOCK_SEAT_QUEUE = "lock-seat";
 
@@ -47,7 +47,7 @@ public class LockSeatConfig {
 
     @Bean
     public Binding lockSeatBinding(Queue lockSeatQueue, DirectExchange lockSeatExchange) {
-        return BindingBuilder.bind(lockSeatQueue).to(lockSeatExchange).with(LockSeatConfig.LOCK_SEAT_QUEUE);
+        return BindingBuilder.bind(lockSeatQueue).to(lockSeatExchange).with(LockSeatMQ.LOCK_SEAT_QUEUE);
     }
 
 }

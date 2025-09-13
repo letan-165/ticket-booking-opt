@@ -8,7 +8,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LockSeatDQL {
-    Integer paymentID;
-    Integer ticketID;
+public class CreateBookingMessaging {
+    String userId;
+    Integer seatId;
+    Integer paymentId;
+    Integer price;
 }

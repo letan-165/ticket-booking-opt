@@ -45,7 +45,7 @@ custom-cache:
     dashboardStats: 10
 
 vnp:
-  expire: 10
+  expire: 60
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   returnUrl: http://localhost:8080/api/payments/vnpay/return
   tmnCode: 3L9OJNZI

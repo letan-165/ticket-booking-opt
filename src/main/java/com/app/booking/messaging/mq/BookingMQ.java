@@ -1,11 +1,11 @@
-package com.app.booking.config.RabbitMQ;
+package com.app.booking.messaging.mq;
 
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookingConfig {
+public class BookingMQ {
     public static final String CREATE_BOOKING_EXCHANGE = "CreateBooking";
     public static final String CREATE_BOOKING_QUEUE = "create-booking";
 

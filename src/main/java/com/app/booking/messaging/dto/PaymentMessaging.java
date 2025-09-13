@@ -3,14 +3,14 @@ package com.app.booking.messaging.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Builder
+import java.time.LocalDateTime;
+
+@Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateBookingConsumer {
-    String userId;
-    Integer seatId;
+public class PaymentMessaging {
     Integer paymentId;
-    Integer price;
+    boolean paid;
 }

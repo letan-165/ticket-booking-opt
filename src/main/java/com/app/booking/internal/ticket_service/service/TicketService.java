@@ -1,17 +1,14 @@
 package com.app.booking.internal.ticket_service.service;
 
-import com.app.booking.common.enums.PaymentStatus;
 import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
-import com.app.booking.config.RabbitMQ.BookingConfig;
-import com.app.booking.config.RabbitMQ.LockSeatConfig;
+import com.app.booking.messaging.mq.BookingMQ;
 import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
-import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.ticket_service.dto.response.TicketDetailResponse;
@@ -19,8 +16,7 @@ import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.mapper.TicketMapper;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
 import com.app.booking.internal.user_service.service.UserService;
-import com.app.booking.messaging.dto.CreateBookingConsumer;
-import com.app.booking.messaging.dto.LockSeatDQL;
+import com.app.booking.messaging.dto.CreateBookingMessaging;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +28,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -85,10 +80,10 @@ public class TicketService {
             throw new AppException(ErrorCode.PRICE_EVENT_INVALID);
         //End check//
         seat.setStatus(SeatStatus.LOCKED);
-        Seat seatRes = seatRepository.save(seat);
+        seatRepository.save(seat);
         Integer paymentId = paymentRepository.save(new Payment()).getId();
 
-        rabbitTemplate.convertAndSend(BookingConfig.CREATE_BOOKING_QUEUE, CreateBookingConsumer.builder()
+        rabbitTemplate.convertAndSend(BookingMQ.CREATE_BOOKING_QUEUE, CreateBookingMessaging.builder()
                         .userId(request.getUserId())
                         .price(price)
                         .paymentId(paymentId)
@@ -124,11 +119,15 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
 
+        Seat seat = seatRepository.findById(ticket.getSeatId())
+                .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
+
+        if (!seat.getStatus().equals(SeatStatus.LOCKED))
+            throw new AppException(ErrorCode.TICKET_NO_AVAILABLE);
+
         SeatStatus seatStatus = isPaid ? SeatStatus.BOOKED : SeatStatus.AVAILABLE;
         TicketStatus ticketStatus = isPaid ? TicketStatus.CONFIRMED : TicketStatus.CANCELLED;
 
-        Seat seat = seatRepository.findById(ticket.getSeatId())
-                .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
 
         seat.setStatus(seatStatus);
         seatRepository.save(seat);

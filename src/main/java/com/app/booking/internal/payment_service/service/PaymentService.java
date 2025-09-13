@@ -1,32 +1,30 @@
 package com.app.booking.internal.payment_service.service;
 
 import com.app.booking.common.enums.PaymentStatus;
-import com.app.booking.common.enums.SeatStatus;
-import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
-import com.app.booking.internal.event_service.entity.Seat;
-import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.payment_service.entity.Payment;
+import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
+import com.app.booking.internal.payment_service.repository.TransactionPayRepository;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
+import com.app.booking.messaging.dto.PaymentMessaging;
+import com.app.booking.messaging.mq.PaymentMQ;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +32,9 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PaymentService {
     PaymentRepository paymentRepository;
+    TransactionPayRepository transactionPayRepository;
     TicketRepository ticketRepository;
-    SeatRepository seatRepository;
+    RabbitTemplate rabbitTemplate;
 
     @Cacheable(value = "payments", keyGenerator  = "pageableKeyGenerator")
     public List<Payment> findAll(Pageable pageable){
@@ -63,32 +62,35 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public Payment paid(HttpServletRequest request){
-        //TODO:  message ack TTL
+    public TransactionPay paid(HttpServletRequest request){
         Integer paymentId = Integer.valueOf(request.getParameter("vnp_TxnRef"));
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(()->new AppException(ErrorCode.PAYMENT_NO_EXISTS));
-        if(!payment.getStatus().equals(PaymentStatus.PENDING))
-            throw new AppException(ErrorCode.PAYMENT_NO_PENDING);
-
         boolean isPaid = "00".equals(request.getParameter("vnp_TransactionStatus"));
+        rabbitTemplate.convertAndSend(PaymentMQ.PAYMENT_QUEUE, PaymentMessaging.builder()
+                        .paymentId(paymentId)
+                        .paid(isPaid)
+                .build());
 
-        if (isPaid){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-            payment = payment.toBuilder()
-                    .transactionId(request.getParameter("vnp_TransactionNo"))
-                    .responseCode(request.getParameter("vnp_ResponseCode"))
-                    .bankCode(request.getParameter("vnp_BankCode"))
-                    .payDate(LocalDateTime.parse(request.getParameter("vnp_PayDate"),formatter))
-                    .build();
+        if (!isPaid){
+            throw new AppException(ErrorCode.PAYMENT_FAIL);
         }
-        //TODO: message update ticket
-        payment.setStatus(isPaid ? PaymentStatus.SUCCESS : PaymentStatus.FAILED);
-        return paymentRepository.save(payment);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        TransactionPay transactionPay = TransactionPay.builder()
+                .id(request.getParameter("vnp_TransactionNo"))
+                .txnRef(paymentId)
+                .gatewayType("VNPAY")
+                .amount(Integer.parseInt(request.getParameter("vnp_Amount")) / 100)
+                .extraInfo(request.getParameter("vnp_OrderInfo"))
+                .responseCode(request.getParameter("vnp_ResponseCode"))
+                .bankCode(request.getParameter("vnp_BankCode"))
+                .payDate(LocalDateTime.parse(request.getParameter("vnp_PayDate"), formatter))
+                .build();
+
+        return transactionPayRepository.save(transactionPay);
     }
 
     @CacheEvict(value = {"payments", "tickets", "events", "seat"}, allEntries = true)
-    public void updateStatus(Integer paymentID,boolean isSuccess){
+    public Payment updateStatus(Integer paymentID,boolean isSuccess){
         Payment payment = paymentRepository.findById(paymentID)
                 .orElseThrow(()->new AppException(ErrorCode.PAYMENT_NO_EXISTS));
 
@@ -97,7 +99,7 @@ public class PaymentService {
 
         PaymentStatus paymentStatus = isSuccess ? PaymentStatus.SUCCESS : PaymentStatus.FAILED;
         payment.setStatus(paymentStatus);
-        paymentRepository.save(payment);
+        return paymentRepository.save(payment);
     }
 
 

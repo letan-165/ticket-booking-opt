@@ -1,11 +1,11 @@
-package com.app.booking.config.RabbitMQ;
+package com.app.booking.messaging.mq;
 
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaymentConfig {
+public class PaymentMQ {
     public static final String PAYMENT_EXCHANGE = "Payment";
     public static final String PAYMENT_QUEUE = "payment";
 

@@ -3,6 +3,7 @@ package com.app.booking.internal.payment_service.controller;
 import com.app.booking.common.ApiResponse;
 import com.app.booking.config.VNPay.VNPayConfig;
 import com.app.booking.internal.payment_service.entity.Payment;
+import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,8 +45,8 @@ public class PaymentController {
     }
 
     @GetMapping("/vnpay/return")
-    public ApiResponse<Payment> paymentReturn(HttpServletRequest request) {
-        return ApiResponse.<Payment>builder()
+    public ApiResponse<TransactionPay> paymentReturn(HttpServletRequest request) {
+        return ApiResponse.<TransactionPay>builder()
                 .result(paymentService.paid(request))
                 .build();
     }
