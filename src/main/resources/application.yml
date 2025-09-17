@@ -23,6 +23,16 @@ spring:
   rabbitmq:
     addresses: amqp://guest:guest@localhost:5672
 
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: http://127.0.0.1:8200
+      token: root
+      kv:
+        backend: secret
+        default-context: application
+
 management:
   endpoints:
     web:
@@ -38,7 +48,7 @@ app:
 
 key:
   jwt:
-    value: ${KEY_JWT:12345678901234567890123456789012}
+    value: ${vault.key.jwt}
 
 custom-cache:
   default-ttl: 300
@@ -52,7 +62,10 @@ vnp:
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   returnUrl: http://localhost:8080/api/payments/vnpay/return
   tmnCode: 3L9OJNZI
-  secretKey: GLAKJH2RLKY3U04LY119H0NTNQ33M4CO
+  secretKey: ${vault.key.vnp}
   feBackUrl: http://localhost:8888/home
 
 
+logging:
+  level:
+    org.springframework.vault: DEBUG
