@@ -1,7 +1,6 @@
 package com.app.booking.internal.event_service.controller;
 
 import com.app.booking.common.ApiResponse;
-import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.dto.request.SeatStatusRequest;
 import com.app.booking.internal.event_service.dto.response.EventResponse;
@@ -13,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
