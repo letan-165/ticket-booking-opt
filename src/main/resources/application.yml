@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticker_booking
-    username: root
-    password: root
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ticker_booking}
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:root}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -18,17 +18,19 @@ spring:
   cache:
     type: redis
   redis:
-    url: redis://localhost:6379
+    url: ${REDIS_URL:redis://localhost:6379}
 
   rabbitmq:
-    addresses: amqp://guest:guest@localhost:5672
+    addresses: ${RABBIT_MQ_URL:amqp://guest:guest@localhost:5672}
 
   config:
     import: vault://
   cloud:
     vault:
-      uri: http://127.0.0.1:8200
-      token: root
+      uri: ${VAULT_URL_PUBLIC}
+      authentication: TOKEN
+      token: ${VAULT_TOKEN}
+      namespace: admin
       kv:
         backend: secret
         default-context: application
@@ -61,7 +63,7 @@ vnp:
   expire: 60
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   returnUrl: http://localhost:8080/api/payments/vnpay/return
-  tmnCode: 3L9OJNZI
+  tmnCode: ${vault.code.vnp}
   secretKey: ${vault.key.vnp}
   feBackUrl: http://localhost:8888/home
 
