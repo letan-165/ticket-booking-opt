@@ -90,7 +90,7 @@ public class AuthService {
         return true;
     }
 
-    String generate(User user) throws JOSEException {
+    public String generate(User user) throws JOSEException {
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
                 .issuer("Ticker Booking")
