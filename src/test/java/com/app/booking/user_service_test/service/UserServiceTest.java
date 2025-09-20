@@ -1,6 +1,5 @@
 package com.app.booking.user_service_test.service;
 
-import com.app.booking.common.enums.UserRole;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
@@ -10,6 +9,8 @@ import com.app.booking.internal.user_service.mapper.UserMapper;
 import com.app.booking.internal.user_service.repository.UserRepository;
 import com.app.booking.internal.user_service.service.UserService;
 import com.app.booking.user_service_test.model_mock.EntityMock;
+import com.app.booking.user_service_test.model_mock.RequestMock;
+import com.app.booking.user_service_test.model_mock.ResponseMock;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,12 +49,7 @@ public class UserServiceTest {
     void initData(){
         user = EntityMock.userMock();
         userID = user.getId();
-        userResponse = UserResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
+        userResponse = ResponseMock.userMock();
         lenient().when(userMapper.toUserResponse(user)).thenReturn(userResponse);
     }
 
@@ -81,12 +77,7 @@ public class UserServiceTest {
 
     @Test
     void update_success_set_password(){
-        UserRequest request = UserRequest.builder()
-                .name("name")
-                .email("email")
-                .password("1")
-                .role(UserRole.USER)
-                .build();
+        UserRequest request = RequestMock.userMock("1");
 
         when(userRepository.findById(userID)).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
@@ -104,11 +95,8 @@ public class UserServiceTest {
 
     @Test
     void update_success_noSet_password(){
-        UserRequest request = UserRequest.builder()
-                .name("name")
-                .email("email")
-                .role(UserRole.USER)
-                .build();
+        UserRequest request = RequestMock.userMock("0");
+
         when(userRepository.findById(userID)).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
 
