@@ -1,9 +1,13 @@
 package com.app.booking.model_mock;
 
 import com.app.booking.common.enums.UserRole;
+import com.app.booking.internal.event_service.dto.request.EventRequest;
+import com.app.booking.internal.event_service.entity.Event;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.LoginResponse;
+
+import java.time.LocalDateTime;
 
 public class RequestMock {
     public static UserRequest userMock(){
@@ -28,6 +32,17 @@ public class RequestMock {
         return LoginRequest.builder()
                 .email("email")
                 .password("1")
+                .build();
+    }
+
+    public static EventRequest eventMock(int totalSeats){
+        return EventRequest.builder()
+                .organizerId("organizerId")
+                .name("name")
+                .location("location")
+                .priceTicket(10000)
+                .time(LocalDateTime.now())
+                .totalSeats(totalSeats)
                 .build();
     }
 }
