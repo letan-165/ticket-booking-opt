@@ -1,4 +1,4 @@
-package com.app.booking.user_service_test.model_mock;
+package com.app.booking.model_mock;
 
 import com.app.booking.common.enums.UserRole;
 import com.app.booking.internal.user_service.entity.User;

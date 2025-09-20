@@ -10,9 +10,9 @@ import com.app.booking.internal.user_service.entity.User;
 import com.app.booking.internal.user_service.mapper.UserMapper;
 import com.app.booking.internal.user_service.repository.UserRepository;
 import com.app.booking.internal.user_service.service.AuthService;
-import com.app.booking.user_service_test.model_mock.EntityMock;
-import com.app.booking.user_service_test.model_mock.RequestMock;
-import com.app.booking.user_service_test.model_mock.ResponseMock;
+import com.app.booking.model_mock.EntityMock;
+import com.app.booking.model_mock.RequestMock;
+import com.app.booking.model_mock.ResponseMock;
 import com.nimbusds.jose.JOSEException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,10 +65,7 @@ public class AuthServiceTest {
 
         verify(passwordEncoder,times(1)).encode(eq(request.getPassword()));
 
-        assertThat(response.getId()).isEqualTo(userResponse.getId());
-        assertThat(response.getName()).isEqualTo(userResponse.getName());
-        assertThat(response.getEmail()).isEqualTo(userResponse.getEmail());
-        assertThat(response.getRole()).isEqualTo(userResponse.getRole());
+        assertThat(response).isEqualTo(userResponse);
     }
 
     @Test
@@ -92,10 +89,7 @@ public class AuthServiceTest {
 
         LoginResponse response = authService.login(request);
 
-        assertThat(response.getUserID()).isEqualTo(loginResponse.getUserID());
-        assertThat(response.getName()).isEqualTo(loginResponse.getName());
-        assertThat(response.getToken()).isEqualTo(loginResponse.getToken());
-
+        assertThat(response).isEqualTo(loginResponse);
     }
 
     @Test
