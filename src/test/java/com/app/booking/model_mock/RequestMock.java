@@ -3,6 +3,7 @@ package com.app.booking.model_mock;
 import com.app.booking.common.enums.UserRole;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.entity.Event;
+import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.LoginResponse;
@@ -43,6 +44,13 @@ public class RequestMock {
                 .priceTicket(10000)
                 .time(LocalDateTime.now())
                 .totalSeats(totalSeats)
+                .build();
+    }
+
+    public static BookRequest bockingMock(){
+        return BookRequest.builder()
+                .userId("userId")
+                .seatId(1)
                 .build();
     }
 }
