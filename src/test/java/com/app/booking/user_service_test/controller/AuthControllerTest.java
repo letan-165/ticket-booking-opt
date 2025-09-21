@@ -1,7 +1,6 @@
 package com.app.booking.user_service_test.controller;
 
 import com.app.booking.common.enums.UserRole;
-import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.user_service.controller.AuthController;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
@@ -9,9 +8,8 @@ import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.LoginResponse;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.service.AuthService;
-import com.app.booking.internal.user_service.service.UserService;
-import com.app.booking.model_mock.RequestMock;
-import com.app.booking.model_mock.ResponseMock;
+import com.app.booking.common.model_mock.RequestMock;
+import com.app.booking.common.model_mock.ResponseMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

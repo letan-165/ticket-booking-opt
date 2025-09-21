@@ -13,7 +13,7 @@ import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
 import com.app.booking.messaging.dto.PaymentMessaging;
 import com.app.booking.messaging.mq.PaymentMQ;
-import com.app.booking.model_mock.EntityMock;
+import com.app.booking.common.model_mock.EntityMock;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;

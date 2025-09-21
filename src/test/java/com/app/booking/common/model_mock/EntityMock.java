@@ -1,4 +1,4 @@
-package com.app.booking.model_mock;
+package com.app.booking.common.model_mock;
 
 import com.app.booking.common.enums.PaymentStatus;
 import com.app.booking.common.enums.SeatStatus;

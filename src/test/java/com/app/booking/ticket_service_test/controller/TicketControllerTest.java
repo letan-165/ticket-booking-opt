@@ -2,15 +2,12 @@ package com.app.booking.ticket_service_test.controller;
 
 import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.ErrorCode;
-import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.ticket_service.dto.response.TicketDetailResponse;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.controller.TicketController;
 import com.app.booking.internal.ticket_service.service.TicketService;
-import com.app.booking.model_mock.EntityMock;
-import com.app.booking.model_mock.RequestMock;
-import com.app.booking.model_mock.ResponseMock;
+import com.app.booking.common.model_mock.EntityMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

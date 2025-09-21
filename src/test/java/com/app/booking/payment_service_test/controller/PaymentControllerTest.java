@@ -4,7 +4,7 @@ import com.app.booking.internal.payment_service.controller.PaymentController;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
-import com.app.booking.model_mock.EntityMock;
+import com.app.booking.common.model_mock.EntityMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

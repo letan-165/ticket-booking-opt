@@ -21,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class AuthService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
-
+    @CacheEvict(value = "users", allEntries = true)
     public UserResponse register(UserRequest request) {
         if(userRepository.existsByEmail(request.getEmail()))
             throw new AppException(ErrorCode.USER_EXISTS);

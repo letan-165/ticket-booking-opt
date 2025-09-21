@@ -1,4 +1,4 @@
-package com.app.booking.model_mock;
+package com.app.booking.common.model_mock;
 
 import com.app.booking.common.enums.UserRole;
 import com.app.booking.internal.event_service.dto.response.EventResponse;
