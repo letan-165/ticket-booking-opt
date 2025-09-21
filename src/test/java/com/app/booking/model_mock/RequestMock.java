@@ -14,7 +14,7 @@ public class RequestMock {
     public static UserRequest userMock(){
         return UserRequest.builder()
                 .name("name")
-                .email("email")
+                .email("email@email")
                 .password("1")
                 .role(UserRole.USER)
                 .build();
@@ -23,7 +23,7 @@ public class RequestMock {
     public static UserRequest userMock(String password){
         return UserRequest.builder()
                 .name("name")
-                .email("email")
+                .email("email@email")
                 .password(password)
                 .role(UserRole.USER)
                 .build();
@@ -31,7 +31,7 @@ public class RequestMock {
 
     public static LoginRequest loginMock(){
         return LoginRequest.builder()
-                .email("email")
+                .email("email@email")
                 .password("1")
                 .build();
     }
