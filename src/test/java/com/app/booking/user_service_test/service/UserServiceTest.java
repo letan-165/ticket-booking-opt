@@ -95,7 +95,7 @@ public class UserServiceTest {
 
     @Test
     void update_success_noSet_password(){
-        UserRequest request = RequestMock.userMock("0");
+        UserRequest request = RequestMock.userMock("");
 
         when(userRepository.findById(userID)).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
@@ -103,7 +103,7 @@ public class UserServiceTest {
         UserResponse userRes = userService.update(userID, request);
 
         verify(userMapper).updateUserFromRequest(eq(user), eq(request));
-        verify(passwordEncoder,times(0)).encode(eq(request.getPassword()));
+        verify(passwordEncoder,never()).encode(eq(request.getPassword()));
 
         assertThat(userRes.getId()).isEqualTo(user.getId());
         assertThat(userRes.getName()).isEqualTo(user.getName());
