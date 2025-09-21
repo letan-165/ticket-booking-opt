@@ -1,6 +1,5 @@
 package com.app.booking.event_service_test.controller;
 
-import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.event_service.controller.EventController;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
@@ -199,12 +198,7 @@ public class EventControllerTest {
 
     @Test
     void updateStatusSeats_success() throws Exception {
-        Seat seat = Seat.builder()
-                .id(1)
-                .eventId(2)
-                .seatNumber("G1")
-                .status(SeatStatus.LOCKED)
-                .build();
+        Seat seat = EntityMock.seatMock();
         SeatStatusRequest request = new SeatStatusRequest();
         var content = objectMapper.writeValueAsString(request);
 

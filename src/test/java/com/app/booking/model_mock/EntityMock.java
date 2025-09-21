@@ -1,9 +1,11 @@
 package com.app.booking.model_mock;
 
 import com.app.booking.common.enums.PaymentStatus;
+import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.enums.UserRole;
 import com.app.booking.internal.event_service.entity.Event;
+import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.user_service.entity.User;
@@ -52,6 +54,15 @@ public class EntityMock {
                 .priceTicket(10000)
                 .time(LocalDateTime.now())
                 .totalSeats(0)
+                .build();
+    }
+
+    public static Seat seatMock(){
+        return Seat.builder()
+                .id(1)
+                .eventId(2)
+                .seatNumber("G1")
+                .status(SeatStatus.LOCKED)
                 .build();
     }
 }
