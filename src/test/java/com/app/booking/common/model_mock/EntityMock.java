@@ -18,7 +18,7 @@ public class EntityMock {
         return User.builder()
                 .id("userID")
                 .name("name")
-                .email("email")
+                .email("email@email")
                 .password("1")
                 .role(UserRole.USER)
                 .build();

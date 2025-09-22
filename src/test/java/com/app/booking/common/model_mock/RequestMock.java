@@ -6,7 +6,6 @@ import com.app.booking.internal.event_service.entity.Event;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
-import com.app.booking.internal.user_service.dto.response.LoginResponse;
 
 import java.time.LocalDateTime;
 

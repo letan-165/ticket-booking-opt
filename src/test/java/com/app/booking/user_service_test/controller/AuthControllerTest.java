@@ -58,7 +58,6 @@ public class AuthControllerTest {
 
     @Test
     void register_fail_unValid_email() throws Exception {
-
         ErrorCode errorCode = ErrorCode.EMAIL_INVALID;
         UserRequest request = UserRequest.builder()
                 .name("name")
