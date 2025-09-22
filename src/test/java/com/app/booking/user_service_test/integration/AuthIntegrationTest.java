@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 class AuthIntegrationTest extends AbstractIntegrationTest {
-
     @Autowired
     MockMvc mockMvc;
 
