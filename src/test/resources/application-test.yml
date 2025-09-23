@@ -24,9 +24,13 @@ spring:
     host: localhost
     port: 6379
 
+  rabbitmq:
+    host: disabled
+
   cloud:
     vault:
       enabled: false
+
 
 logging:
   level:

@@ -132,7 +132,7 @@ public class TicketControllerTest {
     }
 
     @Test
-    void create_fail_blank() throws Exception {
+    void booking_fail_blank() throws Exception {
         ErrorCode errorCode = ErrorCode.NOT_BLANK;
         BookRequest request = BookRequest.builder()
                 .userId("")
@@ -154,7 +154,7 @@ public class TicketControllerTest {
     }
 
     @Test
-    void create_fail_null() throws Exception {
+    void booking_fail_null() throws Exception {
         ErrorCode errorCode = ErrorCode.NOT_NULL;
         BookRequest request = BookRequest.builder()
                 .userId("userId")

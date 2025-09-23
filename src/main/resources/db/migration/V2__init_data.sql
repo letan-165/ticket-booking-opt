@@ -18,7 +18,7 @@ SELECT
     'Event ' || i,
     'Location ' || (1 + floor(random() * 50)::int),
     (10 + floor(random() * 90)::int) * 1000,
-    NOW() + (i || ' days')::interval,           -
+    NOW() + (i || ' days')::interval,
     100 + floor(random() * 50)::int
 FROM generate_series(1, 5000) AS s(i);
 
