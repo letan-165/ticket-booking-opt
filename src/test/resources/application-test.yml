@@ -4,6 +4,9 @@ server:
 
 spring:
   datasource:
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 10
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -20,9 +23,6 @@ spring:
 
   cache:
     type: redis
-  redis:
-    host: localhost
-    port: 6379
 
   rabbitmq:
     host: disabled

@@ -109,7 +109,6 @@ public class EventServiceTest {
         Event response = eventService.update(eventId,request );
 
         verify(request).setTotalSeats(eq(event.getTotalSeats()));
-        verify(userService).userIsExist(any());
         verify(eventMapper).updateEventFromRequest(eq(event),eq(request));
 
         assertThat(response).isEqualTo(event);

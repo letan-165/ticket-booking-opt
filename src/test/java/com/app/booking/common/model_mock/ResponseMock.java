@@ -13,7 +13,7 @@ public class ResponseMock {
         return UserResponse.builder()
                 .id("userID")
                 .name("name")
-                .email("email")
+                .email("email@email")
                 .role(UserRole.USER)
                 .build();
     }

@@ -22,12 +22,14 @@ public abstract class AbstractIntegrationTest {
                     .withDatabaseName("testdb")
                     .withUsername("test")
                     .withPassword("test")
+                    .withExposedPorts(5432)
                     .withReuse(true);
 
     @Container
     static GenericContainer<?> REDIS =
             new GenericContainer<>("redis:7-alpine")
-                    .withExposedPorts(6379);
+                    .withExposedPorts(6379)
+                    .withReuse(true);
 
     @DynamicPropertySource
     static void registerProps(DynamicPropertyRegistry registry) {
@@ -38,7 +40,8 @@ public abstract class AbstractIntegrationTest {
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
 
         // Redis
-        registry.add("spring.redis.url", () -> "redis://" + REDIS.getHost() + ":" + REDIS.getMappedPort(6379));
+        registry.add("spring.redis.host", REDIS::getHost);
+        registry.add("spring.redis.port", () -> REDIS.getMappedPort(6379));
         registry.add("spring.cache.type", () -> "redis");
     }
 }
