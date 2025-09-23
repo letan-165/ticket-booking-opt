@@ -75,7 +75,7 @@ public class PaymentControllerTest {
     }
 
     @Test
-    void update_success() throws Exception {
+    void retry_success() throws Exception {
         Integer ticketId = 1;
         String response= "response";
         when(paymentService.retryPay(ticketId)).thenReturn(response);

@@ -44,3 +44,5 @@ key:
   jwt:
     value: Lw68BnLrwV0T+1/NRbsEMLUXnC7gN2P+m1/yEH6pQn+OtGCQD0nSoMFTAu5H9lhk
 
+vnp:
+  feBackUrl: http://localhost:8888/home
