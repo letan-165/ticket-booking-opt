@@ -1,4 +1,4 @@
-package com.app.booking.config.RabbitMQ;
+package com.app.booking.config.rabbitmq;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

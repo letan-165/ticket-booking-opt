@@ -1,11 +1,11 @@
-package com.app.booking.config.VNPay;
+package com.app.booking.config.vnPay;
 
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Map;
 
 @Component
 public class VNPayConfig {

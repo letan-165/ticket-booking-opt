@@ -39,7 +39,7 @@ public class AuthService {
 
     @NonFinal
     @Value("${key.jwt.value}")
-    String KEY;
+    String key;
 
     @NonFinal
     @Value("${app.time.expiryTime}")
@@ -79,11 +79,11 @@ public class AuthService {
 
     public Boolean introspect(TokenRequest request) throws ParseException, JOSEException {
         SignedJWT jwt = SignedJWT.parse(request.getToken());
-        var expiryTime = jwt.getJWTClaimsSet().getExpirationTime();
-        JWSVerifier jwsVerifier = new MACVerifier(KEY.getBytes());
+        var expiry= jwt.getJWTClaimsSet().getExpirationTime();
+        JWSVerifier jwsVerifier = new MACVerifier(key.getBytes());
 
         boolean isVerify = jwt.verify(jwsVerifier);
-        boolean isTime = expiryTime.after(Date.from(Instant.now()));
+        boolean isTime = expiry.after(Date.from(Instant.now()));
 
         if(!isVerify || !isTime )
             throw new AppException(ErrorCode.UNAUTHENTICATED);
@@ -104,7 +104,7 @@ public class AuthService {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(jwsHeader,payload);
-        jwsObject.sign(new MACSigner(KEY.getBytes()));
+        jwsObject.sign(new MACSigner(key.getBytes()));
 
         return jwsObject.serialize();
     }

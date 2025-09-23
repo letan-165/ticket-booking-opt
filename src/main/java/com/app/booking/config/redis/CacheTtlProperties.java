@@ -1,4 +1,4 @@
-package com.app.booking.config.Redis;
+package com.app.booking.config.redis;
 
 import lombok.AccessLevel;
 import lombok.Getter;

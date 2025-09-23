@@ -1,4 +1,4 @@
-package com.app.booking.config.Redis;
+package com.app.booking.config.redis;
 
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;

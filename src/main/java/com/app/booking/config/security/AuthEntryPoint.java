@@ -1,4 +1,4 @@
-package com.app.booking.config.Security;
+package com.app.booking.config.security;
 
 import com.app.booking.common.ApiResponse;
 import com.app.booking.common.exception.ErrorCode;

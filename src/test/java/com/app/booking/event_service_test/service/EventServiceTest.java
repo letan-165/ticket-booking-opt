@@ -3,6 +3,9 @@ package com.app.booking.event_service_test.service;
 import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
+import com.app.booking.common.model_mock.RequestMock;
+import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.dto.request.SeatStatusRequest;
 import com.app.booking.internal.event_service.dto.response.EventResponse;
@@ -13,9 +16,6 @@ import com.app.booking.internal.event_service.repository.EventRepository;
 import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.event_service.service.EventService;
 import com.app.booking.internal.user_service.service.UserService;
-import com.app.booking.common.model_mock.EntityMock;
-import com.app.booking.common.model_mock.RequestMock;
-import com.app.booking.common.model_mock.ResponseMock;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,37 +30,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class EventServiceTest {
+class EventServiceTest {
     @Autowired
     @InjectMocks
     EventService eventService;
 
-    @Mock EventRepository eventRepository;
-    @Mock SeatRepository seatRepository;
-    @Mock EventMapper eventMapper;
-    @Mock UserService userService;
+    @Mock
+    EventRepository eventRepository;
+    @Mock
+    SeatRepository seatRepository;
+    @Mock
+    EventMapper eventMapper;
+    @Mock
+    UserService userService;
 
     Integer eventId = 1;
     Event event;
     EventResponse eventResponse;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         event = EntityMock.eventMock();
         eventResponse = ResponseMock.eventMock();
     }
 
     @Test
-    void getDetail_success(){
+    void getDetail_success() {
         when(eventRepository.findById(eventId)).thenReturn(Optional.ofNullable(event));
         when(eventMapper.toEventResponse(event)).thenReturn(eventResponse);
 
@@ -71,16 +74,16 @@ public class EventServiceTest {
     }
 
     @Test
-    void getDetail_fail_EVENT_NO_EXISTS(){
+    void getDetail_fail_EVENT_NO_EXISTS() {
         when(eventRepository.findById(eventId)).thenReturn(Optional.empty());
         var exception = assertThrows(AppException.class,
-                ()-> eventService.getDetail(eventId));
+                () -> eventService.getDetail(eventId));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.EVENT_NO_EXISTS);
     }
 
     @Test
-    void create_success(){
+    void create_success() {
         int totalSeat = 10;
         EventRequest request = RequestMock.eventMock(totalSeat);
 
@@ -90,32 +93,33 @@ public class EventServiceTest {
 
         EventResponse response = eventService.create(request);
 
-        verify(userService).userIsExist(eq(request.getOrganizerId()));
+        verify(userService).userIsExist(request.getOrganizerId());
         ArgumentCaptor<List<Seat>> captor = ArgumentCaptor.forClass(List.class);
         verify(seatRepository).saveAll(captor.capture());
-        var seats = captor.getValue();
+        List<Seat> seats = captor.getValue();
 
-        assertThat(seats.size()).isEqualTo(totalSeat);
+        assertThat(seats).hasSize(totalSeat);
+
         assertThat(response).isEqualTo(eventResponse);
     }
 
     @Test
-    void update_success(){
+    void update_success() {
         EventRequest request = Mockito.mock(EventRequest.class);
 
         when(eventRepository.findById(eventId)).thenReturn(Optional.ofNullable(event));
         when(eventRepository.save(event)).thenReturn(event);
 
-        Event response = eventService.update(eventId,request );
+        Event response = eventService.update(eventId, request);
 
-        verify(request).setTotalSeats(eq(event.getTotalSeats()));
-        verify(eventMapper).updateEventFromRequest(eq(event),eq(request));
+        verify(request).setTotalSeats(event.getTotalSeats());
+        verify(eventMapper).updateEventFromRequest(event, eq(request));
 
         assertThat(response).isEqualTo(event);
     }
 
     @Test
-    void updateStatusSeats_success(){
+    void updateStatusSeats_success() {
         Seat seat = new Seat();
         int seatId = 1;
         seat.setId(seatId);
@@ -127,14 +131,14 @@ public class EventServiceTest {
         when(seatRepository.findById(seatId)).thenReturn(Optional.of(seat));
         when(seatRepository.save(seat)).thenReturn(seat);
 
-        Seat response = eventService.updateStatusSeats(seatId,request);
+        Seat response = eventService.updateStatusSeats(seatId, request);
 
         assertThat(seat.getStatus()).isEqualTo(SeatStatus.LOCKED);
         assertThat(response).isEqualTo(seat);
     }
 
     @Test
-    void updateStatusSeats_fail_SEAT_NO_EXISTS(){
+    void updateStatusSeats_fail_SEAT_NO_EXISTS() {
         Seat seat = new Seat();
         int seatId = 1;
         seat.setId(seatId);
@@ -145,7 +149,7 @@ public class EventServiceTest {
 
         when(seatRepository.findById(1)).thenReturn(Optional.empty());
         var exception = assertThrows(AppException.class,
-                ()-> eventService.updateStatusSeats(1, request));
+                () -> eventService.updateStatusSeats(1, request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.SEAT_NO_EXISTS);
     }

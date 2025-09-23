@@ -3,12 +3,12 @@ package com.app.booking.user_service_test.controller;
 import com.app.booking.common.PageResponse;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.RequestMock;
+import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.user_service.controller.UserController;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.service.UserService;
-import com.app.booking.common.model_mock.RequestMock;
-import com.app.booking.common.model_mock.ResponseMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,14 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class UserControllerTest {
+class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -45,7 +47,7 @@ public class UserControllerTest {
     String userID;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         userRequest = RequestMock.userMock();
         userResponse = ResponseMock.userMock();
         userID = userResponse.getId();
@@ -73,7 +75,7 @@ public class UserControllerTest {
     void findByID_success() throws Exception {
         when(userService.findById(userID)).thenReturn(userResponse);
 
-        mockMvc.perform(get("/users/public/{id}",userID)
+        mockMvc.perform(get("/users/public/{id}", userID)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
@@ -90,7 +92,7 @@ public class UserControllerTest {
 
         when(userService.findById(userID)).thenThrow(new AppException(errorCode));
 
-        mockMvc.perform(get("/users/public/{id}",userID)
+        mockMvc.perform(get("/users/public/{id}", userID)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value(errorCode.getCode()))
@@ -101,9 +103,9 @@ public class UserControllerTest {
     void update_success() throws Exception {
         var content = objectMapper.writeValueAsString(userRequest);
 
-        when(userService.update(userID,userRequest)).thenReturn(userResponse);
+        when(userService.update(userID, userRequest)).thenReturn(userResponse);
 
-        mockMvc.perform(patch("/users/public/{id}",userID)
+        mockMvc.perform(patch("/users/public/{id}", userID)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isOk())

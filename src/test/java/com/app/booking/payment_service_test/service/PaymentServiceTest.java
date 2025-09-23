@@ -3,6 +3,7 @@ package com.app.booking.payment_service_test.service;
 import com.app.booking.common.enums.PaymentStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
@@ -13,7 +14,6 @@ import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.repository.TicketRepository;
 import com.app.booking.messaging.dto.PaymentMessaging;
 import com.app.booking.messaging.mq.PaymentMQ;
-import com.app.booking.common.model_mock.EntityMock;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -36,7 +35,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class PaymentServiceTest {
+class PaymentServiceTest {
     @InjectMocks
     PaymentService paymentService;
 
@@ -58,17 +57,17 @@ public class PaymentServiceTest {
     Integer paymentId = 2;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         ticket = EntityMock.ticketMock();
         payment = EntityMock.paymentMock();
     }
 
     @Test
-    void update_success(){
+    void update_success() {
         when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
-        Payment payment = paymentService.update(paymentId,ticketId);
+        Payment paymentUpdate = paymentService.update(paymentId, ticketId);
         ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
         verify(paymentRepository).save(captor.capture());
 
@@ -78,15 +77,15 @@ public class PaymentServiceTest {
         assertThat(captured.getAmount()).isEqualTo(ticket.getPrice());
         assertThat(captured.getStatus()).isEqualTo(PaymentStatus.PENDING);
 
-        assertThat(payment).isEqualTo(payment);
+        assertThat(payment).isEqualTo(paymentUpdate);
     }
 
     @Test
-    void update_fail_TICKET_NO_EXISTS(){
+    void update_fail_TICKET_NO_EXISTS() {
         when(ticketRepository.findById(ticketId)).thenReturn(Optional.empty());
 
         var exception = assertThrows(AppException.class,
-                ()-> paymentService.update(paymentId,ticketId));
+                () -> paymentService.update(paymentId, ticketId));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.TICKET_NO_EXISTS);
     }
@@ -94,7 +93,7 @@ public class PaymentServiceTest {
     @Test
     void paid_success() {
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        String paymentId = "123";
+        String id = "123";
         String transactionStatus = "00";
         String transactionNo = "txn123";
         String amountRaw = "20000";
@@ -103,7 +102,7 @@ public class PaymentServiceTest {
         String bankCode = "VCB";
         String payDateRaw = "20250920140000";
 
-        when(request.getParameter("vnp_TxnRef")).thenReturn(paymentId);
+        when(request.getParameter("vnp_TxnRef")).thenReturn(id);
         when(request.getParameter("vnp_TransactionStatus")).thenReturn(transactionStatus);
         when(request.getParameter("vnp_TransactionNo")).thenReturn(transactionNo);
         when(request.getParameter("vnp_Amount")).thenReturn(amountRaw);
@@ -112,10 +111,9 @@ public class PaymentServiceTest {
         when(request.getParameter("vnp_BankCode")).thenReturn(bankCode);
         when(request.getParameter("vnp_PayDate")).thenReturn(payDateRaw);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         TransactionPay expected = TransactionPay.builder()
                 .id(transactionNo)
-                .txnRef(Integer.valueOf(paymentId))
+                .txnRef(Integer.valueOf(id))
                 .gatewayType("VNPAY")
                 .amount(Integer.parseInt(amountRaw) / 100)
                 .extraInfo(orderInfo)
@@ -134,7 +132,7 @@ public class PaymentServiceTest {
 
         TransactionPay captured = captor.getValue();
         assertThat(captured.getId()).isEqualTo(transactionNo);
-        assertThat(captured.getTxnRef()).isEqualTo(Integer.parseInt(paymentId));
+        assertThat(captured.getTxnRef()).isEqualTo(Integer.parseInt(id));
         assertThat(captured.getGatewayType()).isEqualTo("VNPAY");
         assertThat(captured.getAmount()).isEqualTo(Integer.parseInt(amountRaw) / 100);
         assertThat(captured.getExtraInfo()).isEqualTo(orderInfo);
@@ -145,14 +143,14 @@ public class PaymentServiceTest {
     }
 
     @Test
-    void retryPay_success(){
-        Ticket ticket = EntityMock.ticketMock();
+    void retryPay_success() {
+        Ticket ticketMock = EntityMock.ticketMock();
         Payment paymentMock = EntityMock.paymentMock();
         String result = "vnp url";
 
-        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket));
+        when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticketMock));
         when(paymentRepository.save(any(Payment.class))).thenReturn(paymentMock);
-        when(vnPayService.create(paymentMock.getId(),paymentMock.getAmount(),"Thanh toán lại vé: " + ticket.getId())).thenReturn(result);
+        when(vnPayService.create(paymentMock.getId(), paymentMock.getAmount(), "Thanh toán lại vé: " + ticketMock.getId())).thenReturn(result);
 
         String response = paymentService.retryPay(ticketId);
         ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
@@ -160,30 +158,30 @@ public class PaymentServiceTest {
 
         Payment captured = captor.getValue();
         assertThat(captured.getTicketId()).isEqualTo(ticketId);
-        assertThat(captured.getAmount()).isEqualTo(ticket.getPrice());
+        assertThat(captured.getAmount()).isEqualTo(ticketMock.getPrice());
         assertThat(captured.getStatus()).isEqualTo(PaymentStatus.PENDING);
 
         assertThat(response).isEqualTo(result);
     }
 
     @Test
-    void retryPay_fail_TICKET_NO_EXISTS(){
+    void retryPay_fail_TICKET_NO_EXISTS() {
         when(ticketRepository.findById(ticketId)).thenReturn(Optional.empty());
 
         var exception = assertThrows(AppException.class,
-                ()-> paymentService.retryPay(ticketId));
+                () -> paymentService.retryPay(ticketId));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.TICKET_NO_EXISTS);
     }
 
     @Test
-    void updateStatus_success_isSuccess(){
+    void updateStatus_success_isSuccess() {
         boolean isSuccess = true;
         payment.setStatus(PaymentStatus.PENDING);
         when(paymentRepository.findById(paymentId)).thenReturn(Optional.of(payment));
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
-        Payment response = paymentService.updateStatus(paymentId,isSuccess);
+        paymentService.updateStatus(paymentId, isSuccess);
 
         ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
         verify(paymentRepository).save(captor.capture());
@@ -193,13 +191,13 @@ public class PaymentServiceTest {
     }
 
     @Test
-    void updateStatus_success_noSuccess(){
+    void updateStatus_success_noSuccess() {
         boolean isSuccess = false;
         payment.setStatus(PaymentStatus.PENDING);
         when(paymentRepository.findById(paymentId)).thenReturn(Optional.of(payment));
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
-        Payment response = paymentService.updateStatus(paymentId,isSuccess);
+        paymentService.updateStatus(paymentId, isSuccess);
 
         ArgumentCaptor<Payment> captor = ArgumentCaptor.forClass(Payment.class);
         verify(paymentRepository).save(captor.capture());
@@ -209,22 +207,22 @@ public class PaymentServiceTest {
     }
 
     @Test
-    void updateStatus_fail_PAYMENT_NO_EXISTS(){
+    void updateStatus_fail_PAYMENT_NO_EXISTS() {
         when(paymentRepository.findById(paymentId)).thenReturn(Optional.empty());
 
         var exception = assertThrows(AppException.class,
-                ()-> paymentService.updateStatus(paymentId,true));
+                () -> paymentService.updateStatus(paymentId, true));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.PAYMENT_NO_EXISTS);
     }
 
     @Test
-    void updateStatus_fail_PAYMENT_NO_PENDING(){
+    void updateStatus_fail_PAYMENT_NO_PENDING() {
         payment.setStatus(PaymentStatus.SUCCESS);
         when(paymentRepository.findById(paymentId)).thenReturn(Optional.of(payment));
 
         var exception = assertThrows(AppException.class,
-                ()-> paymentService.updateStatus(paymentId,true));
+                () -> paymentService.updateStatus(paymentId, true));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.PAYMENT_NO_PENDING);
     }

@@ -1,10 +1,10 @@
 package com.app.booking.payment_service_test.controller;
 
+import com.app.booking.common.model_mock.EntityMock;
 import com.app.booking.internal.payment_service.controller.PaymentController;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
-import com.app.booking.common.model_mock.EntityMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,13 +22,14 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PaymentController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class PaymentControllerTest {
+class PaymentControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -44,7 +45,7 @@ public class PaymentControllerTest {
     List<Payment> payments;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         payment = EntityMock.paymentMock();
         payments = new ArrayList<>();
         payments.add(payment);
@@ -66,9 +67,9 @@ public class PaymentControllerTest {
     @Test
     void findAllByOrganizerId_success() throws Exception {
         String userID = "id";
-        when(paymentService.findAllByOrganizerId(eq(userID),any(Pageable.class))).thenReturn(payments);
+        when(paymentService.findAllByOrganizerId(eq(userID), any(Pageable.class))).thenReturn(payments);
 
-        mockMvc.perform(get("/payments/public/user/{userID}",userID))
+        mockMvc.perform(get("/payments/public/user/{userID}", userID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(3));
@@ -77,10 +78,10 @@ public class PaymentControllerTest {
     @Test
     void retry_success() throws Exception {
         Integer ticketId = 1;
-        String response= "response";
+        String response = "response";
         when(paymentService.retryPay(ticketId)).thenReturn(response);
 
-        mockMvc.perform(post("/payments/public/retry/{ticketId}",ticketId)
+        mockMvc.perform(post("/payments/public/retry/{ticketId}", ticketId)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))

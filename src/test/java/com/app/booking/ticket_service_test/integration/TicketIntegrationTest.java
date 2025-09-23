@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -49,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @Transactional
-public class TicketIntegrationTest extends AbstractIntegrationTest {
+class TicketIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -83,14 +83,14 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
     User user;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         int init = 3;
         tickets = new ArrayList<>();
         List<Seat> seats = seatRepository.findAll(PageRequest.of(0, init)).getContent();
         user = userRepository.findAll(Pageable.ofSize(1)).getContent().get(0);
         for (int i = 0; i < init; i++) {
             seat = seats.get(i);
-            tickets.add( ticketRepository.save(Ticket.builder()
+            tickets.add(ticketRepository.save(Ticket.builder()
                     .userId(user.getId())
                     .seatId(seat.getId())
                     .bookingTime(LocalDateTime.now())
@@ -99,7 +99,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                     .build()));
         }
 
-        ticket = tickets.get(init-1);
+        ticket = tickets.get(init - 1);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void getByUser_success() throws Exception {
-        mockMvc.perform(get("/tickets/public/user/{userId}",ticket.getUserId()))
+        mockMvc.perform(get("/tickets/public/user/{userId}", ticket.getUserId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(greaterThanOrEqualTo(1)));
@@ -121,13 +121,13 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
     @Test
     void getDetail_success() throws Exception {
         Payment payment = paymentRepository.save(Payment.builder()
-                        .ticketId(ticket.getId())
-                        .amount(ticket.getPrice())
-                        .status(PaymentStatus.PENDING)
+                .ticketId(ticket.getId())
+                .amount(ticket.getPrice())
+                .status(PaymentStatus.PENDING)
                 .build());
 
 
-        mockMvc.perform(get("/tickets/public/{ticketId}",ticket.getId()))
+        mockMvc.perform(get("/tickets/public/{ticketId}", ticket.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.id").value(ticket.getId()))
@@ -149,7 +149,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
     void getDetail_fail_PAYMENT_NO_EXISTS() throws Exception {
         ErrorCode errorCode = ErrorCode.PAYMENT_NO_EXISTS;
         Ticket t = tickets.get(1);
-        mockMvc.perform(get("/tickets/public/{ticketId}",t.getId()))
+        mockMvc.perform(get("/tickets/public/{ticketId}", t.getId()))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value(errorCode.getCode()))
                 .andExpect(jsonPath("message").value(errorCode.getMessage()));
@@ -164,7 +164,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .seatId(seats.get(0).getId())
                 .build();
         String response = "urlVnp";
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
 
         mockMvc.perform(post("/tickets/public/book")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -188,7 +188,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .build();
         String response = "urlVnp";
 
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
 
         ErrorCode errorCode = ErrorCode.USER_NO_EXISTS;
         mockMvc.perform(post("/tickets/public/book")
@@ -208,7 +208,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .build();
         String response = "urlVnp";
 
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
 
         ErrorCode errorCode = ErrorCode.SEAT_NO_EXISTS;
         mockMvc.perform(post("/tickets/public/book")
@@ -219,10 +219,11 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("message").value(errorCode.getMessage()));
 
     }
+
     @Test
     void booking_fail_TICKET_NO_AVAILABLE() throws Exception {
         seat.setStatus(SeatStatus.LOCKED);
-        Seat seatLock = seatRepository.save(seat);
+        seatRepository.save(seat);
 
         BookRequest request = BookRequest.builder()
                 .userId(user.getId())
@@ -230,7 +231,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .build();
         String response = "urlVnp";
 
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
 
         ErrorCode errorCode = ErrorCode.TICKET_NO_AVAILABLE;
         mockMvc.perform(post("/tickets/public/book")
@@ -256,7 +257,7 @@ public class TicketIntegrationTest extends AbstractIntegrationTest {
                 .build();
         String response = "urlVnp";
 
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
 
         ErrorCode errorCode = ErrorCode.PRICE_EVENT_INVALID;
         mockMvc.perform(post("/tickets/public/book")

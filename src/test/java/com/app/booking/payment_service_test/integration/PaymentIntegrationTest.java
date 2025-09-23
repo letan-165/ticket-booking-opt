@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @Transactional
-public class PaymentIntegrationTest extends AbstractIntegrationTest {
+class PaymentIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -78,9 +78,11 @@ public class PaymentIntegrationTest extends AbstractIntegrationTest {
     Payment payment;
     Event event;
     Ticket ticket;
+    @Value("${vnp.feBackUrl}")
+    String feBackUrl;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         int init = 3;
         event = eventRepository.findAll(Pageable.ofSize(1)).getContent().get(0);
         Seat seat = seatRepository.findAll(Pageable.ofSize(1)).getContent().get(0);
@@ -92,7 +94,7 @@ public class PaymentIntegrationTest extends AbstractIntegrationTest {
                 .status(TicketStatus.BOOKED)
                 .build());
 
-        for (int i= 0 ; i < init ; i++) {
+        for (int i = 0; i < init; i++) {
             payment = paymentRepository.save(Payment.builder()
                     .ticketId(ticket.getId())
                     .createdAt(LocalDateTime.now())
@@ -112,15 +114,11 @@ public class PaymentIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void findAllByOrganizerId_success() throws Exception {
-        mockMvc.perform(get("/payments/public/user/{userID}",event.getOrganizerId()))
+        mockMvc.perform(get("/payments/public/user/{userID}", event.getOrganizerId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(3));
     }
-
-
-    @Value("${vnp.feBackUrl}")
-    String feBackUrl;
 
     @Test
     void paid_success() throws Exception {
@@ -143,9 +141,8 @@ public class PaymentIntegrationTest extends AbstractIntegrationTest {
                         .param("vnp_BankCode", bankCode)
                         .param("vnp_PayDate", payDateRaw))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(feBackUrl+"?paymentId="+paymentId+"&status="+ "00".equals(transactionStatus)));;
-
-
+                .andExpect(redirectedUrl(feBackUrl + "?paymentId=" + paymentId + "&status=" + true));
+        
         verify(rabbitTemplate).convertAndSend(
                 ArgumentMatchers.<String>eq(PaymentMQ.PAYMENT_QUEUE),
                 ArgumentMatchers.<Object>any()
@@ -157,17 +154,17 @@ public class PaymentIntegrationTest extends AbstractIntegrationTest {
     @Test
     void retry_success() throws Exception {
         String response = "urlVnp";
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(response);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(response);
         long countBefore = paymentRepository.count();
 
-        mockMvc.perform(post("/payments/public/retry/{ticketId}",ticket.getId())
+        mockMvc.perform(post("/payments/public/retry/{ticketId}", ticket.getId())
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result").value(response));
         long countAfter = paymentRepository.count();
 
-        assertThat(countAfter).isEqualTo(countBefore+1);
+        assertThat(countAfter).isEqualTo(countBefore + 1);
     }
 
 

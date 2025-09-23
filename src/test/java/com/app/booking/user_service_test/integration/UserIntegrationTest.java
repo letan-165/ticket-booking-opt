@@ -1,45 +1,30 @@
 package com.app.booking.user_service_test.integration;
 
 import com.app.booking.common.AbstractIntegrationTest;
-import com.app.booking.common.PageResponse;
-import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.common.model_mock.EntityMock;
-import com.app.booking.common.model_mock.RequestMock;
-import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.payment_service.service.VNPayService;
-import com.app.booking.internal.user_service.controller.UserController;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
-import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.entity.User;
 import com.app.booking.internal.user_service.repository.UserRepository;
-import com.app.booking.internal.user_service.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
-public class UserIntegrationTest extends AbstractIntegrationTest {
+class UserIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -58,7 +43,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
     User user;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         User userMock = EntityMock.userMock();
         userMock.setId(null);
         userMock.setPassword(passwordEncoder.encode(userMock.getPassword()));
@@ -75,7 +60,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void findByID_success() throws Exception {
-        mockMvc.perform(get("/users/public/{id}",user.getId())
+        mockMvc.perform(get("/users/public/{id}", user.getId())
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
@@ -89,13 +74,14 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
     @Test
     void findByID_fail_USER_NO_EXISTSs() throws Exception {
         ErrorCode errorCode = ErrorCode.USER_NO_EXISTS;
-        mockMvc.perform(get("/users/public/{id}","fake_id")
+        mockMvc.perform(get("/users/public/{id}", "fake_id")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value(errorCode.getCode()))
                 .andExpect(jsonPath("message").value(errorCode.getMessage()));
 
     }
+
     @Test
     void update_success() throws Exception {
         UserRequest request = UserRequest.builder()
@@ -103,7 +89,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
                 .email(user.getEmail() + "Update")
                 .build();
 
-        mockMvc.perform(patch("/users/public/{id}",user.getId())
+        mockMvc.perform(patch("/users/public/{id}", user.getId())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())

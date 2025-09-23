@@ -11,10 +11,9 @@ import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.user_service.entity.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class EntityMock {
-    public static User userMock(){
+    public static User userMock() {
         return User.builder()
                 .id("userID")
                 .name("name")
@@ -24,7 +23,7 @@ public class EntityMock {
                 .build();
     }
 
-    public static Ticket ticketMock(){
+    public static Ticket ticketMock() {
         return Ticket.builder()
                 .id(1)
                 .userId("user123")
@@ -35,7 +34,7 @@ public class EntityMock {
                 .build();
     }
 
-    public static Payment paymentMock(){
+    public static Payment paymentMock() {
         return Payment.builder()
                 .id(2)
                 .ticketId(1)
@@ -45,7 +44,7 @@ public class EntityMock {
                 .build();
     }
 
-    public static Event eventMock(){
+    public static Event eventMock() {
         return Event.builder()
                 .id(1)
                 .organizerId("organizerId")
@@ -57,7 +56,7 @@ public class EntityMock {
                 .build();
     }
 
-    public static Seat seatMock(){
+    public static Seat seatMock() {
         return Seat.builder()
                 .id(1)
                 .eventId(2)

@@ -2,12 +2,12 @@ package com.app.booking.ticket_service_test.controller;
 
 import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
+import com.app.booking.internal.ticket_service.controller.TicketController;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.ticket_service.dto.response.TicketDetailResponse;
 import com.app.booking.internal.ticket_service.entity.Ticket;
-import com.app.booking.internal.ticket_service.controller.TicketController;
 import com.app.booking.internal.ticket_service.service.TicketService;
-import com.app.booking.common.model_mock.EntityMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(TicketController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class TicketControllerTest {
+class TicketControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -49,7 +49,7 @@ public class TicketControllerTest {
     DateTimeFormatter formatter;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         ticket = EntityMock.ticketMock();
         tickets = new ArrayList<>();
         tickets.add(ticket);
@@ -71,9 +71,9 @@ public class TicketControllerTest {
     @Test
     void getByUser_success() throws Exception {
         String userId = ticket.getUserId();
-        when(ticketService.findAllByUserId(eq(userId),any(Pageable.class))).thenReturn(tickets);
+        when(ticketService.findAllByUserId(eq(userId), any(Pageable.class))).thenReturn(tickets);
 
-        mockMvc.perform(get("/tickets/public/user/{userId}",userId))
+        mockMvc.perform(get("/tickets/public/user/{userId}", userId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(3));
@@ -93,7 +93,7 @@ public class TicketControllerTest {
                 .build();
         when(ticketService.getDetail(ticketId)).thenReturn(response);
 
-        mockMvc.perform(get("/tickets/public/{ticketId}",ticketId))
+        mockMvc.perform(get("/tickets/public/{ticketId}", ticketId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.id").value(response.getId()))

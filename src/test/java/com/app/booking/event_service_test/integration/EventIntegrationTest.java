@@ -3,7 +3,6 @@ package com.app.booking.event_service_test.integration;
 import com.app.booking.common.AbstractIntegrationTest;
 import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.exception.ErrorCode;
-import com.app.booking.common.model_mock.EntityMock;
 import com.app.booking.common.model_mock.RequestMock;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.dto.request.SeatStatusRequest;
@@ -25,14 +24,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
 @Transactional
-public class EventIntegrationTest extends AbstractIntegrationTest {
+class EventIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -48,8 +47,9 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
     SeatRepository seatRepository;
 
     Event event;
+
     @BeforeEach
-    void initData(){
+    void initData() {
         event = eventRepository.findAll(Pageable.ofSize(1)).getContent().get(0);
     }
 
@@ -63,7 +63,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void findAllByOrganizerId_success() throws Exception {
-        mockMvc.perform(get("/events/public/organizers/{id}",event.getOrganizerId()))
+        mockMvc.perform(get("/events/public/organizers/{id}", event.getOrganizerId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(greaterThanOrEqualTo(1)));
@@ -71,7 +71,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void getDetail_success() throws Exception {
-        mockMvc.perform(get("/events/public/{id}",event.getId()))
+        mockMvc.perform(get("/events/public/{id}", event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.id").value(event.getId()))
@@ -93,7 +93,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
-                .andExpect(jsonPath("result.id",not(emptyOrNullString())))
+                .andExpect(jsonPath("result.id", not(emptyOrNullString())))
                 .andExpect(jsonPath("result.organizerId").value(request.getOrganizerId()))
                 .andExpect(jsonPath("result.name").value(request.getName()))
                 .andExpect(jsonPath("result.location").value(request.getLocation()))
@@ -126,7 +126,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
                 .location(locationUpdate)
                 .build();
 
-        mockMvc.perform(patch("/events/public/{id}",event.getId())
+        mockMvc.perform(patch("/events/public/{id}", event.getId())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -151,7 +151,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
 
 
         ErrorCode errorCode = ErrorCode.EVENT_NO_EXISTS;
-        mockMvc.perform(patch("/events/public/{id}",eventId)
+        mockMvc.perform(patch("/events/public/{id}", eventId)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -162,7 +162,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
     @Test
     void delete_success() throws Exception {
         Integer eventID = event.getId();
-        mockMvc.perform(delete("/events/public/{id}",eventID))
+        mockMvc.perform(delete("/events/public/{id}", eventID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result").value(true));
@@ -174,7 +174,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
     void delete_fail_EVENT_NO_EXISTS() throws Exception {
         Integer eventID = 999999999;
         ErrorCode errorCode = ErrorCode.EVENT_NO_EXISTS;
-        mockMvc.perform(delete("/events/public/{id}",eventID))
+        mockMvc.perform(delete("/events/public/{id}", eventID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value(errorCode.getCode()))
                 .andExpect(jsonPath("message").value(errorCode.getMessage()));
@@ -190,7 +190,7 @@ public class EventIntegrationTest extends AbstractIntegrationTest {
                 .build();
 
         assertThat(seat.getStatus()).isEqualTo(SeatStatus.AVAILABLE);
-        mockMvc.perform(patch("/events/public/seats/{seatId}",seat.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+        mockMvc.perform(patch("/events/public/seats/{seatId}", seat.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))

@@ -1,4 +1,4 @@
-package com.app.booking.config.Security;
+package com.app.booking.config.security;
 
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,14 +24,18 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @NonFinal
+    @Value("${key.jwt.value}")
+    String key;
+
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated());
+                .anyRequest().authenticated());
 
         http.oauth2ResourceServer(oauth -> oauth
-                .jwt(jwt->jwt
+                .jwt(jwt -> jwt
                         .decoder(jwtDecoder())
                         .jwtAuthenticationConverter(jwtAuthenticationConverter())
                 ).authenticationEntryPoint(new AuthEntryPoint()));
@@ -39,20 +43,17 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
-    @NonFinal
-    @Value("${key.jwt.value}")
-    String KEY;
 
     @Bean
-    JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(),"HS256");
+    JwtDecoder jwtDecoder() {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "HS256");
         return NimbusJwtDecoder
                 .withSecretKey(secretKeySpec)
                 .macAlgorithm(MacAlgorithm.HS256)
                 .build();
     }
 
-    JwtAuthenticationConverter jwtAuthenticationConverter(){
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
@@ -62,11 +63,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder (){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
-    };
-
-
-
-
+    }
 }

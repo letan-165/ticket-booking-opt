@@ -1,7 +1,6 @@
 package com.app.booking.internal.user_service.dto.request;
 
 import com.app.booking.common.enums.UserRole;
-import com.app.booking.common.exception.ErrorCode;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.app.booking.config.Security;
+package com.app.booking.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

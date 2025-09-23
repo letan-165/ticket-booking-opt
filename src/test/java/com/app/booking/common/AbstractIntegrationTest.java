@@ -17,7 +17,7 @@ import org.springframework.test.context.DynamicPropertySource;
 public abstract class AbstractIntegrationTest {
 
     @Container
-    static PostgreSQLContainer<?> POSTGRES =
+    static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:15-alpine")
                     .withDatabaseName("testdb")
                     .withUsername("test")
@@ -26,7 +26,7 @@ public abstract class AbstractIntegrationTest {
                     .withReuse(true);
 
     @Container
-    static GenericContainer<?> REDIS =
+    static GenericContainer<?> redis =
             new GenericContainer<>("redis:7-alpine")
                     .withExposedPorts(6379)
                     .withReuse(true);
@@ -34,14 +34,14 @@ public abstract class AbstractIntegrationTest {
     @DynamicPropertySource
     static void registerProps(DynamicPropertyRegistry registry) {
         // Postgres
-        registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
-        registry.add("spring.datasource.username", POSTGRES::getUsername);
-        registry.add("spring.datasource.password", POSTGRES::getPassword);
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
 
         // Redis
-        registry.add("spring.redis.host", REDIS::getHost);
-        registry.add("spring.redis.port", () -> REDIS.getMappedPort(6379));
+        registry.add("spring.redis.host", redis::getHost);
+        registry.add("spring.redis.port", () -> redis.getMappedPort(6379));
         registry.add("spring.cache.type", () -> "redis");
     }
 }

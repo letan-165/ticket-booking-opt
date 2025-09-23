@@ -4,6 +4,8 @@ import com.app.booking.common.enums.SeatStatus;
 import com.app.booking.common.enums.TicketStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
+import com.app.booking.common.model_mock.RequestMock;
 import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.repository.SeatRepository;
 import com.app.booking.internal.payment_service.entity.Payment;
@@ -17,8 +19,6 @@ import com.app.booking.internal.ticket_service.service.TicketService;
 import com.app.booking.internal.user_service.service.UserService;
 import com.app.booking.messaging.dto.CreateBookingMessaging;
 import com.app.booking.messaging.mq.BookingMQ;
-import com.app.booking.common.model_mock.EntityMock;
-import com.app.booking.common.model_mock.RequestMock;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,22 +37,29 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class TicketServiceTest {
+class TicketServiceTest {
     @Autowired
     @InjectMocks
     TicketService ticketService;
 
-    @Mock PaymentRepository paymentRepository;
-    @Mock TicketRepository ticketRepository;
-    @Mock SeatRepository seatRepository;
-    @Mock UserService userService;
-    @Mock TicketMapper ticketMapper;
-    @Mock VNPayService vnPayService;
-    @Mock RabbitTemplate rabbitTemplate;
+    @Mock
+    PaymentRepository paymentRepository;
+    @Mock
+    TicketRepository ticketRepository;
+    @Mock
+    SeatRepository seatRepository;
+    @Mock
+    UserService userService;
+    @Mock
+    TicketMapper ticketMapper;
+    @Mock
+    VNPayService vnPayService;
+    @Mock
+    RabbitTemplate rabbitTemplate;
 
 
     @Test
-    void booking_success(){
+    void booking_success() {
         Payment payment = EntityMock.paymentMock();
         BookRequest request = RequestMock.bockingMock();
         Seat seat = Seat.builder()
@@ -65,12 +72,12 @@ public class TicketServiceTest {
         when(seatRepository.findSeatForUpdate(request.getSeatId())).thenReturn(Optional.of(seat));
         when(seatRepository.findPriceBySeatId(request.getSeatId())).thenReturn(price);
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
-        when(vnPayService.create(anyInt(),anyInt(),anyString())).thenReturn(vnpUrl);
+        when(vnPayService.create(anyInt(), anyInt(), anyString())).thenReturn(vnpUrl);
 
         String response = ticketService.booking(request);
 
-        verify(userService).userIsExist(eq(request.getUserId()));
-        verify(seatRepository).save(eq(seat));
+        verify(userService).userIsExist(request.getUserId());
+        verify(seatRepository).save(seat);
         verify(paymentRepository).save(any());
         verify(rabbitTemplate).convertAndSend(
                 eq(BookingMQ.CREATE_BOOKING_QUEUE),
@@ -82,19 +89,19 @@ public class TicketServiceTest {
     }
 
     @Test
-    void booking_fail_SEAT_NO_EXISTS(){
+    void booking_fail_SEAT_NO_EXISTS() {
         BookRequest request = RequestMock.bockingMock();
 
         when(seatRepository.findSeatForUpdate(request.getSeatId())).thenReturn(Optional.empty());
         var exception = assertThrows(AppException.class,
-                ()-> ticketService.booking(request));
+                () -> ticketService.booking(request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.SEAT_NO_EXISTS);
 
     }
 
     @Test
-    void booking_fail_TICKET_NO_AVAILABLE(){
+    void booking_fail_TICKET_NO_AVAILABLE() {
         BookRequest request = RequestMock.bockingMock();
         Seat seat = Seat.builder()
                 .status(SeatStatus.BOOKED)
@@ -103,13 +110,13 @@ public class TicketServiceTest {
 
         when(seatRepository.findSeatForUpdate(request.getSeatId())).thenReturn(Optional.of(seat));
         var exception = assertThrows(AppException.class,
-                ()-> ticketService.booking(request));
+                () -> ticketService.booking(request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.TICKET_NO_AVAILABLE);
     }
 
     @Test
-    void updateStatus_success_isPaid(){
+    void updateStatus_success_isPaid() {
         boolean isPaid = true;
         Ticket ticket = EntityMock.ticketMock();
         Seat seat = Seat.builder()
@@ -135,7 +142,7 @@ public class TicketServiceTest {
     }
 
     @Test
-    void updateStatus_success_noPaid(){
+    void updateStatus_success_noPaid() {
         boolean isPaid = false;
         Ticket ticket = EntityMock.ticketMock();
         Seat seat = Seat.builder()

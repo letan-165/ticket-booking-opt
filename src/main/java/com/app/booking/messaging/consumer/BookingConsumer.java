@@ -1,13 +1,13 @@
 package com.app.booking.messaging.consumer;
 
 import com.app.booking.common.enums.TicketStatus;
-import com.app.booking.messaging.mq.BookingMQ;
-import com.app.booking.messaging.mq.LockSeatMQ;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.ticket_service.entity.Ticket;
 import com.app.booking.internal.ticket_service.service.TicketService;
 import com.app.booking.messaging.dto.CreateBookingMessaging;
 import com.app.booking.messaging.dto.LockSeatDQLMessaging;
+import com.app.booking.messaging.mq.BookingMQ;
+import com.app.booking.messaging.mq.LockSeatMQ;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,7 +28,7 @@ public class BookingConsumer {
     RabbitTemplate rabbitTemplate;
 
     @RabbitListener(queues = BookingMQ.CREATE_BOOKING_QUEUE)
-    public void create(CreateBookingMessaging consumer) throws InterruptedException {
+    public void create(CreateBookingMessaging consumer) {
         Ticket ticket = ticketService.save(Ticket.builder()
                 .userId(consumer.getUserId())
                 .seatId(consumer.getSeatId())
@@ -42,6 +42,6 @@ public class BookingConsumer {
                 .paymentID(consumer.getPaymentId())
                 .build());
 
-        paymentService.update(consumer.getPaymentId(),ticket.getId());
+        paymentService.update(consumer.getPaymentId(), ticket.getId());
     }
 }

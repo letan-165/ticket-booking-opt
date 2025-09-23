@@ -1,6 +1,6 @@
 package com.app.booking.internal.payment_service.service;
 
-import com.app.booking.config.VNPay.VNPayConfig;
+import com.app.booking.config.vnPay.VNPayConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,12 @@ public class VNPayService {
     @Value("${vnp.expire}")
     private Integer expire;
 
-    public String create(Integer paymentId,int total, String info){
+    public String create(Integer paymentId, int total, String info) {
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", "2.1.0");
         vnp_Params.put("vnp_Command", "pay");
         vnp_Params.put("vnp_TmnCode", tmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(total*100));
+        vnp_Params.put("vnp_Amount", String.valueOf(total * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_TxnRef", String.valueOf(paymentId));
         vnp_Params.put("vnp_OrderInfo", info);
@@ -80,9 +80,9 @@ public class VNPayService {
         return payUrl + "?" + queryUrl;
     }
 
-    public int orderReturn(HttpServletRequest request){
+    public int orderReturn(HttpServletRequest request) {
         Map fields = new HashMap();
-        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
+        for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
             String fieldName = null;
             String fieldValue = null;
             fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII);
@@ -95,7 +95,7 @@ public class VNPayService {
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
         fields.remove("vnp_SecureHashType");
         fields.remove("vnp_SecureHash");
-        String signValue = VNPayConfig.hashAllFields(secretKey,fields);
+        String signValue = VNPayConfig.hashAllFields(secretKey, fields);
         if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                 return 1;

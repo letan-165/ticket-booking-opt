@@ -10,7 +10,6 @@ import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.entity.User;
 import com.app.booking.internal.user_service.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

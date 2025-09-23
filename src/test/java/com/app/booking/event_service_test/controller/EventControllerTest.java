@@ -1,6 +1,9 @@
 package com.app.booking.event_service_test.controller;
 
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
+import com.app.booking.common.model_mock.RequestMock;
+import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.event_service.controller.EventController;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.dto.request.SeatStatusRequest;
@@ -8,9 +11,6 @@ import com.app.booking.internal.event_service.dto.response.EventResponse;
 import com.app.booking.internal.event_service.entity.Event;
 import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.service.EventService;
-import com.app.booking.common.model_mock.EntityMock;
-import com.app.booking.common.model_mock.RequestMock;
-import com.app.booking.common.model_mock.ResponseMock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(EventController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class EventControllerTest {
+class EventControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -52,7 +52,7 @@ public class EventControllerTest {
     DateTimeFormatter formatter;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         event = EntityMock.eventMock();
         events = new ArrayList<>();
         events.add(event);
@@ -75,9 +75,9 @@ public class EventControllerTest {
     @Test
     void findAllByOrganizerId_success() throws Exception {
         String organizerId = event.getOrganizerId();
-        when(eventService.findAllByOrganizerId(eq(organizerId),any(Pageable.class))).thenReturn(events);
+        when(eventService.findAllByOrganizerId(eq(organizerId), any(Pageable.class))).thenReturn(events);
 
-        mockMvc.perform(get("/events/public/organizers/{id}",organizerId))
+        mockMvc.perform(get("/events/public/organizers/{id}", organizerId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.length()").value(3));
@@ -88,7 +88,7 @@ public class EventControllerTest {
         Integer eventId = event.getId();
         when(eventService.getDetail(eventId)).thenReturn(eventResponse);
 
-        mockMvc.perform(get("/events/public/{id}",eventId))
+        mockMvc.perform(get("/events/public/{id}", eventId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.id").value(eventResponse.getId()))
@@ -148,10 +148,10 @@ public class EventControllerTest {
         EventRequest request = RequestMock.eventMock(0);
         var content = objectMapper.writeValueAsString(request);
 
-        when(eventService.update(eventId,request)).thenReturn(event);
+        when(eventService.update(eventId, request)).thenReturn(event);
 
-        mockMvc.perform(patch("/events/public/{id}",eventId).contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(content))
+        mockMvc.perform(patch("/events/public/{id}", eventId).contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result.id").value(event.getId()))
@@ -167,9 +167,9 @@ public class EventControllerTest {
     void delete_success() throws Exception {
         Integer eventId = event.getId();
 
-        doNothing().when(eventService).delete(eq(eventId));
+        doNothing().when(eventService).delete(eventId);
 
-        mockMvc.perform(delete("/events/public/{id}",eventId))
+        mockMvc.perform(delete("/events/public/{id}", eventId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))
                 .andExpect(jsonPath("result").value(true));
@@ -181,9 +181,9 @@ public class EventControllerTest {
         SeatStatusRequest request = new SeatStatusRequest();
         var content = objectMapper.writeValueAsString(request);
 
-        when(eventService.updateStatusSeats(seat.getId(),request)).thenReturn(seat);
+        when(eventService.updateStatusSeats(seat.getId(), request)).thenReturn(seat);
 
-        mockMvc.perform(patch("/events/public/seats/{seatId}",seat.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+        mockMvc.perform(patch("/events/public/seats/{seatId}", seat.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("code").value(1000))

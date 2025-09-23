@@ -15,7 +15,7 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandling {
 
-    ResponseEntity<ApiResponse> toResponseEntity(ErrorCode errorCode){
+    ResponseEntity<ApiResponse<Object>> toResponseEntity(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.httpStatus)
                 .body(ApiResponse.builder()
                         .code(errorCode.code)
@@ -24,22 +24,22 @@ public class GlobalExceptionHandling {
     }
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handlingException(){
+    ResponseEntity<ApiResponse<Object>> handlingException() {
         return toResponseEntity(ErrorCode.OTHER_ERROR);
     }
 
     @ExceptionHandler(value = NoResourceFoundException.class)
-    ResponseEntity<ApiResponse> handlingNoResourceFoundException(){
+    ResponseEntity<ApiResponse<Object>> handlingNoResourceFoundException() {
         return toResponseEntity(ErrorCode.NOT_FOUND);
     }
 
     @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handlingAppException(AppException e){
+    ResponseEntity<ApiResponse<Object>> handlingAppException(AppException e) {
         return toResponseEntity(e.getErrorCode());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    public ResponseEntity<ApiResponse<Object>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         Throwable cause = ex.getCause();
 
         if (cause instanceof InvalidFormatException formatException) {
@@ -61,7 +61,7 @@ public class GlobalExceptionHandling {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse> handleValidation(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         String field = Objects.requireNonNull(fieldError).getField();
         String annotation = fieldError.getCode();
@@ -70,8 +70,8 @@ public class GlobalExceptionHandling {
         switch (Objects.requireNonNull(annotation)) {
             case "NotBlank" -> errorCode = ErrorCode.NOT_BLANK;
             case "NotNull" -> errorCode = ErrorCode.NOT_NULL;
-            case "Email"   -> errorCode = ErrorCode.EMAIL_INVALID;
-            default        -> errorCode = ErrorCode.OTHER_ERROR;
+            case "Email" -> errorCode = ErrorCode.EMAIL_INVALID;
+            default -> errorCode = ErrorCode.OTHER_ERROR;
         }
 
         String finalMessage = errorCode.getMessage().replace("{field}", field);

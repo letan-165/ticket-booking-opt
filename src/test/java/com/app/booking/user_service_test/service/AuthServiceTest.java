@@ -2,6 +2,9 @@ package com.app.booking.user_service_test.service;
 
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model_mock.EntityMock;
+import com.app.booking.common.model_mock.RequestMock;
+import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.LoginResponse;
@@ -10,9 +13,6 @@ import com.app.booking.internal.user_service.entity.User;
 import com.app.booking.internal.user_service.mapper.UserMapper;
 import com.app.booking.internal.user_service.repository.UserRepository;
 import com.app.booking.internal.user_service.service.AuthService;
-import com.app.booking.common.model_mock.EntityMock;
-import com.app.booking.common.model_mock.RequestMock;
-import com.app.booking.common.model_mock.ResponseMock;
 import com.nimbusds.jose.JOSEException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-public class AuthServiceTest {
+class AuthServiceTest {
     @Spy
     @Autowired
     @InjectMocks
@@ -48,12 +48,12 @@ public class AuthServiceTest {
     User user;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         user = EntityMock.userMock();
     }
 
     @Test
-    void register_success(){
+    void register_success() {
         UserRequest request = RequestMock.userMock();
         UserResponse userResponse = ResponseMock.userMock();
         when(userRepository.existsByEmail(request.getEmail())).thenReturn(false);
@@ -63,18 +63,18 @@ public class AuthServiceTest {
 
         UserResponse response = authService.register(request);
 
-        verify(passwordEncoder,times(1)).encode(eq(request.getPassword()));
+        verify(passwordEncoder, times(1)).encode(request.getPassword());
 
         assertThat(response).isEqualTo(userResponse);
     }
 
     @Test
-    void register_fail_USER_EXISTS(){
+    void register_fail_USER_EXISTS() {
         UserRequest request = RequestMock.userMock();
         when(userRepository.existsByEmail(request.getEmail())).thenReturn(true);
 
         var exception = assertThrows(AppException.class,
-                ()-> authService.register(request));
+                () -> authService.register(request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.USER_EXISTS);
     }
@@ -93,32 +93,25 @@ public class AuthServiceTest {
     }
 
     @Test
-    void login_fail_USER_NO_EXISTS() throws JOSEException {
+    void login_fail_USER_NO_EXISTS() {
         LoginRequest request = RequestMock.loginMock();
-        LoginResponse loginResponse = ResponseMock.loginMock();
         when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
         var exception = assertThrows(AppException.class,
-                ()-> authService.login(request));
+                () -> authService.login(request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.USER_NO_EXISTS);
     }
 
     @Test
-    void login_fail_PASSWORD_INVALID() throws JOSEException {
+    void login_fail_PASSWORD_INVALID() {
         LoginRequest request = RequestMock.loginMock();
-        LoginResponse loginResponse = ResponseMock.loginMock();
         when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.ofNullable(user));
         when(passwordEncoder.matches(request.getPassword(), user.getPassword())).thenReturn(false);
         var exception = assertThrows(AppException.class,
-                ()-> authService.login(request));
+                () -> authService.login(request));
 
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.PASSWORD_INVALID);
-
     }
-
-
-
-
 
 
 }

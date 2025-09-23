@@ -1,15 +1,12 @@
 package com.app.booking.internal.payment_service.controller;
 
 import com.app.booking.common.ApiResponse;
-import com.app.booking.config.VNPay.VNPayConfig;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.service.PaymentService;
 import com.app.booking.internal.payment_service.service.VNPayService;
-import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,14 +14,10 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/payments")
