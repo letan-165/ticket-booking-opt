@@ -55,7 +55,7 @@ public class EventController {
     }
 
     @PatchMapping("/public/{id}")
-    public ApiResponse<Event> update(@PathVariable Integer id,@Valid @RequestBody EventRequest request) {
+    public ApiResponse<Event> update(@PathVariable Integer id,@RequestBody EventRequest request) {
         return ApiResponse.<Event>builder()
                 .result(eventService.update(id, request))
                 .build();

@@ -164,27 +164,6 @@ public class EventControllerTest {
     }
 
     @Test
-    void update_fail_blank() throws Exception {
-        ErrorCode errorCode = ErrorCode.NOT_BLANK;
-        Integer eventId = event.getId();
-        EventRequest request = EventRequest.builder()
-                .organizerId("organizerId")
-                .name("")
-                .build();
-        var content = objectMapper.writeValueAsString(request);
-
-        when(eventService.update(eventId,request)).thenReturn(event);
-        String finalMessage = errorCode.getMessage().replace("{field}", "name");
-        mockMvc.perform(patch("/events/public/{id}",eventId)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(content))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("code").value(errorCode.getCode()))
-                .andExpect(jsonPath("message").value(finalMessage));
-
-    }
-
-    @Test
     void delete_success() throws Exception {
         Integer eventId = event.getId();
 

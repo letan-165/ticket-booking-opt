@@ -84,7 +84,6 @@ public class EventService {
     public Event update(Integer id,EventRequest request) {
         Event event = findById(id);
         request.setTotalSeats(event.getTotalSeats());
-        userService.userIsExist(request.getOrganizerId());
         eventMapper.updateEventFromRequest(event, request);
         return eventRepository.save(event);
     }
