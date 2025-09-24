@@ -29,7 +29,7 @@ spring:
     vault:
       uri: ${VAULT_URL_PUBLIC:http://localhost:8200}
       authentication: TOKEN
-      token: ${VAULT_TOKEN}
+      token: ${VAULT_TOKEN:root}
       namespace: admin
       kv:
         backend: secret
