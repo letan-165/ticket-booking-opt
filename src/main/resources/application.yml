@@ -35,6 +35,14 @@ spring:
         backend: secret
         default-context: application
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/ticket-booking
+
+
+
 management:
   endpoints:
     web:
@@ -67,3 +75,19 @@ vnp:
   secretKey: ${vault.key.vnp}
   feBackUrl: http://localhost:8888/home
 
+keycloak:
+  auth-server-url: http://localhost:9080/
+  realm: ticket-booking
+  resource: booking-app
+  credentials:
+    secret: ${CLIENT_SERVER_KEYCLOAK}
+  bearer-only: true
+  ssl-required: external
+  public-client: false
+  use-resource-role-mappings: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.web: DEBUG
