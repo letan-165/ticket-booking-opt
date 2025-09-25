@@ -14,19 +14,15 @@
                 <timestamp>
                     <timeZone>Asia/Ho_Chi_Minh</timeZone>
                 </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "level": "%level",
-                        "logger": "%logger",
-                        "thread": "%thread",
-                        "message": "%message"
-                        }
-                    </pattern>
-                </pattern>
-                <throwable/>
+                <loggerName/>
+                <threadName/>
+                <logLevel/>
+                <logstashMarkers/>
+                <mdc/>
+                <stackTrace/>
             </providers>
         </encoder>
+
     </appender>
 
     <root level="INFO">
