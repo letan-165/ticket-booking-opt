@@ -1,6 +1,6 @@
 package com.app.booking.internal.event_service.controller;
 
-import com.app.booking.common.ApiResponse;
+import com.app.booking.common.model.response.ApiResponse;
 import com.app.booking.internal.event_service.dto.request.EventRequest;
 import com.app.booking.internal.event_service.dto.request.SeatStatusRequest;
 import com.app.booking.internal.event_service.dto.response.EventResponse;
@@ -34,9 +34,9 @@ public class EventController {
     }
 
     @GetMapping("/public/organizers/{id}")
-    public ApiResponse<List<Event>> findAllByOrganizerId(@PathVariable String id,@PageableDefault(size = 10) Pageable pageable) {
+    public ApiResponse<List<Event>> findAllByOrganizerId(@PathVariable String id, @PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
-                .result(eventService.findAllByOrganizerId(id,pageable))
+                .result(eventService.findAllByOrganizerId(id, pageable))
                 .build();
     }
 
@@ -55,7 +55,7 @@ public class EventController {
     }
 
     @PatchMapping("/public/{id}")
-    public ApiResponse<Event> update(@PathVariable Integer id,@RequestBody EventRequest request) {
+    public ApiResponse<Event> update(@PathVariable Integer id, @RequestBody EventRequest request) {
         return ApiResponse.<Event>builder()
                 .result(eventService.update(id, request))
                 .build();
@@ -72,7 +72,7 @@ public class EventController {
     @PatchMapping("/public/seats/{seatId}")
     public ApiResponse<Seat> updateStatusSeats(@PathVariable Integer seatId, @RequestBody SeatStatusRequest request) {
         return ApiResponse.<Seat>builder()
-                .result(eventService.updateStatusSeats(seatId,request))
+                .result(eventService.updateStatusSeats(seatId, request))
                 .build();
     }
 

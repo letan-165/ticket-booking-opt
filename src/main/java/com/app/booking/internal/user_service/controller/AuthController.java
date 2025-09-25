@@ -1,6 +1,6 @@
 package com.app.booking.internal.user_service.controller;
 
-import com.app.booking.common.ApiResponse;
+import com.app.booking.common.model.response.ApiResponse;
 import com.app.booking.internal.user_service.dto.request.LoginRequest;
 import com.app.booking.internal.user_service.dto.request.TokenRequest;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
@@ -24,12 +24,12 @@ import java.text.ParseException;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthController {
     AuthService authService;
 
     @PostMapping("/public/register")
-    ApiResponse<UserResponse> register(@Valid @RequestBody UserRequest request){
+    ApiResponse<UserResponse> register(@Valid @RequestBody UserRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(authService.register(request))
                 .build();

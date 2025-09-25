@@ -1,6 +1,6 @@
 package com.app.booking.internal.payment_service.controller;
 
-import com.app.booking.common.ApiResponse;
+import com.app.booking.common.model.response.ApiResponse;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.service.PaymentService;
@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/payments")
 @RequiredArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PaymentController {
     PaymentService paymentService;
     VNPayService vnPayService;
@@ -47,7 +47,7 @@ public class PaymentController {
     }
 
     @GetMapping("/vnpay/return")
-    public void  paymentReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void paymentReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
         TransactionPay result = paymentService.paid(request);
         boolean status = result.getResponseCode().equals("00");
         String redirectUrl = feBackUrl + "?paymentId=" + result.getTxnRef() + "&status=" + status;
@@ -60,7 +60,6 @@ public class PaymentController {
                 .result(paymentService.retryPay(ticketId))
                 .build();
     }
-
 
 
 }

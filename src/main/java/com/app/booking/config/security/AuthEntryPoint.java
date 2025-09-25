@@ -1,7 +1,7 @@
 package com.app.booking.config.security;
 
-import com.app.booking.common.ApiResponse;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,8 +22,8 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         ObjectMapper objectMapper = new ObjectMapper();
         response.getWriter().write(objectMapper.writeValueAsString(ApiResponse
                 .builder()
-                        .code(errorCode.getCode())
-                        .message(errorCode.getMessage())
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
                 .build()));
         response.flushBuffer();
     }

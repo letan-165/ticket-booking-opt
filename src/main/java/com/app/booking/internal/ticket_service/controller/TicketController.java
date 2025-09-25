@@ -1,6 +1,6 @@
 package com.app.booking.internal.ticket_service.controller;
 
-import com.app.booking.common.ApiResponse;
+import com.app.booking.common.model.response.ApiResponse;
 import com.app.booking.internal.ticket_service.dto.request.BookRequest;
 import com.app.booking.internal.ticket_service.dto.response.TicketDetailResponse;
 import com.app.booking.internal.ticket_service.entity.Ticket;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/tickets")
 @RequiredArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TicketController {
     TicketService ticketService;
 

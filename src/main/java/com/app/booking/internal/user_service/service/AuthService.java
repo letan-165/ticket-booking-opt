@@ -34,24 +34,22 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthService {
-
-    @NonFinal
-    @Value("${key.jwt.value}")
-    String key;
-
-    @NonFinal
-    @Value("${app.time.expiryTime}")
-    int expiryTime;
 
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    @NonFinal
+    @Value("${key.jwt.value}")
+    String key;
+    @NonFinal
+    @Value("${app.time.expiryTime}")
+    int expiryTime;
 
     @CacheEvict(value = "users", allEntries = true)
     public UserResponse register(UserRequest request) {
-        if(userRepository.existsByEmail(request.getEmail()))
+        if (userRepository.existsByEmail(request.getEmail()))
             throw new AppException(ErrorCode.USER_EXISTS);
 
         User user = userMapper.toUser(request);
@@ -63,11 +61,11 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) throws JOSEException {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(()-> new AppException(ErrorCode.USER_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NO_EXISTS));
 
         boolean check = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
-        if(!check)
+        if (!check)
             throw new AppException(ErrorCode.PASSWORD_INVALID);
 
         return LoginResponse.builder()
@@ -79,31 +77,42 @@ public class AuthService {
 
     public Boolean introspect(TokenRequest request) throws ParseException, JOSEException {
         SignedJWT jwt = SignedJWT.parse(request.getToken());
-        var expiry= jwt.getJWTClaimsSet().getExpirationTime();
+        var expiry = jwt.getJWTClaimsSet().getExpirationTime();
         JWSVerifier jwsVerifier = new MACVerifier(key.getBytes());
 
         boolean isVerify = jwt.verify(jwsVerifier);
         boolean isTime = expiry.after(Date.from(Instant.now()));
 
-        if(!isVerify || !isTime )
+        if (!isVerify || !isTime)
             throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         return true;
+    }
+
+    public String getUserIdFromToken(String token) {
+        log.info("AuthService.getUserIdFromToken {}", token);
+        SignedJWT signedJWT = null;
+        try {
+            signedJWT = SignedJWT.parse(token);
+            return signedJWT.getJWTClaimsSet().getSubject();
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.PARSE_TOKEN_FAIL);
+        }
     }
 
     public String generate(User user) throws JOSEException {
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
                 .issuer("Ticker Booking")
-                .subject(user.getName())
+                .subject(user.getId())
                 .issueTime(Date.from(Instant.now()))
-                .expirationTime(Date.from(Instant.now().plus(expiryTime,ChronoUnit.SECONDS)))
+                .expirationTime(Date.from(Instant.now().plus(expiryTime, ChronoUnit.SECONDS)))
                 .claim("scope", user.getRole())
                 .build();
 
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
-        JWSObject jwsObject = new JWSObject(jwsHeader,payload);
+        JWSObject jwsObject = new JWSObject(jwsHeader, payload);
         jwsObject.sign(new MACSigner(key.getBytes()));
 
         return jwsObject.serialize();

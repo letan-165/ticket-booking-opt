@@ -67,7 +67,3 @@ vnp:
   secretKey: ${vault.key.vnp}
   feBackUrl: http://localhost:8888/home
 
-
-logging:
-  level:
-    org.springframework.vault: DEBUG

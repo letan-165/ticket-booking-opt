@@ -1,8 +1,8 @@
 package com.app.booking.internal.user_service.service;
 
-import com.app.booking.common.PageResponse;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model.response.PageResponse;
 import com.app.booking.internal.user_service.dto.request.UserRequest;
 import com.app.booking.internal.user_service.dto.response.UserResponse;
 import com.app.booking.internal.user_service.entity.User;
@@ -24,18 +24,19 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
-    public User findUser(String userID){
+    public User findUser(String userID) {
         return userRepository.findById(userID)
-                .orElseThrow(()->new AppException(ErrorCode.USER_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NO_EXISTS));
     }
-    public void userIsExist(String userID){
-        if(!userRepository.existsById(userID))
+
+    public void userIsExist(String userID) {
+        if (!userRepository.existsById(userID))
             throw new AppException(ErrorCode.USER_NO_EXISTS);
     }
 
@@ -54,17 +55,17 @@ public class UserService {
         );
     }
 
-    @Cacheable(value = "user", keyGenerator  = "simpleKeyGenerator")
+    @Cacheable(value = "user", keyGenerator = "simpleKeyGenerator")
     public UserResponse findById(String id) {
         User user = findUser(id);
         return userMapper.toUserResponse(user);
     }
 
-    @CachePut(value="user", key="'findById:' + #id")
+    @CachePut(value = "user", key = "'findById:' + #id")
     @CacheEvict(value = "users", allEntries = true)
-    public UserResponse update(String id,@Valid UserRequest request) {
+    public UserResponse update(String id, @Valid UserRequest request) {
         User user = findUser(id);
-        userMapper.updateUserFromRequest(user,request);
+        userMapper.updateUserFromRequest(user, request);
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }

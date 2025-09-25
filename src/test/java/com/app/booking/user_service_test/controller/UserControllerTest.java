@@ -1,8 +1,8 @@
 package com.app.booking.user_service_test.controller;
 
-import com.app.booking.common.PageResponse;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.common.model.response.PageResponse;
 import com.app.booking.common.model_mock.RequestMock;
 import com.app.booking.common.model_mock.ResponseMock;
 import com.app.booking.internal.user_service.controller.UserController;

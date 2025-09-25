@@ -1,4 +1,4 @@
-package com.app.booking.common;
+package com.app.booking.common.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

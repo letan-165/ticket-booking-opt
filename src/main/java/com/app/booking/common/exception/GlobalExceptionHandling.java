@@ -1,6 +1,6 @@
 package com.app.booking.common.exception;
 
-import com.app.booking.common.ApiResponse;
+import com.app.booking.common.model.response.ApiResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

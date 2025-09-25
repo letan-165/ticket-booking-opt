@@ -26,10 +26,11 @@ public enum ErrorCode {
     UNAUTHENTICATED(2002, "Token not authenticated", HttpStatus.UNAUTHORIZED),
     PASSWORD_INVALID(203, "Password invalid", HttpStatus.BAD_REQUEST),
     TOKEN_LOGOUT(2004, "Token had logout", HttpStatus.BAD_REQUEST),
+    PARSE_TOKEN_FAIL(2005, "Jwt invalid", HttpStatus.BAD_REQUEST),
 
     // ===== ENUM & VALIDATION (3001 – 3999) =====
     // ===== ENUM (3001 – 3099) =====
-    ENUM_INVALID(3001,"Enum invalid", HttpStatus.BAD_REQUEST),
+    ENUM_INVALID(3001, "Enum invalid", HttpStatus.BAD_REQUEST),
     TICKET_STATUS_INVALID(3002, "Ticket status invalid (BOOKED, CANCELLED, CONFIRMED)", HttpStatus.BAD_REQUEST),
     SEAT_STATUS_INVALID(3003, "Seat status invalid (AVAILABLE, BOOKED, LOCKED)", HttpStatus.BAD_REQUEST),
     PAYMENT_STATUS_INVALID(3004, "Payment status invalid (PENDING, SUCCESS, FAILED)", HttpStatus.BAD_REQUEST),
@@ -40,9 +41,9 @@ public enum ErrorCode {
     NOT_NULL(3103, "Value request.{field} is null", HttpStatus.BAD_REQUEST),
 
     // ===== COMMON (9000 – 9999) =====
-    INTERNAL_ERROR(9001,"Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
-    NOT_FOUND(9002,"Not Found", HttpStatus.INTERNAL_SERVER_ERROR),
-    OTHER_ERROR(9999,"Other error", HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_ERROR(9001, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    NOT_FOUND(9002, "Not Found", HttpStatus.INTERNAL_SERVER_ERROR),
+    OTHER_ERROR(9999, "Other error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     int code;
     String message;

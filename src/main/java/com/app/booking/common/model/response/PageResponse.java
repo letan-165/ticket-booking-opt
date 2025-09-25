@@ -1,4 +1,4 @@
-package com.app.booking.common;
+package com.app.booking.common.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PageResponse <T> {
+public class PageResponse<T> {
     private List<T> content;
     private int pageNumber;
     private int pageSize;
