@@ -23,7 +23,7 @@ public class SecurityConfig {
     @Value("${key.jwt.value}")
     String key;
 
-    String[] endpoints = {"/api/users/public"};
+    String[] endpoints = {"/auth/public/**", "/keycloak/auth/public/**", "/keycloak/users/public/**"};
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -33,22 +33,12 @@ public class SecurityConfig {
 
         http.oauth2ResourceServer(oauth -> oauth
                 .jwt(jwt -> jwt
-//                        .decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
                 ).authenticationEntryPoint(new AuthEntryPoint()));
 
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
-//
-//    @Bean
-//    JwtDecoder jwtDecoder() {
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "HS256");
-//        return NimbusJwtDecoder
-//                .withSecretKey(secretKeySpec)
-//                .macAlgorithm(MacAlgorithm.HS256)
-//                .build();
-//    }
 
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();

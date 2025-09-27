@@ -10,7 +10,7 @@ spring:
     password: ${POSTGRES_PASSWORD:root}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -80,14 +80,9 @@ keycloak:
   realm: ticket-booking
   resource: booking-app
   credentials:
+    id: spring-boot-app
     secret: ${CLIENT_SERVER_KEYCLOAK}
   bearer-only: true
   ssl-required: external
   public-client: false
   use-resource-role-mappings: true
-
-logging:
-  level:
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.web: DEBUG
