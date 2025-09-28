@@ -45,18 +45,4 @@ public class CacheKeyConfig {
             return key.toString();
         };
     }
-
-    @Bean("keycloakKeyGenerator")
-    public KeyGenerator keycloakKeyGenerator() {
-        return (target, method, params) -> {
-
-            String token = (String) params[0];
-            int first = (int) params[1];
-            int max = (int) params[2];
-
-            String userId = keycloakClient.userInfo(token).getSub();
-
-            return "getUsers:" + userId + ":" + first + "-" + max;
-        };
-    }
 }

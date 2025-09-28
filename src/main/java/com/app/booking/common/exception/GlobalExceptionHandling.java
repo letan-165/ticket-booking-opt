@@ -4,6 +4,7 @@ import com.app.booking.common.model.response.ApiResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -86,6 +87,12 @@ public class GlobalExceptionHandling {
 
     @ExceptionHandler(WebClientResponseException.Forbidden.class)
     public ResponseEntity<ApiResponse<Object>> handleForbidden(WebClientResponseException ex) {
+        return toResponseEntity(ErrorCode.UNAUTHORIZED_KEYCLOAK);
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ApiResponse<Object>> handleForbidden(AuthorizationDeniedException ex) {
         return toResponseEntity(ErrorCode.UNAUTHORIZED);
     }
+
 }

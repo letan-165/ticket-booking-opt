@@ -29,8 +29,7 @@ public class UserMdcFilter extends OncePerRequestFilter {
         try {
             String auth = request.getHeader("Authorization");
             if (auth != null && auth.startsWith("Bearer ")) {
-                String token = auth.substring(7);
-                String username = authServiceKL.userInfo(token).getPreferred_username();
+                String username = authServiceKL.userInfo().getPreferred_username();
                 MDC.put("username", username);
             }
             filterChain.doFilter(request, response);

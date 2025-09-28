@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,32 +21,27 @@ import java.util.List;
 public class UserControllerKL {
     UserServiceKL userServiceKL;
 
-    String toToken(String auth) {
-        return auth.replace("Bearer ", "");
-    }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/public")
-    public ApiResponse<List<UserKeycloak>> getUsers(@RequestHeader("Authorization") String token,
-                                                    @RequestParam(defaultValue = "0") int first,
+    public ApiResponse<List<UserKeycloak>> getUsers(@RequestParam(defaultValue = "0") int first,
                                                     @RequestParam(defaultValue = "10") int max) {
         return ApiResponse.<List<UserKeycloak>>builder()
-                .result(userServiceKL.getUsers(toToken(token), first, max))
+                .result(userServiceKL.getUsers(first, max))
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/public/{username}")
-    public ApiResponse<UserKeycloak> getUser(@RequestHeader("Authorization") String token,
-                                             @PathVariable String username) {
+    public ApiResponse<UserKeycloak> getUser(@PathVariable String username) {
         return ApiResponse.<UserKeycloak>builder()
-                .result(userServiceKL.getUser(toToken(token), username))
+                .result(userServiceKL.getUser(username))
                 .build();
     }
 
     @PutMapping("/public")
-    public ApiResponse<UserKeycloak> update(@RequestHeader("Authorization") String token,
-                                            @RequestBody UpdateUserRequest request) {
+    public ApiResponse<UserKeycloak> update(@RequestBody UpdateUserRequest request) {
         return ApiResponse.<UserKeycloak>builder()
-                .result(userServiceKL.update(toToken(token), request))
+                .result(userServiceKL.update(request))
                 .build();
     }
 }

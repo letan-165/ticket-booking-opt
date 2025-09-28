@@ -20,10 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthControllerKL {
     AuthServiceKL authServiceKL;
 
-    String toToken(String auth) {
-        return auth.replace("Bearer ", "");
-    }
-
     @PostMapping("/public/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         return ApiResponse.<LoginResponse>builder()
@@ -39,9 +35,9 @@ public class AuthControllerKL {
     }
 
     @GetMapping("/public/profile")
-    public ApiResponse<UserInfoKeyCloak> profile(@RequestHeader("Authorization") String token) {
+    public ApiResponse<UserInfoKeyCloak> profile() {
         return ApiResponse.<UserInfoKeyCloak>builder()
-                .result(authServiceKL.userInfo(toToken(token)))
+                .result(authServiceKL.userInfo())
                 .build();
     }
 

@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -36,7 +38,7 @@ public class AuthServiceKL {
             throw new AppException(ErrorCode.PASSWORD_INVALID);
         }
     }
-    
+
     @CacheEvict(value = "users", allEntries = true)
     public String createUser(CreateUserRequest request) {
         LoginResponse response = keycloakClient.clientCredentialsLogin();
@@ -66,7 +68,8 @@ public class AuthServiceKL {
         return userID;
     }
 
-    public UserInfoKeyCloak userInfo(String token) {
-        return keycloakClient.userInfo(token);
+    public UserInfoKeyCloak userInfo() {
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return keycloakClient.userInfo(jwt.getTokenValue());
     }
 }

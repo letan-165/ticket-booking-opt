@@ -27,6 +27,8 @@ public enum ErrorCode {
     PASSWORD_INVALID(203, "Password invalid", HttpStatus.BAD_REQUEST),
     TOKEN_LOGOUT(2004, "Token had logout", HttpStatus.BAD_REQUEST),
     PARSE_TOKEN_FAIL(2005, "Jwt invalid", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED_KEYCLOAK(2006, "You don't have permission access keycloak", HttpStatus.FORBIDDEN),
+
 
     // ===== ENUM & VALIDATION (3001 – 3999) =====
     // ===== ENUM (3001 – 3099) =====
