@@ -1,5 +1,7 @@
 package com.app.booking.internal.keycloak_service.service;
 
+import com.app.booking.common.exception.AppException;
+import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.keycloak_service.client.KeycloakClient;
 import com.app.booking.internal.keycloak_service.mapper.KeycloakMapper;
 import com.app.booking.internal.keycloak_service.model.dto.request.CreateUserRequest;
@@ -12,7 +14,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 
@@ -25,9 +29,15 @@ public class AuthServiceKL {
     KeycloakMapper keycloakMapper;
 
     public LoginResponse login(LoginRequest loginRequest) {
-        return keycloakClient.login(loginRequest);
+        try {
+            return keycloakClient.login(loginRequest);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new AppException(ErrorCode.PASSWORD_INVALID);
+        }
     }
-
+    
+    @CacheEvict(value = "users", allEntries = true)
     public String createUser(CreateUserRequest request) {
         LoginResponse response = keycloakClient.clientCredentialsLogin();
         String token = response.getAccess_token();
@@ -41,12 +51,18 @@ public class AuthServiceKL {
                         .temporary(false)
                         .build()))
                 .build();
-
-        String userID = keycloakClient.createUser(token, payload);
+        String userID;
+        try {
+            userID = keycloakClient.createUser(token, payload);
+        } catch (WebClientResponseException e) {
+            log.error(e.getMessage());
+            throw new AppException(ErrorCode.USER_EXISTS);
+        }
         keycloakClient.assignRole(token, userID, List.of(RoleKeycloak.builder()
                 .id("a6568ee2-bec1-4cff-9a70-eef8641eda06")
                 .name("USER")
                 .build()));
+
         return userID;
     }
 

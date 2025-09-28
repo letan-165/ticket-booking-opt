@@ -1,5 +1,9 @@
 package com.app.booking.config.redis;
 
+import com.app.booking.internal.keycloak_service.client.KeycloakClient;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +14,10 @@ import java.util.StringJoiner;
 
 
 @Configuration
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CacheKeyConfig {
+    KeycloakClient keycloakClient;
 
     @Bean("simpleKeyGenerator")
     public KeyGenerator simpleKeyGenerator() {
@@ -36,6 +43,20 @@ public class CacheKeyConfig {
                 }
             }
             return key.toString();
+        };
+    }
+
+    @Bean("keycloakKeyGenerator")
+    public KeyGenerator keycloakKeyGenerator() {
+        return (target, method, params) -> {
+
+            String token = (String) params[0];
+            int first = (int) params[1];
+            int max = (int) params[2];
+
+            String userId = keycloakClient.userInfo(token).getSub();
+
+            return "getUsers:" + userId + ":" + first + "-" + max;
         };
     }
 }

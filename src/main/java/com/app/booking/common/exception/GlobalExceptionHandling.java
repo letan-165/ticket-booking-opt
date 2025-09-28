@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Objects;
@@ -83,4 +84,8 @@ public class GlobalExceptionHandling {
                         .build());
     }
 
+    @ExceptionHandler(WebClientResponseException.Forbidden.class)
+    public ResponseEntity<ApiResponse<Object>> handleForbidden(WebClientResponseException ex) {
+        return toResponseEntity(ErrorCode.UNAUTHORIZED);
+    }
 }

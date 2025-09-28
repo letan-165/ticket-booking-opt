@@ -26,18 +26,25 @@ public class UserControllerKL {
 
     @GetMapping("/public")
     public ApiResponse<List<UserKeycloak>> getUsers(@RequestHeader("Authorization") String token,
-                                                    @RequestParam(required = false) String username,
                                                     @RequestParam(defaultValue = "0") int first,
                                                     @RequestParam(defaultValue = "10") int max) {
         return ApiResponse.<List<UserKeycloak>>builder()
-                .result(userServiceKL.getUsers(toToken(token), username, first, max))
+                .result(userServiceKL.getUsers(toToken(token), first, max))
+                .build();
+    }
+
+    @GetMapping("/public/{username}")
+    public ApiResponse<UserKeycloak> getUser(@RequestHeader("Authorization") String token,
+                                             @PathVariable String username) {
+        return ApiResponse.<UserKeycloak>builder()
+                .result(userServiceKL.getUser(toToken(token), username))
                 .build();
     }
 
     @PutMapping("/public")
-    public ApiResponse<String> update(@RequestHeader("Authorization") String token,
-                                      @RequestBody UpdateUserRequest request) {
-        return ApiResponse.<String>builder()
+    public ApiResponse<UserKeycloak> update(@RequestHeader("Authorization") String token,
+                                            @RequestBody UpdateUserRequest request) {
+        return ApiResponse.<UserKeycloak>builder()
                 .result(userServiceKL.update(toToken(token), request))
                 .build();
     }

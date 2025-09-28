@@ -56,7 +56,7 @@ public class ApiLoggingAspect {
                 .map(arg -> (arg instanceof Maskable m) ? m.maskSensitive() : arg)
                 .toArray();
 
-        String userId = Objects.toString(MDC.get("userId"), "unknown");
+        String userId = Objects.toString(MDC.get("username"), "public");
 
         Map<String, Object> logMap = new HashMap<>();
         logMap.put(API, api);
@@ -64,14 +64,14 @@ public class ApiLoggingAspect {
         logMap.put(ARGS, Arrays.asList(logArgs));
         logMap.put(USER_ID, userId);
 
-        log.info(appendEntries(logMap), "Api call: {}", api);
+        log.info(appendEntries(logMap), "Api call: {} {}", userId, api);
 
         try {
             Object result = joinPoint.proceed();
             long duration = System.currentTimeMillis() - start;
             logMap.put(DURATION_MS, duration);
             logMap.put(STATUS, "API SUCCESS");
-            log.info(appendEntries(logMap), "Api success: {}, in {} ms", api, duration);
+            log.info(appendEntries(logMap), "Api success: {} {}, in {} ms", userId, api, duration);
             return result;
         } catch (Exception e) {
             long duration = System.currentTimeMillis() - start;
@@ -79,7 +79,7 @@ public class ApiLoggingAspect {
             logMap.put(STATUS, "API FAILED");
             logMap.put(ERROR, e.getMessage());
 
-            log.info(appendEntries(logMap), "Api failed: {}, in {} ms", api, duration);
+            log.info(appendEntries(logMap), "Api failed: {} {}, in {} ms", userId, api, duration);
             throw e;
         }
     }
