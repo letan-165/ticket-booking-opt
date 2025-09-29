@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserServiceKL {
+public class UserService {
     KeycloakClient keycloakClient;
     KeycloakMapper keycloakMapper;
 
@@ -42,7 +42,7 @@ public class UserServiceKL {
     }
 
     @Cacheable(value = "user", keyGenerator = "simpleKeyGenerator")
-    public void userIsExists(String userID) {
+    public void userIsExist(String userID) {
         String token = keycloakClient.clientCredentialsLogin().getAccess_token();
         var lists = keycloakClient.getUsers(token, userID, 0, 2);
         if (lists.isEmpty())

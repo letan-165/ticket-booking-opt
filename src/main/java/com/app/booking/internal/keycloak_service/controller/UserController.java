@@ -3,7 +3,7 @@ package com.app.booking.internal.keycloak_service.controller;
 import com.app.booking.common.model.response.ApiResponse;
 import com.app.booking.internal.keycloak_service.model.dto.request.UpdateUserRequest;
 import com.app.booking.internal.keycloak_service.model.keycloak.UserKeycloak;
-import com.app.booking.internal.keycloak_service.service.UserServiceKL;
+import com.app.booking.internal.keycloak_service.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,15 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserControllerKL {
-    UserServiceKL userServiceKL;
+public class UserController {
+    UserService userService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/public")
     public ApiResponse<List<UserKeycloak>> getUsers(@RequestParam(defaultValue = "0") int first,
                                                     @RequestParam(defaultValue = "10") int max) {
         return ApiResponse.<List<UserKeycloak>>builder()
-                .result(userServiceKL.getUsers(first, max))
+                .result(userService.getUsers(first, max))
                 .build();
     }
 
@@ -34,14 +34,14 @@ public class UserControllerKL {
     @GetMapping("/public/{username}")
     public ApiResponse<UserKeycloak> getUser(@PathVariable String username) {
         return ApiResponse.<UserKeycloak>builder()
-                .result(userServiceKL.getUser(username))
+                .result(userService.getUser(username))
                 .build();
     }
 
     @PutMapping("/public")
     public ApiResponse<UserKeycloak> update(@RequestBody UpdateUserRequest request) {
         return ApiResponse.<UserKeycloak>builder()
-                .result(userServiceKL.update(request))
+                .result(userService.update(request))
                 .build();
     }
 }

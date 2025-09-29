@@ -1,6 +1,6 @@
 package com.app.booking.common.log;
 
-import com.app.booking.internal.keycloak_service.service.AuthServiceKL;
+import com.app.booking.internal.keycloak_service.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserMdcFilter extends OncePerRequestFilter {
-    AuthServiceKL authServiceKL;
+    AuthService authService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -29,7 +29,7 @@ public class UserMdcFilter extends OncePerRequestFilter {
         try {
             String auth = request.getHeader("Authorization");
             if (auth != null && auth.startsWith("Bearer ")) {
-                String username = authServiceKL.userInfo().getPreferred_username();
+                String username = authService.userInfo().getPreferred_username();
                 MDC.put("username", username);
             }
             filterChain.doFilter(request, response);

@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthServiceKL {
+public class AuthService {
     KeycloakClient keycloakClient;
     KeycloakMapper keycloakMapper;
 

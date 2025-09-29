@@ -11,7 +11,7 @@ import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.mapper.EventMapper;
 import com.app.booking.internal.event_service.repository.EventRepository;
 import com.app.booking.internal.event_service.repository.SeatRepository;
-import com.app.booking.internal.user_service.service.UserService;
+import com.app.booking.internal.keycloak_service.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
