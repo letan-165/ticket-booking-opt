@@ -11,7 +11,7 @@ import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.mapper.EventMapper;
 import com.app.booking.internal.event_service.repository.EventRepository;
 import com.app.booking.internal.event_service.repository.SeatRepository;
-import com.app.booking.internal.keycloak_service.service.UserService;
+import com.app.booking.internal.keycloak_service.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class EventService {
     EventRepository eventRepository;
     SeatRepository seatRepository;
     EventMapper eventMapper;
-    UserService userService;
+    AuthService authService;
 
     public Event findById(Integer id) {
         return eventRepository.findById(id)
@@ -49,7 +49,7 @@ public class EventService {
 
     @Cacheable(value = "events", keyGenerator = "pageableKeyGenerator")
     public List<Event> findAllByOrganizerId(String id, Pageable pageable) {
-        userService.userIsExist(id);
+        authService.checkUserToken(id);
         return eventRepository.findAllByOrganizerId(id, pageable).getContent();
     }
 
@@ -66,7 +66,7 @@ public class EventService {
     @Transactional
     @CacheEvict(value = "events", allEntries = true)
     public EventResponse create(EventRequest request) {
-        userService.userIsExist(request.getOrganizerId());
+        authService.checkUserToken(request.getOrganizerId());
         List<Seat> seats = new ArrayList<>();
         Event event = eventRepository.save(eventMapper.toEvent(request));
         for (int i = 0; i < request.getTotalSeats(); i++) {
@@ -84,6 +84,7 @@ public class EventService {
 
     @CacheEvict(value = {"events", "event"}, allEntries = true)
     public Event update(Integer id, EventRequest request) {
+        authService.checkUserToken(request.getOrganizerId());
         Event event = findById(id);
         request.setTotalSeats(event.getTotalSeats());
         eventMapper.updateEventFromRequest(event, request);
@@ -92,9 +93,8 @@ public class EventService {
 
     @CacheEvict(value = {"events", "event"}, allEntries = true)
     public void delete(Integer id) {
-        if (!eventRepository.existsById(id)) {
-            throw new AppException(ErrorCode.EVENT_NO_EXISTS);
-        }
+        Event event = findById(id);
+        authService.checkUserToken(event.getOrganizerId());
         eventRepository.deleteById(id);
     }
 
@@ -102,7 +102,9 @@ public class EventService {
     public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request) {
         Seat seat = seatRepository.findById(seatId)
                 .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
-
+        Event event = findById(seat.getEventId());
+        authService.checkUserToken(event.getOrganizerId());
+        
         seat.setStatus(request.getStatus());
         return seatRepository.save(seat);
     }

@@ -72,4 +72,10 @@ public class AuthService {
         Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return keycloakClient.userInfo(jwt.getTokenValue());
     }
+
+    public void checkUserToken(String userId) {
+        var user = userInfo();
+        if (!userId.equals(user.getSub()))
+            throw new AppException(ErrorCode.USER_INVALID);
+    }
 }

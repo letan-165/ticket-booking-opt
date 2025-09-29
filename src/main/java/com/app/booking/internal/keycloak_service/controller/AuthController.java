@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     AuthService authService;
 
-    @PostMapping("/public/login")
+    @PostMapping("/public/guest/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         return ApiResponse.<LoginResponse>builder()
                 .result(authService.login(loginRequest))
                 .build();
     }
 
-    @PostMapping("/public/register")
+    @PostMapping("/public/guest/register")
     public ApiResponse<String> createUser(@RequestBody CreateUserRequest request) {
         return ApiResponse.<String>builder()
                 .result(authService.createUser(request))

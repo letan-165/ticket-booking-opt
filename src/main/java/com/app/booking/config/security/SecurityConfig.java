@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Value("${key.jwt.value}")
     String key;
 
-    String[] endpoints = {"/auth/public/**", "/keycloak/auth/public/**"};
+    String[] endpoints = {"/auth/public/**", "/keycloak/auth/public/guest/**", "/events/public/guest/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

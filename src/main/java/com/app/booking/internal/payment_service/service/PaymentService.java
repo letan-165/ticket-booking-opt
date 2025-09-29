@@ -3,6 +3,7 @@ package com.app.booking.internal.payment_service.service;
 import com.app.booking.common.enums.PaymentStatus;
 import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
+import com.app.booking.internal.keycloak_service.service.AuthService;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.entity.TransactionPay;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
@@ -35,22 +36,24 @@ public class PaymentService {
     TransactionPayRepository transactionPayRepository;
     TicketRepository ticketRepository;
     RabbitTemplate rabbitTemplate;
+    AuthService authService;
     VNPayService vnPayService;
 
-    @Cacheable(value = "payments", keyGenerator  = "pageableKeyGenerator")
-    public List<Payment> findAll(Pageable pageable){
+    @Cacheable(value = "payments", keyGenerator = "pageableKeyGenerator")
+    public List<Payment> findAll(Pageable pageable) {
         return paymentRepository.findAll(pageable).getContent();
     }
 
-    @Cacheable(value = "payments", keyGenerator  = "pageableKeyGenerator")
-    public List<Payment> findAllByOrganizerId(String organizerId,Pageable pageable){
-        return paymentRepository.findAllByOrganizerId(organizerId,pageable).getContent();
+    @Cacheable(value = "payments", keyGenerator = "pageableKeyGenerator")
+    public List<Payment> findAllByOrganizerId(String organizerId, Pageable pageable) {
+        authService.checkUserToken(organizerId);
+        return paymentRepository.findAllByOrganizerId(organizerId, pageable).getContent();
     }
 
     @CacheEvict(value = "payments", allEntries = true)
-    public Payment update(Integer paymentId,Integer ticketId){
+    public Payment update(Integer paymentId, Integer ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(()-> new AppException(ErrorCode.TICKET_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.TICKET_NO_EXISTS));
 
         Payment payment = Payment.builder()
                 .id(paymentId)
@@ -63,12 +66,12 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public TransactionPay paid(HttpServletRequest request){
+    public TransactionPay paid(HttpServletRequest request) {
         Integer paymentId = Integer.valueOf(request.getParameter("vnp_TxnRef"));
         boolean isPaid = "00".equals(request.getParameter("vnp_TransactionStatus"));
         rabbitTemplate.convertAndSend(PaymentMQ.PAYMENT_QUEUE, PaymentMessaging.builder()
-                        .paymentId(paymentId)
-                        .paid(isPaid)
+                .paymentId(paymentId)
+                .paid(isPaid)
                 .build());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -86,9 +89,12 @@ public class PaymentService {
         return transactionPayRepository.save(transactionPay);
     }
 
-    public String retryPay(Integer ticketId){
+    public String retryPay(Integer ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(()->new AppException(ErrorCode.TICKET_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.TICKET_NO_EXISTS));
+
+        authService.checkUserToken(ticket.getUserId());
+        
         Payment payment = Payment.builder()
                 .ticketId(ticketId)
                 .createdAt(LocalDateTime.now())
@@ -97,15 +103,15 @@ public class PaymentService {
                 .build();
 
         Payment paymentRes = paymentRepository.save(payment);
-        return vnPayService.create(paymentRes.getId(),paymentRes.getAmount(),"Thanh toán lại vé: " + ticket.getId());
+        return vnPayService.create(paymentRes.getId(), paymentRes.getAmount(), "Thanh toán lại vé: " + ticket.getId());
     }
 
     @CacheEvict(value = {"payments", "tickets", "events", "seat"}, allEntries = true)
-    public Payment updateStatus(Integer paymentID,boolean isSuccess){
+    public Payment updateStatus(Integer paymentID, boolean isSuccess) {
         Payment payment = paymentRepository.findById(paymentID)
-                .orElseThrow(()->new AppException(ErrorCode.PAYMENT_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NO_EXISTS));
 
-        if(!payment.getStatus().equals(PaymentStatus.PENDING))
+        if (!payment.getStatus().equals(PaymentStatus.PENDING))
             throw new AppException(ErrorCode.PAYMENT_NO_PENDING);
 
         PaymentStatus paymentStatus = isSuccess ? PaymentStatus.SUCCESS : PaymentStatus.FAILED;

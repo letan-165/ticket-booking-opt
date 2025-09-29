@@ -27,14 +27,14 @@ import java.util.List;
 public class EventController {
     EventService eventService;
 
-    @GetMapping("/public")
+    @GetMapping("/public/guest")
     public ApiResponse<List<Event>> getAll(@PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
                 .result(eventService.getAll(pageable))
                 .build();
     }
 
-    @GetMapping("/public/{id}")
+    @GetMapping("/public/guest/{id}")
     public ApiResponse<EventResponse> getDetail(@PathVariable Integer id) {
         return ApiResponse.<EventResponse>builder()
                 .result(eventService.getDetail(id))

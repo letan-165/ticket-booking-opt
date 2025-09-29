@@ -6,7 +6,7 @@ import com.app.booking.common.exception.AppException;
 import com.app.booking.common.exception.ErrorCode;
 import com.app.booking.internal.event_service.entity.Seat;
 import com.app.booking.internal.event_service.repository.SeatRepository;
-import com.app.booking.internal.keycloak_service.service.UserService;
+import com.app.booking.internal.keycloak_service.service.AuthService;
 import com.app.booking.internal.payment_service.entity.Payment;
 import com.app.booking.internal.payment_service.repository.PaymentRepository;
 import com.app.booking.internal.payment_service.service.VNPayService;
@@ -38,7 +38,7 @@ public class TicketService {
     PaymentRepository paymentRepository;
     TicketRepository ticketRepository;
     SeatRepository seatRepository;
-    UserService userService;
+    AuthService authService;
     TicketMapper ticketMapper;
     VNPayService vnPayService;
     RabbitTemplate rabbitTemplate;
@@ -60,13 +60,13 @@ public class TicketService {
 
     @Cacheable(value = "tickets", keyGenerator = "pageableKeyGenerator")
     public List<Ticket> findAllByUserId(String userId, Pageable pageable) {
-        userService.userIsExist(userId);
+        authService.checkUserToken(userId);
         return ticketRepository.findAllByUserId(userId, pageable).getContent();
     }
 
     @Cacheable(value = "tickets", keyGenerator = "pageableKeyGenerator")
     public List<Ticket> findAllByOrganizerId(String organizerId, Pageable pageable) {
-        userService.userIsExist(organizerId);
+        authService.checkUserToken(organizerId);
         return ticketRepository.findAllByOrganizerId(organizerId, pageable).getContent();
     }
 
@@ -74,7 +74,7 @@ public class TicketService {
     @CacheEvict(value = "tickets", allEntries = true)
     public String booking(BookRequest request) {
         //Check validation //
-        userService.userIsExist(request.getUserId());
+        authService.checkUserToken(request.getUserId());
         Seat seat = seatRepository.findSeatForUpdate(request.getSeatId())
                 .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
 
@@ -102,6 +102,7 @@ public class TicketService {
     @Cacheable(value = "ticket", keyGenerator = "simpleKeyGenerator")
     public TicketDetailResponse getDetail(Integer ticketId) {
         Ticket ticket = findById(ticketId);
+        authService.checkUserToken(ticket.getUserId());
         Seat seat = findSeatById(ticket.getSeatId());
         Payment payment = paymentRepository.findByTicketId(ticketId)
                 .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NO_EXISTS));

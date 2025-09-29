@@ -42,14 +42,6 @@ public class UserService {
     }
 
     @Cacheable(value = "user", keyGenerator = "simpleKeyGenerator")
-    public void userIsExist(String userID) {
-        String token = keycloakClient.clientCredentialsLogin().getAccess_token();
-        var lists = keycloakClient.getUsers(token, userID, 0, 2);
-        if (lists.isEmpty())
-            throw new AppException(ErrorCode.USER_NO_EXISTS);
-    }
-
-    @Cacheable(value = "user", keyGenerator = "simpleKeyGenerator")
     public UserKeycloak getUser(String username) {
         String token = getTokenFromHeader();
         var lists = keycloakClient.getUsers(token, username, 0, 2);

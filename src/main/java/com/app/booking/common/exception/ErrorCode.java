@@ -20,6 +20,7 @@ public enum ErrorCode {
     PAYMENT_NO_EXISTS(1008, "Payment not found", HttpStatus.BAD_REQUEST),
     PAYMENT_NO_PENDING(1009, "Cannot payment when status is invalid", HttpStatus.BAD_REQUEST),
     PAYMENT_FAIL(1010, "Payment fail", HttpStatus.BAD_REQUEST),
+    USER_INVALID(1011, "User does not match token", HttpStatus.BAD_REQUEST),
 
     // ===== AUTH (2001 – 2999) =====
     UNAUTHORIZED(2001, "You don't have permission", HttpStatus.FORBIDDEN),
