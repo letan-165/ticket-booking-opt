@@ -81,7 +81,7 @@ keycloak:
   resource: booking-app
   credentials:
     id: spring-boot-app
-    secret: ${CLIENT_SERVER_KEYCLOAK}
+    secret: ${vault.server.keycloak}
   bearer-only: true
   ssl-required: external
   public-client: false

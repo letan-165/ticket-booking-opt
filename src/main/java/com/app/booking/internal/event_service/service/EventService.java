@@ -41,18 +41,20 @@ public class EventService {
                 .orElseThrow(() -> new AppException(ErrorCode.EVENT_NO_EXISTS));
     }
 
-    @Cacheable(value = "events", keyGenerator  = "pageableKeyGenerator")
+    @Cacheable(value = "events", keyGenerator = "pageableKeyGenerator")
     public List<Event> getAll(Pageable pageable) {
         return eventRepository.findAll(pageable).getContent();
     }
-    @Cacheable(value = "events", keyGenerator  = "pageableKeyGenerator")
-    public List<Event> findAllByOrganizerId(String id,Pageable pageable) {
+
+
+    @Cacheable(value = "events", keyGenerator = "pageableKeyGenerator")
+    public List<Event> findAllByOrganizerId(String id, Pageable pageable) {
         userService.userIsExist(id);
-        return eventRepository.findAllByOrganizerId(id,pageable).getContent();
+        return eventRepository.findAllByOrganizerId(id, pageable).getContent();
     }
 
 
-    @Cacheable(value = "event",keyGenerator  = "simpleKeyGenerator")
+    @Cacheable(value = "event", keyGenerator = "simpleKeyGenerator")
     public EventResponse getDetail(Integer id) {
         var event = findById(id);
         var seats = seatRepository.findAllByEventId(id);
@@ -65,13 +67,13 @@ public class EventService {
     @CacheEvict(value = "events", allEntries = true)
     public EventResponse create(EventRequest request) {
         userService.userIsExist(request.getOrganizerId());
-        List<Seat> seats= new ArrayList<>();
+        List<Seat> seats = new ArrayList<>();
         Event event = eventRepository.save(eventMapper.toEvent(request));
-        for(int i = 0; i < request.getTotalSeats(); i++  ){
+        for (int i = 0; i < request.getTotalSeats(); i++) {
             seats.add(Seat.builder()
-                            .eventId(event.getId())
-                            .status(SeatStatus.AVAILABLE)
-                            .seatNumber("G" + i)
+                    .eventId(event.getId())
+                    .status(SeatStatus.AVAILABLE)
+                    .seatNumber("G" + i)
                     .build());
         }
         var resSeats = seatRepository.saveAll(seats);
@@ -81,7 +83,7 @@ public class EventService {
     }
 
     @CacheEvict(value = {"events", "event"}, allEntries = true)
-    public Event update(Integer id,EventRequest request) {
+    public Event update(Integer id, EventRequest request) {
         Event event = findById(id);
         request.setTotalSeats(event.getTotalSeats());
         eventMapper.updateEventFromRequest(event, request);
@@ -97,14 +99,13 @@ public class EventService {
     }
 
     @CacheEvict(value = {"events", "event"}, allEntries = true)
-    public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request){
+    public Seat updateStatusSeats(Integer seatId, SeatStatusRequest request) {
         Seat seat = seatRepository.findById(seatId)
-                .orElseThrow(()->new AppException(ErrorCode.SEAT_NO_EXISTS));
+                .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
 
         seat.setStatus(request.getStatus());
         return seatRepository.save(seat);
     }
-
 
 
 }
