@@ -14,6 +14,7 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class PaymentController {
     @Value("${vnp.feBackUrl}")
     String feBackUrl;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/public")
     public ApiResponse<List<Payment>> getAll(Pageable pageable) {
         return ApiResponse.<List<Payment>>builder()
@@ -39,10 +41,11 @@ public class PaymentController {
                 .build();
     }
 
-    @GetMapping("/public/user/{userId}")
-    public ApiResponse<List<Payment>> findAllByOrganizerId(@PathVariable String userId, Pageable pageable) {
+    @PreAuthorize("hasRole('ORGANIZER')")
+    @GetMapping("/public/organizer/{organizerId}")
+    public ApiResponse<List<Payment>> findAllByOrganizerId(@PathVariable String organizerId, Pageable pageable) {
         return ApiResponse.<List<Payment>>builder()
-                .result(paymentService.findAllByOrganizerId(userId, pageable))
+                .result(paymentService.findAllByOrganizerId(organizerId, pageable))
                 .build();
     }
 
@@ -54,6 +57,7 @@ public class PaymentController {
         response.sendRedirect(redirectUrl);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/public/retry/{ticketId}")
     public ApiResponse<String> retryPay(@PathVariable Integer ticketId) {
         return ApiResponse.<String>builder()

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public class TicketController {
     TicketService ticketService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/public")
     public ApiResponse<List<Ticket>> getAll(Pageable pageable) {
         return ApiResponse.<List<Ticket>>builder()
@@ -30,13 +32,23 @@ public class TicketController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/public/user/{userId}")
-    public ApiResponse<List<Ticket>> getByUser(@PathVariable String userId, Pageable pageable) {
+    public ApiResponse<List<Ticket>> findAllByUserId(@PathVariable String userId, Pageable pageable) {
         return ApiResponse.<List<Ticket>>builder()
                 .result(ticketService.findAllByUserId(userId, pageable))
                 .build();
     }
 
+    @PreAuthorize("hasRole('ORGANIZER')")
+    @GetMapping("/public/organizer/{organizerId}")
+    public ApiResponse<List<Ticket>> findAllByOrganizerId(@PathVariable String organizerId, Pageable pageable) {
+        return ApiResponse.<List<Ticket>>builder()
+                .result(ticketService.findAllByOrganizerId(organizerId, pageable))
+                .build();
+    }
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/public/{ticketId}")
     public ApiResponse<TicketDetailResponse> getDetail(@PathVariable Integer ticketId) {
         return ApiResponse.<TicketDetailResponse>builder()
@@ -44,6 +56,7 @@ public class TicketController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/public/book")
     public ApiResponse<String> booking(@Valid @RequestBody BookRequest request) {
         return ApiResponse.<String>builder()

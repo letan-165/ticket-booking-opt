@@ -64,6 +64,12 @@ public class TicketService {
         return ticketRepository.findAllByUserId(userId, pageable).getContent();
     }
 
+    @Cacheable(value = "tickets", keyGenerator = "pageableKeyGenerator")
+    public List<Ticket> findAllByOrganizerId(String organizerId, Pageable pageable) {
+        userService.userIsExist(organizerId);
+        return ticketRepository.findAllByOrganizerId(organizerId, pageable).getContent();
+    }
+
     @Transactional
     @CacheEvict(value = "tickets", allEntries = true)
     public String booking(BookRequest request) {
