@@ -46,14 +46,16 @@ services:
     container_name: vault
     ports:
       - "8200:8200"
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: root
-      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
     cap_add:
       - IPC_LOCK
     volumes:
       - ./vault/data:/vault/data
-
+      - ./vault/config:/vault/config
+    command: vault server -config=/vault/config
+  
+  
+  
+  
 
   # ELK Stack
   elasticsearch:
