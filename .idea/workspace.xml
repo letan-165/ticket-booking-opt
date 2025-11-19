@@ -4,7 +4,73 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="chore: clean" />
+    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="feat: init app">
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/client/KeycloakClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/AppException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/ErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/GlobalExceptionHandling.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/ApiLoggingAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/Maskable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/UserMdcFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/AuthEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/mapper/KeycloakMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/ApiResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/PageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/CreateUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/UpdateUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/response/LoginResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/CreateUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/RoleKeycloak.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/UserInfoKeyCloak.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/UserKeycloak.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/config/config.hcl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_audit" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_auth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_index-header-hmac-key" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_keyring" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-audit" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-auth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-mounts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_master" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_mounts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_seal-config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/_shamir-kek" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/cluster/local/_info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/hsm/_barrier-unseal-keys" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/versions/_1.16.3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/core/wrapping/_jwtkey" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_provider/assignment/_allow_all" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_provider/provider/_default" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_tokens/named_keys/_default" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_salt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_upgrading" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/archive/_metadata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/metadata/_1TfFmrjrJe36bqMiiurhsJE24CyC2rXAjC0lp4kac8yZcNVBxej64twGAeoMADKot5mGpGtbd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/policy/_metadata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/versions/79a/_030a4515bc117b01b1717a362c7a956ec577cd65796509d25e6349d9d5103" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/versions/79c/_e04ddfdf6a44e90984a14a21e76e6b834ccfb6c7ec943e382c523d5b59df4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_control-group" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_default" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_response-wrapping" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/_salt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/accessor/_0340a8585e15bcd707cdb1e66f87146ac1e04bae" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/id/_h6701b020568bf71079c98b6b1fcece161878d214bd9d438fbae5d3c3c1256d41" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,124 +127,126 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Run App.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.keycloak: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.postgres-keycloak: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.vault: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in booking.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.login_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.login_fail_unValid_email.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.login_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.register_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.register_fail_valid_email.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthControllerTest.register_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthIntegrationTest.login_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthIntegrationTest.register_Success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthIntegrationTest.register_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthIntegrationTest.testRegisterUser_Success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.login_fail_PASSWORD_INVALID.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.login_fail_USER_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.login_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.register_fail_USER_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.register_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BookingApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.create_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.create_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.delete_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.findAllByOrganizerId_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.getDetail_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.updateStatusSeats_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.update_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventControllerTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.create_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.getDetail_fail_EVENT_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.getDetail_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.updateStatusSeats_fail_SEAT_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.updateStatusSeats_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EventServiceTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentControllerTest.findAllByOrganizerId_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentControllerTest.getAll_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentControllerTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentIntegrationTest.paid_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.paid_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.retryPay_fail_TICKET_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.retryPay_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.updateStatus_fail_PAYMENT_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.updateStatus_fail_PAYMENT_NO_PENDING.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.updateStatus_success_isSuccess.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.updateStatus_success_noSuccess.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.update_fail_TICKET_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PaymentServiceTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.booking_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.create_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.create_fail_null.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.getAll_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.getByUser_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketControllerTest.getDetail_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketIntegrationTest.booking_fail_blank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketIntegrationTest.booking_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketIntegrationTest.getAll_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketServiceTest.booking_fail_SEAT_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketServiceTest.booking_fail_TICKET_NO_AVAILABLE.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketServiceTest.booking_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketServiceTest.updateStatus_success_isPaid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TicketServiceTest.updateStatus_success_noPaid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.findAll_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.findByUserID_fail_notFindUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.findByUserID_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.findById_fail_USER_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.findById_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.findUser_fail_USER_NO_EXISTS.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.findUser_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.update_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.update_success_noSet_password.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.update_success_set_password.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.java in booking.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.booking [clean,install,-DskipTests...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.booking [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.sonarqube.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;service.view.auto.scroll.to.source&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;sonarlint&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Run App.executor": "Run",
+    "Application.user-service.executor": "Run",
+    "Docker.docker-compose.yml.keycloak: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.postgres-keycloak: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.vault: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "JUnit.All in booking.executor": "Run",
+    "JUnit.AuthControllerTest.executor": "Run",
+    "JUnit.AuthControllerTest.login_fail_blank.executor": "Run",
+    "JUnit.AuthControllerTest.login_fail_unValid_email.executor": "Run",
+    "JUnit.AuthControllerTest.login_success.executor": "Run",
+    "JUnit.AuthControllerTest.register_fail_blank.executor": "Run",
+    "JUnit.AuthControllerTest.register_fail_valid_email.executor": "Run",
+    "JUnit.AuthControllerTest.register_success.executor": "Run",
+    "JUnit.AuthIntegrationTest.executor": "Run",
+    "JUnit.AuthIntegrationTest.login_success.executor": "Run",
+    "JUnit.AuthIntegrationTest.register_Success.executor": "Run",
+    "JUnit.AuthIntegrationTest.register_success.executor": "Run",
+    "JUnit.AuthIntegrationTest.testRegisterUser_Success.executor": "Run",
+    "JUnit.AuthServiceTest.executor": "Run",
+    "JUnit.AuthServiceTest.login_fail_PASSWORD_INVALID.executor": "Run",
+    "JUnit.AuthServiceTest.login_fail_USER_NO_EXISTS.executor": "Run",
+    "JUnit.AuthServiceTest.login_success.executor": "Run",
+    "JUnit.AuthServiceTest.register_fail_USER_EXISTS.executor": "Run",
+    "JUnit.AuthServiceTest.register_success.executor": "Run",
+    "JUnit.BookingApplicationTests.executor": "Run",
+    "JUnit.EventControllerTest.create_fail_blank.executor": "Run",
+    "JUnit.EventControllerTest.create_success.executor": "Run",
+    "JUnit.EventControllerTest.delete_success.executor": "Run",
+    "JUnit.EventControllerTest.executor": "Run",
+    "JUnit.EventControllerTest.findAllByOrganizerId_success.executor": "Run",
+    "JUnit.EventControllerTest.getDetail_success.executor": "Run",
+    "JUnit.EventControllerTest.updateStatusSeats_success.executor": "Run",
+    "JUnit.EventControllerTest.update_fail_blank.executor": "Run",
+    "JUnit.EventControllerTest.update_success.executor": "Run",
+    "JUnit.EventIntegrationTest.executor": "Run",
+    "JUnit.EventServiceTest.create_success.executor": "Run",
+    "JUnit.EventServiceTest.executor": "Run",
+    "JUnit.EventServiceTest.getDetail_fail_EVENT_NO_EXISTS.executor": "Run",
+    "JUnit.EventServiceTest.getDetail_success.executor": "Run",
+    "JUnit.EventServiceTest.updateStatusSeats_fail_SEAT_NO_EXISTS.executor": "Run",
+    "JUnit.EventServiceTest.updateStatusSeats_success.executor": "Run",
+    "JUnit.EventServiceTest.update_success.executor": "Run",
+    "JUnit.PaymentControllerTest.executor": "Run",
+    "JUnit.PaymentControllerTest.findAllByOrganizerId_success.executor": "Run",
+    "JUnit.PaymentControllerTest.getAll_success.executor": "Run",
+    "JUnit.PaymentControllerTest.update_success.executor": "Run",
+    "JUnit.PaymentIntegrationTest.executor": "Run",
+    "JUnit.PaymentIntegrationTest.paid_success.executor": "Run",
+    "JUnit.PaymentServiceTest.executor": "Run",
+    "JUnit.PaymentServiceTest.paid_success.executor": "Run",
+    "JUnit.PaymentServiceTest.retryPay_fail_TICKET_NO_EXISTS.executor": "Run",
+    "JUnit.PaymentServiceTest.retryPay_success.executor": "Run",
+    "JUnit.PaymentServiceTest.updateStatus_fail_PAYMENT_NO_EXISTS.executor": "Run",
+    "JUnit.PaymentServiceTest.updateStatus_fail_PAYMENT_NO_PENDING.executor": "Run",
+    "JUnit.PaymentServiceTest.updateStatus_success_isSuccess.executor": "Run",
+    "JUnit.PaymentServiceTest.updateStatus_success_noSuccess.executor": "Run",
+    "JUnit.PaymentServiceTest.update_fail_TICKET_NO_EXISTS.executor": "Run",
+    "JUnit.PaymentServiceTest.update_success.executor": "Run",
+    "JUnit.TicketControllerTest.booking_success.executor": "Run",
+    "JUnit.TicketControllerTest.create_fail_blank.executor": "Run",
+    "JUnit.TicketControllerTest.create_fail_null.executor": "Run",
+    "JUnit.TicketControllerTest.executor": "Run",
+    "JUnit.TicketControllerTest.getAll_success.executor": "Run",
+    "JUnit.TicketControllerTest.getByUser_success.executor": "Run",
+    "JUnit.TicketControllerTest.getDetail_success.executor": "Run",
+    "JUnit.TicketIntegrationTest.booking_fail_blank.executor": "Run",
+    "JUnit.TicketIntegrationTest.booking_success.executor": "Run",
+    "JUnit.TicketIntegrationTest.executor": "Run",
+    "JUnit.TicketIntegrationTest.getAll_success.executor": "Run",
+    "JUnit.TicketServiceTest.booking_fail_SEAT_NO_EXISTS.executor": "Run",
+    "JUnit.TicketServiceTest.booking_fail_TICKET_NO_AVAILABLE.executor": "Run",
+    "JUnit.TicketServiceTest.booking_success.executor": "Run",
+    "JUnit.TicketServiceTest.updateStatus_success_isPaid.executor": "Run",
+    "JUnit.TicketServiceTest.updateStatus_success_noPaid.executor": "Run",
+    "JUnit.UserControllerTest.executor": "Run",
+    "JUnit.UserControllerTest.findAll_success.executor": "Run",
+    "JUnit.UserControllerTest.findByUserID_fail_notFindUser.executor": "Run",
+    "JUnit.UserControllerTest.findByUserID_success.executor": "Run",
+    "JUnit.UserControllerTest.update_success.executor": "Run",
+    "JUnit.UserIntegrationTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.findById_fail_USER_NO_EXISTS.executor": "Run",
+    "JUnit.UserServiceTest.findById_success.executor": "Run",
+    "JUnit.UserServiceTest.findUser_fail_USER_NO_EXISTS.executor": "Run",
+    "JUnit.UserServiceTest.findUser_success.executor": "Run",
+    "JUnit.UserServiceTest.update_success.executor": "Run",
+    "JUnit.UserServiceTest.update_success_noSet_password.executor": "Run",
+    "JUnit.UserServiceTest.update_success_set_password.executor": "Run",
+    "JUnit.java in booking.executor": "Run",
+    "Maven.booking [clean,install,-DskipTests...].executor": "Run",
+    "Maven.booking [clean].executor": "Run",
+    "Maven.sonarqube.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/user-service",
+    "rearrange.code.on.save": "true",
+    "service.view.auto.scroll.to.source": "true",
+    "settings.editor.selected.configurable": "sonarlint"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service\config" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\src\test\java\com\app\booking" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\src\main\resources\db\migration" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\src\main\resources" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\src\main\java\com\app\booking\internal\user_service" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service\model\dto" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault\config" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault" />
     </key>
@@ -203,19 +271,39 @@
           <value>
             <map>
               <entry key="Run App" value="STOPPED" />
+              <entry key="user-service" value="STOPPED" />
             </map>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Run App">
+  <component name="RunManager" selected="Application.user-service">
     <configuration name="Run App" type="Application" factoryName="Application">
       <option name="envFilePaths">
         <option value="$PROJECT_DIR$/.env" />
       </option>
       <option name="MAIN_CLASS_NAME" value="com.app.booking.BookingApplication" />
-      <module name="booking" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="user-service" type="Application" factoryName="Application">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <option name="MAIN_CLASS_NAME" value="com.app.user_service.UserServiceApplication" />
+      <module name="user-service" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -355,6 +443,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.user-service" />
       <item itemvalue="Application.Run App" />
       <item itemvalue="Docker.docker-compose.yml.vault: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
@@ -380,14 +469,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756809115835</updated>
-    </task>
-    <task id="LOCAL-00021" summary="chore: clean code vnpay">
-      <option name="closed" value="true" />
-      <created>1757664486794</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1757664486794</updated>
     </task>
     <task id="LOCAL-00022" summary="feat: lock seat ttl">
       <option name="closed" value="true" />
@@ -773,7 +854,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763462597472</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="feat: init app">
+      <option name="closed" value="true" />
+      <created>1763463137413</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1763463137414</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -788,7 +877,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: TicketControllerTest" />
     <MESSAGE value="refactor: fix when run all test" />
     <MESSAGE value="chore: config integration test" />
     <MESSAGE value="feat: AuthIntegrationTest" />
@@ -813,6 +901,7 @@
     <MESSAGE value="refactor: use vault local" />
     <MESSAGE value="refactor: config.hcl" />
     <MESSAGE value="chore: clean" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: clean" />
+    <MESSAGE value="feat: init app" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: init app" />
   </component>
 </project>

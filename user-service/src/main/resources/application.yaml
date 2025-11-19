@@ -1,3 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
 spring:
-  application:
-    name: user-service
+  cache:
+    type: redis
+  redis:
+    url: ${REDIS_URL:redis://localhost:6379}
+
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: ${VAULT_URL_PUBLIC:http://localhost:8200}
+      token: ${VAULT_TOKEN:root}
+      kv:
+        backend: secret
+        default-context: application
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/ticket-booking
+
+app:
+  time:
+    expiryTime: 3600
+
+key:
+  jwt:
+    value: ${vault.key.jwt}
+
+custom-cache:
+  default-ttl: 300
+  ttls:
+    eventDetail: 1800
+    userProfile: 3600
+    dashboardStats: 10
+
+keycloak:
+  auth-server-url: http://localhost:9080/
+  realm: ticket-booking
+  resource: booking-app
+  credentials:
+    id: spring-boot-app
+    secret: ${vault.server.keycloak}
+  bearer-only: true
+  ssl-required: external
+  public-client: false
+  use-resource-role-mappings: true
