@@ -1,0 +1,25 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    url: ${REDIS_URL:redis://localhost:6379}
+
+  rabbitmq:
+    addresses: ${RABBIT_MQ_URL:amqp://guest:guest@localhost:5672}
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+
+custom-cache:
+  default-ttl: 300
+  ttls:
+    eventDetail: 1800
+    userProfile: 3600
+    dashboardStats: 10

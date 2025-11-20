@@ -1,8 +1,8 @@
 package com.app.user_service.service;
 
+import com.app.ticket_common_library.common.exception.AppException;
+import com.app.ticket_common_library.common.exception.ErrorCode;
 import com.app.user_service.client.KeycloakClient;
-import com.app.user_service.config.exception.AppException;
-import com.app.user_service.config.exception.ErrorCode;
 import com.app.user_service.mapper.KeycloakMapper;
 import com.app.user_service.model.dto.request.UpdateUserRequest;
 import com.app.user_service.model.dto.response.LoginResponse;

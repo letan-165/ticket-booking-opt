@@ -1,6 +1,6 @@
 package com.app.user_service.controller;
 
-import com.app.user_service.model.dto.ApiResponse;
+import com.app.ticket_common_library.common.response.ApiResponse;
 import com.app.user_service.model.dto.request.UpdateUserRequest;
 import com.app.user_service.model.keycloak.UserKeycloak;
 import com.app.user_service.service.UserService;

@@ -4,11 +4,6 @@ server:
     context-path: /api
 
 spring:
-  cache:
-    type: redis
-  redis:
-    url: ${REDIS_URL:redis://localhost:6379}
-
   config:
     import: vault://
   cloud:
@@ -28,17 +23,6 @@ spring:
 app:
   time:
     expiryTime: 3600
-
-key:
-  jwt:
-    value: ${vault.key.jwt}
-
-custom-cache:
-  default-ttl: 300
-  ttls:
-    eventDetail: 1800
-    userProfile: 3600
-    dashboardStats: 10
 
 keycloak:
   auth-server-url: http://localhost:9080/

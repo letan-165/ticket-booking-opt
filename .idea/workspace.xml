@@ -4,72 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="feat: init app">
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/client/KeycloakClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/AppException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/ErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/GlobalExceptionHandling.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/ApiLoggingAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/Maskable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/UserMdcFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/AuthEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/mapper/KeycloakMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/ApiResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/PageResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/CreateUserRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/UpdateUserRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/response/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/CreateUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/RoleKeycloak.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/UserInfoKeyCloak.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/keycloak/UserKeycloak.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/config/config.hcl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_audit" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_auth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_index-header-hmac-key" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_keyring" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-audit" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-auth" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_local-mounts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_master" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_mounts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_seal-config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/_shamir-kek" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/cluster/local/_info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/hsm/_barrier-unseal-keys" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/versions/_1.16.3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/core/wrapping/_jwtkey" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_provider/assignment/_allow_all" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_provider/provider/_default" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_tokens/named_keys/_default" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_salt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/_upgrading" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/archive/_metadata" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/metadata/_1TfFmrjrJe36bqMiiurhsJE24CyC2rXAjC0lp4kac8yZcNVBxej64twGAeoMADKot5mGpGtbd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/policy/_metadata" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/versions/79a/_030a4515bc117b01b1717a362c7a956ec577cd65796509d25e6349d9d5103" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/logical/eeecd4bc-fcbc-54d7-206c-361939d5ddfa/aa07ce37-a7eb-3fb9-9972-66fb93559648/versions/79c/_e04ddfdf6a44e90984a14a21e76e6b834ccfb6c7ec943e382c523d5b59df4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_control-group" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_default" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/policy/_response-wrapping" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/_salt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/accessor/_0340a8585e15bcd707cdb1e66f87146ac1e04bae" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vault/data/sys/token/id/_h6701b020568bf71079c98b6b1fcece161878d214bd9d438fbae5d3c3c1256d41" afterDir="false" />
+    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="feat: init user service">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/common/log/ApiLoggingAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/common/log/Maskable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/common/log/UserMdcFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/UserServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/UserServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/client/KeycloakClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/client/KeycloakClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/AppException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/ErrorCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/exception/GlobalExceptionHandling.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/ApiLoggingAspect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/Maskable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/log/UserMdcFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/AuthEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/security/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/ApiResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/PageResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/model/dto/request/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vault/data/core/_keyring" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_keyring" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vault/data/core/_master" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_master" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +198,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/user-service",
+    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/user-service/src/main/java/com/app/user_service",
     "rearrange.code.on.save": "true",
     "service.view.auto.scroll.to.source": "true",
     "settings.editor.selected.configurable": "sonarlint"
@@ -239,11 +206,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\common\src\main\java\ticket\library\common" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-common-library\src\main\java\com\app\ticket_common_library\config" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-common-library\src\main\java\com\app\ticket_common_library" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service\config" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service\model\dto" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
@@ -469,14 +436,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756809115835</updated>
-    </task>
-    <task id="LOCAL-00022" summary="feat: lock seat ttl">
-      <option name="closed" value="true" />
-      <created>1757683358122</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1757683358122</updated>
     </task>
     <task id="LOCAL-00023" summary="feat: payment with vnpay (res 1s)">
       <option name="closed" value="true" />
@@ -862,7 +821,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763463137414</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="feat: init user service">
+      <option name="closed" value="true" />
+      <created>1763550545204</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1763550545204</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -877,7 +844,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: fix when run all test" />
     <MESSAGE value="chore: config integration test" />
     <MESSAGE value="feat: AuthIntegrationTest" />
     <MESSAGE value="feat: UserIntegrationTest" />
@@ -902,6 +868,7 @@
     <MESSAGE value="refactor: config.hcl" />
     <MESSAGE value="chore: clean" />
     <MESSAGE value="feat: init app" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: init app" />
+    <MESSAGE value="feat: init user service" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: init user service" />
   </component>
 </project>

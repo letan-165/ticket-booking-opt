@@ -1,6 +1,6 @@
 package com.app.user_service.controller;
 
-import com.app.user_service.model.dto.ApiResponse;
+import com.app.ticket_common_library.common.response.ApiResponse;
 import com.app.user_service.model.dto.request.CreateUserRequest;
 import com.app.user_service.model.dto.request.LoginRequest;
 import com.app.user_service.model.dto.response.LoginResponse;

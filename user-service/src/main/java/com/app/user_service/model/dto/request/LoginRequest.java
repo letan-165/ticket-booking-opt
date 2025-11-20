@@ -1,6 +1,6 @@
 package com.app.user_service.model.dto.request;
 
-import com.app.user_service.config.log.Maskable;
+import com.app.ticket_common_library.common.log.Maskable;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
