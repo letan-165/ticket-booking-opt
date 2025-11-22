@@ -1,0 +1,17 @@
+package com.app.event_service.mapper;
+
+import com.app.event_service.dto.request.EventRequest;
+import com.app.event_service.dto.response.EventResponse;
+import com.app.event_service.entity.Event;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface EventMapper {
+    Event toEvent(EventRequest request);
+
+    EventResponse toEventResponse(Event event);
+
+    void updateEventFromRequest(@MappingTarget Event event, EventRequest request);
+}

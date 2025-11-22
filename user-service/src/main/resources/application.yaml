@@ -18,7 +18,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9080/realms/ticket-booking
+          issuer-uri: ${KEYCLOAK_JWT_URL:http://localhost:9080/realms/ticket-booking}
 
 app:
   time:

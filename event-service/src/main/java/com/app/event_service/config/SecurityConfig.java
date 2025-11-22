@@ -1,4 +1,4 @@
-package com.app.user_service.config;
+package com.app.event_service.config;
 
 import com.app.ticket_common_library.config.security.AuthEntryPoint;
 import com.app.ticket_common_library.config.security.KeycloakRoleConverter;
@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    String[] endpoints = {"/auth/public/**", "/keycloak/auth/public/guest/**"};
+    String[] endpoints = {"/events/public/guest/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -30,4 +30,5 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
+
 }

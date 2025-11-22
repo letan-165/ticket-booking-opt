@@ -41,4 +41,12 @@ public class AuthController {
                 .build();
     }
 
+    @GetMapping("/checkUserToken/userID")
+    public ApiResponse<Boolean> checkUserToken(@PathVariable String userID) {
+        authService.checkUserToken(userID);
+        return ApiResponse.<Boolean>builder()
+                .result(true)
+                .build();
+    }
+
 }
