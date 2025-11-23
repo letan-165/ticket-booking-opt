@@ -20,21 +20,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/events/public")
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class EventController {
     EventService eventService;
 
-    @GetMapping("/public/guest")
+    @GetMapping("/guest")
     public ApiResponse<List<Event>> getAll(@PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
                 .result(eventService.getAll(pageable))
                 .build();
     }
 
-    @GetMapping("/public/guest/{id}")
+    @GetMapping("/guest/{id}")
     public ApiResponse<EventResponse> getDetail(@PathVariable Integer id) {
         return ApiResponse.<EventResponse>builder()
                 .result(eventService.getDetail(id))
@@ -42,7 +42,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZER', 'ADMIN')")
-    @GetMapping("/public/organizers/{id}")
+    @GetMapping("/organizers/{id}")
     public ApiResponse<List<Event>> findAllByOrganizerId(@PathVariable String id, @PageableDefault(size = 10) Pageable pageable) {
         return ApiResponse.<List<Event>>builder()
                 .result(eventService.findAllByOrganizerId(id, pageable))
@@ -50,7 +50,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZER', 'ADMIN')")
-    @PostMapping("/public")
+    @PostMapping
     public ApiResponse<EventResponse> create(@Valid @RequestBody EventRequest request) {
         return ApiResponse.<EventResponse>builder()
                 .result(eventService.create(request))
@@ -58,7 +58,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZER', 'ADMIN')")
-    @PatchMapping("/public/{id}")
+    @PatchMapping("/{id}")
     public ApiResponse<Event> update(@PathVariable Integer id, @RequestBody EventRequest request) {
         return ApiResponse.<Event>builder()
                 .result(eventService.update(id, request))
@@ -66,7 +66,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZER', 'ADMIN')")
-    @DeleteMapping("/public/{id}")
+    @DeleteMapping("/{id}")
     public ApiResponse<Boolean> delete(@PathVariable Integer id) {
         eventService.delete(id);
         return ApiResponse.<Boolean>builder()
@@ -75,7 +75,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZER', 'ADMIN')")
-    @PatchMapping("/public/seats/{seatId}")
+    @PatchMapping("/seats/{seatId}")
     public ApiResponse<Seat> updateStatusSeats(@PathVariable Integer seatId, @RequestBody SeatStatusRequest request) {
         return ApiResponse.<Seat>builder()
                 .result(eventService.updateStatusSeats(seatId, request))

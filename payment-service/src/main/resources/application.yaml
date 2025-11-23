@@ -1,3 +1,44 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /api
+
 spring:
-  application:
-    name: payment-service
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/payment_service}
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: ${VAULT_URL_PUBLIC:http://localhost:8200}
+      token: ${VAULT_TOKEN:root}
+      kv:
+        backend: secret
+        default-context: application
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_JWT_URL:http://localhost:9080/realms/ticket-booking}
+
+app:
+  service:
+    user: http://localhost:8080/api
+    ticket: http://localhost:8082/api
+
+vnp:
+  expire: 60
+  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:8080/api/payments/vnpay/return
+  tmnCode: ${vault.code.vnp}
+  secretKey: ${vault.key.vnp}
+  feBackUrl: http://localhost:8888/home

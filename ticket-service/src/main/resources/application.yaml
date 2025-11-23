@@ -1,3 +1,31 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
 spring:
-  application:
-    name: ticket-service
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ticket_service}
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_JWT_URL:http://localhost:9080/realms/ticket-booking}
+
+app:
+  service:
+    user: http://localhost:8080/api
+    event: http://localhost:8081/api
+    payment: http://localhost:8083/api
+
+vnp:
+  expire: 60

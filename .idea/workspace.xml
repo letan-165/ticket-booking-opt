@@ -4,35 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="feat: init library">
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/EventController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/dto/request/EventRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/dto/request/SeatStatusRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/dto/response/EventResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/entity/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/entity/Seat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/mapper/EventMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/EventRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/SeatRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/client/AuthClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/service/EventService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/resources/db/migration/V1__init_event_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/config/security/KeycloakRoleConverter.java" afterDir="false" />
+    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="chore: clean">
+      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/local/EventControllerLocal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/config/vnPay/VNPayConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/config/webClient/WebClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/controller/local/PaymentControllerLocal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/Ticket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/response/PaymentBookingResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/entity/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/entity/TransactionPay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/consumer/PaymentConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/dto/PaymentMessaging.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/mq/PaymentMQ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/PaymentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/TransactionPayRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/AuthClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/TicketClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/VNPayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/db/migration/V1__init_payment_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/config/security/FeignConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/controller/TicketController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/controller/local/TicketControllerLocal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/Seat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/request/BookRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/PaymentBookingResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/TicketDetailResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/entity/Ticket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/mapper/TicketMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/consumer/BookingConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/consumer/LockSeatConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/CreateBookingMessaging.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/LockSeatDQLMessaging.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/mq/BookingMQ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/mq/LockSeatMQ.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/TicketRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/AuthClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/EventClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/PaymentClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/service/TicketService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/resources/db/migration/V1__init_ticket_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/local/AuthControllerLocal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/EventServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/EventServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/EventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/client/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/client/AuthClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/UserServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/UserServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/PaymentServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/PaymentServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-common-library/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-common-library/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/TicketServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/TicketServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/_keyring" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_keyring" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/_master" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_master" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_tokens/named_keys/_default" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_tokens/named_keys/_default" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vault/data/logical/7312c108-8c47-1bb9-80c8-85293664dff4/oidc_tokens/public_keys/_cb188f85-a604-d74a-8107-44e8dd9b07f0" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +124,8 @@
   "keyToString": {
     "Application.Run App.executor": "Run",
     "Application.event-service.executor": "Run",
+    "Application.payment-service.executor": "Run",
+    "Application.ticket-service.executor": "Run",
     "Application.user-service.executor": "Run",
     "Docker.docker-compose.yml.keycloak: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.postgres-keycloak: Compose Deployment.executor": "Run",
@@ -195,7 +227,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/event-service/src/main/java/com/app/event_service",
+    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/payment-service/src/main/java/com/app/payment_service",
     "rearrange.code.on.save": "true",
     "service.view.auto.scroll.to.source": "true",
     "settings.editor.selected.configurable": "sonarlint"
@@ -203,11 +235,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\event-service\src\main\java\com\app\event_service" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\user-service\src\main\java\com\app\user_service" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\common\src\main\java\ticket\library\common" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-common-library\src\main\java\com\app\ticket_common_library\config" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-common-library\src\main\java\com\app\ticket_common_library" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service\repository" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service\config" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\resources\db" />
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-service\src\main\java\com\app\ticket_service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
@@ -215,11 +247,11 @@
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.app.event_service.config" />
-      <recent name="com.app.ticket_common_library.config.security" />
-      <recent name="com.app.booking.ticket_service_test.integration" />
-      <recent name="com.app.booking.user_service_test.integration" />
-      <recent name="com.app.booking.internal.user_service.controller" />
+      <recent name="com.app.event_service.controller.local" />
+      <recent name="com.app.ticket_service.dto.response" />
+      <recent name="com.app.payment_service.controller.local" />
+      <recent name="com.app.ticket_service.controller.local" />
+      <recent name="com.app.user_service.controller.local" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -235,6 +267,8 @@
           <value>
             <map>
               <entry key="event-service" value="STOPPED" />
+              <entry key="payment-service" value="STOPPED" />
+              <entry key="ticket-service" value="STOPPED" />
               <entry key="user-service" value="STOPPED" />
             </map>
           </value>
@@ -242,13 +276,53 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.event-service">
+  <component name="RunManager" selected="Application.payment-service">
     <configuration name="event-service" type="Application" factoryName="Application">
       <option name="envFilePaths">
         <option value="$PROJECT_DIR$/.env" />
       </option>
       <option name="MAIN_CLASS_NAME" value="com.app.event_service.EventServiceApplication" />
       <module name="event-service" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="payment-service" type="Application" factoryName="Application">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <option name="MAIN_CLASS_NAME" value="com.app.payment_service.PaymentServiceApplication" />
+      <module name="payment-service" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ticket-service" type="Application" factoryName="Application">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/.env" />
+      </option>
+      <option name="MAIN_CLASS_NAME" value="com.app.ticket_service.TicketServiceApplication" />
+      <module name="ticket-service" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -410,6 +484,8 @@
     <list>
       <item itemvalue="Application.user-service" />
       <item itemvalue="Application.event-service" />
+      <item itemvalue="Application.ticket-service" />
+      <item itemvalue="Application.payment-service" />
       <item itemvalue="Docker.docker-compose.yml.vault: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml.keycloak: Compose Deployment" />
@@ -434,14 +510,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756809115835</updated>
-    </task>
-    <task id="LOCAL-00024" summary="feat: rollback fe">
-      <option name="closed" value="true" />
-      <created>1757749439105</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1757749439105</updated>
     </task>
     <task id="LOCAL-00025" summary="feat: rollback fe">
       <option name="closed" value="true" />
@@ -827,7 +895,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763624164393</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="chore: clean">
+      <option name="closed" value="true" />
+      <created>1763809766138</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1763809766139</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -863,10 +939,10 @@
     <MESSAGE value="refactor: auth with checkUserToken" />
     <MESSAGE value="refactor: use vault local" />
     <MESSAGE value="refactor: config.hcl" />
-    <MESSAGE value="chore: clean" />
     <MESSAGE value="feat: init app" />
     <MESSAGE value="feat: init user service" />
     <MESSAGE value="feat: init library" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: init library" />
+    <MESSAGE value="chore: clean" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: clean" />
   </component>
 </project>
