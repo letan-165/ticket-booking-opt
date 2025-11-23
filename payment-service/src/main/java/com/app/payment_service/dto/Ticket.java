@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class Ticket {
     Integer id;
     String userId;
+    String organizerId;
     Integer seatId;
     Integer price;
     LocalDateTime bookingTime;

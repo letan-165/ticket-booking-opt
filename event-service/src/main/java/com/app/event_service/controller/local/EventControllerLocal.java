@@ -1,5 +1,6 @@
 package com.app.event_service.controller.local;
 
+import com.app.event_service.entity.Event;
 import com.app.event_service.entity.Seat;
 import com.app.event_service.repository.SeatRepository;
 import com.app.ticket_common_library.common.exception.AppException;
@@ -30,9 +31,9 @@ public class EventControllerLocal {
                 .orElseThrow(() -> new AppException(ErrorCode.SEAT_NO_EXISTS));
     }
 
-    @GetMapping("/price/{id}")
-    public Integer findPriceBySeatId(@PathVariable Integer id) {
-        return seatRepository.findPriceBySeatId(id);
+    @GetMapping("/{id}")
+    public Event findBySeatId(@PathVariable Integer id) {
+        return seatRepository.findBySeatId(id);
     }
 
     @PostMapping

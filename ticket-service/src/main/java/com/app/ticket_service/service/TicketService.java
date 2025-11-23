@@ -4,6 +4,7 @@ import com.app.ticket_common_library.common.enums.SeatStatus;
 import com.app.ticket_common_library.common.enums.TicketStatus;
 import com.app.ticket_common_library.common.exception.AppException;
 import com.app.ticket_common_library.common.exception.ErrorCode;
+import com.app.ticket_service.dto.Event;
 import com.app.ticket_service.dto.Payment;
 import com.app.ticket_service.dto.Seat;
 import com.app.ticket_service.dto.request.BookRequest;
@@ -74,7 +75,8 @@ public class TicketService {
         if (!seat.getStatus().equals(SeatStatus.AVAILABLE))
             throw new AppException(ErrorCode.TICKET_NO_AVAILABLE);
 
-        Integer price = eventClient.findPriceBySeatId(request.getSeatId());
+        Event event = eventClient.findBySeatId(request.getSeatId());
+        Integer price = event.getTotalSeats();
         if (price == null)
             throw new AppException(ErrorCode.PRICE_EVENT_INVALID);
         //End check//
@@ -85,6 +87,7 @@ public class TicketService {
 
         rabbitTemplate.convertAndSend(BookingMQ.CREATE_BOOKING_QUEUE, CreateBookingMessaging.builder()
                 .userId(request.getUserId())
+                .organizerId(event.getOrganizerId())
                 .price(price)
                 .paymentId(response.getPaymentId())
                 .seatId(seat.getId())

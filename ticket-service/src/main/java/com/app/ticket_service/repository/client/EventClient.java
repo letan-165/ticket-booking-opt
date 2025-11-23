@@ -1,6 +1,7 @@
 package com.app.ticket_service.repository.client;
 
 import com.app.ticket_common_library.config.security.FeignConfig;
+import com.app.ticket_service.dto.Event;
 import com.app.ticket_service.dto.Seat;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,8 @@ public interface EventClient {
     @GetMapping("/lock/{id}")
     Seat findSeatForUpdate(@PathVariable Integer id);//Lock
 
-    @GetMapping("/price/{id}")
-    Integer findPriceBySeatId(@PathVariable Integer id);
+    @GetMapping("/{id}")
+    Event findBySeatId(@PathVariable Integer id);
 
     @PostMapping
     void save(Seat seat);

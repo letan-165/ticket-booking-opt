@@ -48,7 +48,9 @@ public class PaymentService {
     @Cacheable(value = "payments", keyGenerator = "pageableKeyGenerator")
     public List<Payment> findAllByOrganizerId(String organizerId, Pageable pageable) {
         authClient.checkUserToken(organizerId);
-        return paymentRepository.findAllByOrganizerId(organizerId, pageable).getContent();
+        List<Ticket> tickets = ticketClient.findAllByOrganizerId(organizerId).getResult();
+        var ticketIds = tickets.stream().map(Ticket::getId).toList();
+        return paymentRepository.findAllByTicketId(ticketIds);
     }
 
     @CacheEvict(value = "payments", allEntries = true)

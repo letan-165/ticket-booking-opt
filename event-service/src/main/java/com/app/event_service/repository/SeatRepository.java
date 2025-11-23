@@ -1,5 +1,6 @@
 package com.app.event_service.repository;
 
+import com.app.event_service.entity.Event;
 import com.app.event_service.entity.Seat;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,8 +21,8 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     List<Seat> findAllByEventId(Integer eventID);
 
     @Query(
-            value = "SELECT e.price_ticket FROM seats s JOIN events e ON s.event_id = e.id WHERE s.id = :seatId",
+            value = "SELECT e FROM seats s JOIN events e ON s.event_id = e.id WHERE s.id = :seatId",
             nativeQuery = true
     )
-    Integer findPriceBySeatId(@Param("seatId") Integer seatId);
+    Event findBySeatId(@Param("seatId") Integer seatId);
 }

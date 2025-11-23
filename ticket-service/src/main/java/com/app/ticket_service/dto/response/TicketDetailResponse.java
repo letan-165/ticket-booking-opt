@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class TicketDetailResponse {
     Integer id;
     String userId;
+    String organizerId;
     Seat seat;
     Integer price;
     LocalDateTime bookingTime;

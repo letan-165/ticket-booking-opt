@@ -22,6 +22,9 @@ public class Ticket {
     @Column(name = "user_id", nullable = false)
     String userId;
 
+    @Column(name = "organizer_id", nullable = false)
+    String organizerId;
+
     @Column(name = "seat_id", nullable = false)
     Integer seatId;
 

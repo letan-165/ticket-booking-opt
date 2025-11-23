@@ -4,62 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="chore: clean">
-      <change afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/local/EventControllerLocal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/config/vnPay/VNPayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/config/webClient/WebClientConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/controller/local/PaymentControllerLocal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/Ticket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/response/PaymentBookingResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/entity/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/entity/TransactionPay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/consumer/PaymentConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/dto/PaymentMessaging.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/messaging/mq/PaymentMQ.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/PaymentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/TransactionPayRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/AuthClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/TicketClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/VNPayService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/db/migration/V1__init_payment_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-common-library/src/main/java/com/app/ticket_common_library/config/security/FeignConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/controller/TicketController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/controller/local/TicketControllerLocal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/Seat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/request/BookRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/PaymentBookingResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/TicketDetailResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/entity/Ticket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/mapper/TicketMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/consumer/BookingConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/consumer/LockSeatConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/CreateBookingMessaging.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/LockSeatDQLMessaging.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/mq/BookingMQ.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/mq/LockSeatMQ.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/TicketRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/AuthClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/EventClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/PaymentClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/service/TicketService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/resources/db/migration/V1__init_ticket_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/local/AuthControllerLocal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="f22333c9-b6b0-4702-b3b0-c7a0e6e87ffb" name="Changes" comment="chore: conversion payment, ticket">
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ticket-service/src/main/resources/db/migration/V2__add_organizer_id_ticket.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/EventController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/client/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/client/AuthClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/PaymentServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/PaymentServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ticket-common-library/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-common-library/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ticket-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/TicketServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/TicketServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/app/user_service/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/local/EventControllerLocal.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/controller/local/EventControllerLocal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/SeatRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-service/src/main/java/com/app/event_service/repository/SeatRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/dto/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/TicketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/repository/client/TicketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/app/payment_service/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/TicketDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/dto/response/TicketDetailResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/entity/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/entity/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/CreateBookingMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/messaging/dto/CreateBookingMessaging.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/TicketRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/TicketRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/EventClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/repository/client/EventClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/service/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-service/src/main/java/com/app/ticket_service/service/TicketService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/_keyring" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_keyring" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/_master" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/_master" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" beforeDir="false" afterPath="$PROJECT_DIR$/vault/data/core/cluster/_feature-flags" afterDir="false" />
@@ -227,7 +187,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/payment-service/src/main/java/com/app/payment_service",
+    "last_opened_file_path": "C:/Users/letan/Documents/a_Github/Ticket-Booking-OPT/ticket-service/src/main/resources/db/migration",
     "rearrange.code.on.save": "true",
     "service.view.auto.scroll.to.source": "true",
     "settings.editor.selected.configurable": "sonarlint"
@@ -235,11 +195,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-service\src\main\resources\db\migration" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service\repository" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\java\com\app\payment_service\config" />
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\payment-service\src\main\resources\db" />
-      <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\ticket-service\src\main\java\com\app\ticket_service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT" />
@@ -247,11 +207,11 @@
       <recent name="C:\Users\letan\Documents\a_Github\Ticket-Booking-OPT\vault" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.app.ticket_service.dto" />
       <recent name="com.app.event_service.controller.local" />
       <recent name="com.app.ticket_service.dto.response" />
       <recent name="com.app.payment_service.controller.local" />
       <recent name="com.app.ticket_service.controller.local" />
-      <recent name="com.app.user_service.controller.local" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -276,7 +236,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.payment-service">
+  <component name="RunManager" selected="Application.ticket-service">
     <configuration name="event-service" type="Application" factoryName="Application">
       <option name="envFilePaths">
         <option value="$PROJECT_DIR$/.env" />
@@ -510,14 +470,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756809115835</updated>
-    </task>
-    <task id="LOCAL-00025" summary="feat: rollback fe">
-      <option name="closed" value="true" />
-      <created>1757751730754</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1757751730754</updated>
     </task>
     <task id="LOCAL-00026" summary="docs: update word">
       <option name="closed" value="true" />
@@ -903,7 +855,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763809766139</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="chore: conversion payment, ticket">
+      <option name="closed" value="true" />
+      <created>1763887157041</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1763887157041</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -918,7 +878,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: AuthIntegrationTest" />
     <MESSAGE value="feat: UserIntegrationTest" />
     <MESSAGE value="feat: TicketIntegrationTest" />
     <MESSAGE value="feat: PaymentIntegrationTest" />
@@ -943,6 +902,7 @@
     <MESSAGE value="feat: init user service" />
     <MESSAGE value="feat: init library" />
     <MESSAGE value="chore: clean" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: clean" />
+    <MESSAGE value="chore: conversion payment, ticket" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: conversion payment, ticket" />
   </component>
 </project>

@@ -1,0 +1,2 @@
+ALTER TABLE tickets
+ADD COLUMN organizer_id VARCHAR(255) NOT NULL;

@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateBookingMessaging {
     String userId;
+    String organizerId;
     Integer seatId;
     Integer paymentId;
     Integer price;
